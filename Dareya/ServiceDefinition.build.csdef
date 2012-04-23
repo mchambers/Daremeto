@@ -9,7 +9,7 @@
   **********************************************************************************************
 -->
 <ServiceDefinition name="Dareya" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition">
-  <WebRole name="MvcWebRole1" vmsize="Small">
+  <WebRole name="DareyaAPI" vmsize="ExtraSmall">
     <Sites>
       <Site name="Web">
         <Bindings>
@@ -22,6 +22,11 @@
     </Endpoints>
     <Imports>
       <Import moduleName="Diagnostics" />
+      <Import moduleName="RemoteAccess" />
+      <Import moduleName="RemoteForwarder" />
     </Imports>
+    <ConfigurationSettings>
+      <Setting name="StorageConnectionString" />
+    </ConfigurationSettings>
   </WebRole>
 </ServiceDefinition>

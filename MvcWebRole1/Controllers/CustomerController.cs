@@ -10,18 +10,19 @@ namespace DareyaAPI.Controllers
     public class CustomerController : ApiController
     {
         // GET /api/customer
-        public IEnumerable<Customer> Get()
+        /*public IEnumerable<Customer> Get()
         {
             return new string[] { "value1", "value2" };
-        }
+        }*/
 
         // GET /api/customer/5
-        public string Get(int id)
+        public Customer Get(int id)
         {
-            return "value";
+            return Customer.CreateCustomer(id, "Test", "Customer");
         }
 
         // POST /api/customer
+        [DareyaAPI.Filters.DareyoutoAuthorization]
         public void Post(string value)
         {
         }

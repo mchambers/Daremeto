@@ -12,5 +12,8 @@ namespace DareyaAPI.Models
         Challenge Add(Challenge item);
         void Remove(int id);
         bool Update(Challenge item);
+
+        IQueryable<Challenge> GetListForUser(long userID);
+        IQueryable<Challenge> GetListForUser(long userID, int status);
     }
 }

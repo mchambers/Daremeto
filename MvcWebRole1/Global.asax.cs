@@ -6,6 +6,9 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using DareyaAPI.Formatters;
 
 namespace DareyaAPI
 {
@@ -25,7 +28,7 @@ namespace DareyaAPI
 
             routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
+                routeTemplate: "v1/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
 
@@ -36,6 +39,25 @@ namespace DareyaAPI
             );
         }
 
+        public static void Configure(HttpConfiguration config)
+        {
+            var matches = config.Formatters
+                            .Where(f => f.SupportedMediaTypes
+                                         .Where(m => m.MediaType.ToString() == "application/xml" ||
+                                                     m.MediaType.ToString() == "text/xml" || 
+                                                     m.MediaType.ToString() == "application/json" || 
+                                                     m.MediaType.ToString() == "text/json")
+                                         .Count() > 0)
+                            .ToList();
+            foreach (var match in matches)
+                config.Formatters.Remove(match);  
+
+            JsonSerializerSettings serializerSettings = new JsonSerializerSettings();
+            serializerSettings.Converters.Add(new IsoDateTimeConverter());
+            serializerSettings.DefaultValueHandling = DefaultValueHandling.Ignore;
+            config.Formatters.Add(new JsonNetFormatter(serializerSettings));
+        }
+
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -44,6 +66,8 @@ namespace DareyaAPI
             RegisterRoutes(RouteTable.Routes);
 
             BundleTable.Bundles.RegisterTemplateBundles();
+
+            Configure(GlobalConfiguration.Configuration);
         }
     }
 }
