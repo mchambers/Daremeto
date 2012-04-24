@@ -31,5 +31,9 @@
     <Property Name="Password" Type="text" />
     <Property Name="EmailAddress" Type="nvarchar(max)" />
     <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Verified" Type="int" />
+    <Property Name="FacebookUserID" Type="nvarchar(max)" />
+    <Property Name="FacebookAccessToken" Type="text" />
+    <Property Name="FacebookExpires" Type="nvarchar(max)" />
   </EntityType>
 </Schema>

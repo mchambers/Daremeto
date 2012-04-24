@@ -36,12 +36,16 @@
           <Property Name="Password" Type="text" />
           <Property Name="EmailAddress" Type="nvarchar(max)" />
           <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Verified" Type="int" />
+          <Property Name="FacebookUserID" Type="nvarchar(max)" />
+          <Property Name="FacebookAccessToken" Type="text" />
+          <Property Name="FacebookExpires" Type="nvarchar(max)" />
         </EntityType>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DbModels" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
-        <EntityContainer Name="daremetoEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="DYDbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Challenge" EntityType="DbModels.Challenge" />
           <EntitySet Name="Customer" EntityType="DbModels.Customer" />
           <AssociationSet Name="FK_Challenge_0" Association="DbModels.FK_Challenge_0">
@@ -78,6 +82,10 @@
           <NavigationProperty Name="Challenge" Relationship="DbModels.FK_Challenge_0" FromRole="Customer" ToRole="Challenge" />
           <Property Type="String" Name="Password" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="EmailAddress" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Verified" />
+          <Property Type="String" Name="FacebookUserID" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="FacebookAccessToken" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="FacebookExpires" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Challenge_0">
           <End Role="Customer" Type="DbModels.Customer" Multiplicity="1" />
@@ -96,7 +104,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="DbModelsStoreContainer" CdmEntityContainer="daremetoEntities">
+        <EntityContainerMapping StorageEntityContainer="DbModelsStoreContainer" CdmEntityContainer="DYDbEntities">
           <EntitySetMapping Name="Challenge"><EntityTypeMapping TypeName="DbModels.Challenge"><MappingFragment StoreEntitySet="Challenge">
             <ScalarProperty Name="ID" ColumnName="ID" />
             <ScalarProperty Name="Title" ColumnName="Title" />
@@ -106,7 +114,11 @@
             <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Customer"><EntityTypeMapping TypeName="DbModels.Customer"><MappingFragment StoreEntitySet="Customer">
-            <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+            <ScalarProperty Name="FacebookExpires" ColumnName="FacebookExpires" />
+                <ScalarProperty Name="FacebookAccessToken" ColumnName="FacebookAccessToken" />
+                <ScalarProperty Name="FacebookUserID" ColumnName="FacebookUserID" />
+                <ScalarProperty Name="Verified" ColumnName="Verified" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
             <ScalarProperty Name="FirstName" ColumnName="FirstName" />

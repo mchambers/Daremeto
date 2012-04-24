@@ -16,6 +16,10 @@
     <EntitySetMapping Name="Customer">
       <EntityTypeMapping TypeName="DbModels.Customer">
         <MappingFragment StoreEntitySet="Customer">
+          <ScalarProperty Name="FacebookExpires" ColumnName="FacebookExpires" />
+          <ScalarProperty Name="FacebookAccessToken" ColumnName="FacebookAccessToken" />
+          <ScalarProperty Name="FacebookUserID" ColumnName="FacebookUserID" />
+          <ScalarProperty Name="Verified" ColumnName="Verified" />
           <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="ID" ColumnName="ID" />

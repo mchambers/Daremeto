@@ -37,6 +37,10 @@
     <NavigationProperty Name="Challenge" Relationship="DbModels.FK_Challenge_0" FromRole="Customer" ToRole="Challenge" />
     <Property Type="String" Name="Password" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Type="String" Name="EmailAddress" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="Verified" />
+    <Property Type="String" Name="FacebookUserID" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="FacebookAccessToken" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="FacebookExpires" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <Association Name="FK_Challenge_0">
     <End Role="Customer" Type="DbModels.Customer" Multiplicity="1" />

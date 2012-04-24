@@ -3,26 +3,49 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
+using DareyaAPI.Models;
+
+using System.Web;
+using System.Web.Http.Controllers;
+using System.Web.Http.Filters;
+using System.Security.Principal;
 
 namespace DareyaAPI.Controllers
 {
     public class ChallengeController : ApiController
     {
-        // GET /api/challenge
-        public IEnumerable<string> Get()
+        private daremetoEntities repo;
+
+        public ChallengeController()
         {
-            return new string[] { "value1", "value2" };
+            repo = new daremetoEntities();
+        }
+
+        // GET /api/challenge
+        public IEnumerable<Challenge> Get()
+        {
+            return repo.Challenge.OrderByDescending(c=>c.ID).Take(10);
         }
 
         // GET /api/challenge/5
-        public string Get(int id)
+        public Challenge Get(int id)
         {
-            return "value";
+            Challenge c = repo.Challenge.FirstOrDefault(chal => chal.ID == id);
+            return c;
         }
 
         // POST /api/challenge
-        public void Post(string value)
+        [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
+        public void PostNew(Challenge value)
         {
+            if (value.Description.Equals(""))
+            {
+                throw new HttpResponseException(System.Net.HttpStatusCode.InternalServerError);
+            }
+
+            value.CustomerID = ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
+            repo.Challenge.AddObject(value);
+            repo.SaveChanges();
         }
 
         // PUT /api/challenge/5

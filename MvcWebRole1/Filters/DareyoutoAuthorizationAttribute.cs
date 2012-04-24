@@ -10,8 +10,38 @@ using DareyaAPI.Models;
 
 namespace DareyaAPI.Filters
 {
-    public class DareyoutoAuthorizationAttribute : System.Web.Http.AuthorizeAttribute
+    public enum DYAuthorizationRoles
     {
+        Public,
+        Users,
+        Private,
+        Friends
+    }
+
+    public enum DYAuthorizationResourceType
+    {
+        None,
+        Customer,
+        Challenge
+    }
+
+    public class DYAuthorizationAttribute : System.Web.Http.AuthorizeAttribute
+    {
+        private DYAuthorizationRoles AuthLevel = DYAuthorizationRoles.Private;
+        private DYAuthorizationResourceType AuthResource;
+        private long AuthResourceID;
+
+        public DYAuthorizationAttribute(DYAuthorizationRoles level)
+        {
+            AuthLevel = level;
+        }
+
+        public DYAuthorizationAttribute(DYAuthorizationRoles level, DYAuthorizationResourceType type, long ID)
+        {
+            AuthResource = type;
+            AuthResourceID = ID;
+        }
+
         public override void OnAuthorization(HttpActionContext actionContext)
         {
             Models.AuthorizationRepository ar = new Models.AuthorizationRepository();

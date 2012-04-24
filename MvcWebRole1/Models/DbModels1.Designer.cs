@@ -8,12 +8,13 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
+using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
-using System.Data.EntityClient;
-using System.ComponentModel;
-using System.Xml.Serialization;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
@@ -103,6 +104,7 @@ namespace DareyaAPI.Models
         private ObjectSet<Customer> _Customer;
 
         #endregion
+
         #region AddTo Methods
     
         /// <summary>
@@ -122,11 +124,11 @@ namespace DareyaAPI.Models
         }
 
         #endregion
+
     }
-    
 
     #endregion
-    
+
     #region Entities
     
     /// <summary>
@@ -157,6 +159,7 @@ namespace DareyaAPI.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -307,6 +310,7 @@ namespace DareyaAPI.Models
         partial void OnCustomerIDChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -349,6 +353,7 @@ namespace DareyaAPI.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -377,6 +382,7 @@ namespace DareyaAPI.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -671,6 +677,7 @@ namespace DareyaAPI.Models
         partial void OnEmailAddressChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -697,8 +704,10 @@ namespace DareyaAPI.Models
         }
 
         #endregion
+
     }
 
     #endregion
+
     
 }
