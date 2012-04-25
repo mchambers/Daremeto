@@ -7,13 +7,13 @@ namespace DareyaAPI.Models
 {
     interface IChallengeRepository
     {
-        ChallengeModel Get(int id);
-        ChallengeModel Add(ChallengeModel item);
+        Challenge Get(int id);
+        void Add(Challenge item);
         void Remove(int id);
-        bool Update(ChallengeModel item);
+        bool Update(Challenge item);
 
-        IQueryable<ChallengeModel> GetListForUser(long userID);
-        IQueryable<ChallengeModel> GetListForUser(long userID, int status);
-
+        List<Challenge> GetNewest(int startAt, int amount);
+        List<Challenge> GetListForUser(long userID);
+        List<Challenge> GetListForUser(long userID, int status);
     }
 }

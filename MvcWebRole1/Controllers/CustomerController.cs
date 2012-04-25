@@ -58,6 +58,7 @@ namespace DareyaAPI.Controllers
             return FilterForAudience(c, Security.DetermineAudience(c));
         }
 
+        // POST /api/customer/signup
         public void PostSignup(Customer newCustomer)
         {
             if (newCustomer.FirstName.Equals("") ||

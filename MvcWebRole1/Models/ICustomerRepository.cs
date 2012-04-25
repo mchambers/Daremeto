@@ -11,5 +11,6 @@ namespace DareyaAPI.Models
         void Add(Customer c);
         void Update(Customer c);
         Customer GetWithEmailAddress(string EmailAddress);
+        Customer GetWithFacebookID(string FBID);
     }
 }

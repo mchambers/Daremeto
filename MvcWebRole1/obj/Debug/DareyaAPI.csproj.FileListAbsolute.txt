@@ -88,3 +88,7 @@ C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\obj\Debug\DareyaAPI.csprojResolveAssemblyReference.cache
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\obj\Debug\DareyaAPI.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\obj\Debug\DareyaAPI.pdb
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\bin\Facebook.dll
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\bin\SendGridMail.dll
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\bin\CodeScales.Http.dll
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\bin\Facebook.xml

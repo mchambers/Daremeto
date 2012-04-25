@@ -308,6 +308,78 @@ namespace DareyaAPI.Database
         private global::System.Int64 _CustomerID;
         partial void OnCustomerIDChanging(global::System.Int64 value);
         partial void OnCustomerIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> CurrentBid
+        {
+            get
+            {
+                return _CurrentBid;
+            }
+            set
+            {
+                OnCurrentBidChanging(value);
+                ReportPropertyChanging("CurrentBid");
+                _CurrentBid = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CurrentBid");
+                OnCurrentBidChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _CurrentBid;
+        partial void OnCurrentBidChanging(Nullable<global::System.Int32> value);
+        partial void OnCurrentBidChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int64> TargetCustomerID
+        {
+            get
+            {
+                return _TargetCustomerID;
+            }
+            set
+            {
+                OnTargetCustomerIDChanging(value);
+                ReportPropertyChanging("TargetCustomerID");
+                _TargetCustomerID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("TargetCustomerID");
+                OnTargetCustomerIDChanged();
+            }
+        }
+        private Nullable<global::System.Int64> _TargetCustomerID;
+        partial void OnTargetCustomerIDChanging(Nullable<global::System.Int64> value);
+        partial void OnTargetCustomerIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> State
+        {
+            get
+            {
+                return _State;
+            }
+            set
+            {
+                OnStateChanging(value);
+                ReportPropertyChanging("State");
+                _State = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("State");
+                OnStateChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _State;
+        partial void OnStateChanging(Nullable<global::System.Int32> value);
+        partial void OnStateChanged();
 
         #endregion
 

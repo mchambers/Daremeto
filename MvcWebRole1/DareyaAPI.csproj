@@ -37,6 +37,9 @@
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.4.1.10331.0\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="Facebook">
+      <HintPath>..\packages\Facebook.6.0.16\lib\net40-client\Facebook.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -47,6 +50,9 @@
     <Reference Include="Microsoft.WindowsAzure.StorageClient, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.5.3\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SendGridMail">
+      <HintPath>..\packages\Sendgrid.1.0.1\lib\net40\SendGridMail.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -129,8 +135,8 @@
   <ItemGroup>
     <Compile Include="Controllers\ChallengeController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\DYSecurity.cs" />
     <Compile Include="Controllers\LoginController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Filters\DareyoutoAuthorizationAttribute.cs" />
     <Compile Include="Formatters\JsonNetFormatter.cs" />
     <Compile Include="Global.asax.cs">
@@ -139,15 +145,22 @@
     </Compile>
     <Compile Include="Models\Authorization.cs" />
     <Compile Include="Models\AuthorizationRepository.cs" />
+    <Compile Include="Models\ChallengeBid.cs" />
+    <Compile Include="Models\ChallengeBidRepository.cs" />
+    <Compile Include="Models\ChallengeModel.cs" />
+    <Compile Include="Models\ChallengeRepository.cs" />
+    <Compile Include="Models\ChallengeStatus.cs" />
+    <Compile Include="Models\CustomerModel.cs" />
     <Compile Include="Models\CustomerRepository.cs" />
     <Compile Include="Models\DareyaIdentity.cs" />
     <Compile Include="Models\DareyaPrincipal.cs" />
-    <Compile Include="Models\DbModels.Designer.cs">
+    <Compile Include="Database\DbModels.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DbModels.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\IAuthorizationRepository.cs" />
+    <Compile Include="Models\IChallengeBidRepository.cs" />
     <Compile Include="Models\IChallengeRepository.cs" />
     <Compile Include="Models\ICustomerRepository.cs" />
     <Compile Include="Models\Login.cs" />
@@ -185,6 +198,7 @@
     <Content Include="Global.asax">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="lib\CodeScales.Http.dll" />
     <Content Include="Scripts\jquery-1.6.2-vsdoc.js" />
     <Content Include="Scripts\jquery-1.6.2.js" />
     <Content Include="Scripts\jquery-1.6.2.min.js" />
@@ -237,7 +251,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="Models\DbModels.edmx">
+    <EntityDeploy Include="Database\DbModels.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DbModels.Designer.cs</LastGenOutput>
     </EntityDeploy>

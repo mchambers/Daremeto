@@ -80,5 +80,10 @@ namespace DareyaAPI.Models
         {
             db.SaveChanges();
         }
+
+        public Customer GetWithFacebookID(string FBID)
+        {
+            return DbCustomerToCustomer(db.Customer.FirstOrDefault(cust => cust.FacebookUserID.Equals(FBID)));
+        }
     }
 }

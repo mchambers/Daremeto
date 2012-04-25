@@ -10,5 +10,6 @@ namespace DareyaAPI.Models
         public string EmailAddress { get; set; }
         public string Password { get; set; }
         public string FacebookToken { get; set; }
+        public string FacebookID { get; set; }
     }
 }

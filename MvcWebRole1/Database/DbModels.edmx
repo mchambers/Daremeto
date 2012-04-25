@@ -19,6 +19,9 @@
           <Property Name="Type" Type="tinyint" />
           <Property Name="CustomerID" Type="bigint" Nullable="false" />
           <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CurrentBid" Type="int" />
+          <Property Name="TargetCustomerID" Type="bigint" />
+          <Property Name="State" Type="int" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -64,6 +67,9 @@
           <Property Name="Type" Type="Byte" />
           <Property Name="CustomerID" Type="Int64" Nullable="false" />
           <NavigationProperty Name="Customer" Relationship="DbModels.FK_Challenge_0" FromRole="Challenge" ToRole="Customer" />
+          <Property Type="Int32" Name="CurrentBid" />
+          <Property Type="Int64" Name="TargetCustomerID" />
+          <Property Type="Int32" Name="State" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -106,7 +112,10 @@
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="DbModelsStoreContainer" CdmEntityContainer="DYDbEntities">
           <EntitySetMapping Name="Challenge"><EntityTypeMapping TypeName="DbModels.Challenge"><MappingFragment StoreEntitySet="Challenge">
-            <ScalarProperty Name="ID" ColumnName="ID" />
+            <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="TargetCustomerID" ColumnName="TargetCustomerID" />
+                <ScalarProperty Name="CurrentBid" ColumnName="CurrentBid" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
             <ScalarProperty Name="Title" ColumnName="Title" />
             <ScalarProperty Name="Description" ColumnName="Description" />
             <ScalarProperty Name="Privacy" ColumnName="Privacy" />
@@ -145,7 +154,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
       </DesignerInfoPropertySet>
     </Options>

@@ -14,24 +14,47 @@ namespace DareyaAPI.Controllers
 {
     public class ChallengeController : ApiController
     {
-        private daremetoEntities repo;
+        private IChallengeRepository ChalRepo;
+        private IChallengeBidRepository BidRepo;
 
         public ChallengeController()
         {
-            repo = new daremetoEntities();
+            ChalRepo = new ChallengeRepository();
+            BidRepo = new ChallengeBidRepository();
         }
 
         // GET /api/challenge
-        public IEnumerable<Challenge> Get()
+        public List<Challenge> Get()
         {
-            return repo.Challenge.OrderByDescending(c=>c.ID).Take(10);
+            return ChalRepo.GetNewest(0, 10);
         }
 
         // GET /api/challenge/5
         public Challenge Get(int id)
         {
-            Challenge c = repo.Challenge.FirstOrDefault(chal => chal.ID == id);
+            Challenge c = ChalRepo.Get(id);
+            c.Bids = BidRepo.Get(c.ID);
             return c;
+        }
+
+        // PUT /api/challenge/bid/5
+        [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
+        public void PutBid(int id, ChallengeBid value)
+        {
+            // validate the data first prolly.
+            BidRepo.Add(value);
+        }
+
+        [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
+        public void PostAccept(int id)
+        {
+
+        }
+
+        [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
+        public void PostReject(int id)
+        {
+
         }
 
         // POST /api/challenge
@@ -44,8 +67,8 @@ namespace DareyaAPI.Controllers
             }
 
             value.CustomerID = ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
-            repo.Challenge.AddObject(value);
-            repo.SaveChanges();
+
+            ChalRepo.Add(value);
         }
 
         // PUT /api/challenge/5

@@ -5,8 +5,9 @@ using System.Web;
 
 namespace DareyaAPI.Models
 {
-    public class IChallengeBackerRepository
+    public interface IChallengeBidRepository
     {
-        
+        void Add(ChallengeBid bid);
+        List<ChallengeBid> Get(long ChallengeID);
     }
 }

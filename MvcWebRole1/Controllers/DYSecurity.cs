@@ -16,6 +16,16 @@ namespace DareyaAPI.Controllers
             Owner
         }
 
+        public Audience DetermineVisibility(Customer c)
+        {
+            return Audience.Users;
+        }
+
+        public Audience DetermineVisibility(Challenge c)
+        {
+            return Audience.Users;
+        }
+
         /* DetermineAudience reports the audience the current user falls into with regards to the specified content.
          * 
          *      Example: 
@@ -44,16 +54,46 @@ namespace DareyaAPI.Controllers
         {
             ICustomerRepository repo = new CustomerRepository();
 
-            Customer c = repo.GetWithEmailAddress(l.EmailAddress);
-            if (c == null)
-                return null;
+            Customer c=null;
 
-            if (!l.Password.Equals(c.Password))
-                return null;
+            if (!l.EmailAddress.Equals(""))
+            {
+                c = repo.GetWithEmailAddress(l.EmailAddress);
+                if (c == null)
+                    return null;
 
+                if (!l.Password.Equals(c.Password))
+                    return null;
+            }
+            else
+            {
+                Facebook.FacebookClient fb = new Facebook.FacebookClient();
+
+                c = repo.GetWithFacebookID(l.FacebookID);
+                if (c == null)
+                    return null;
+
+                fb.AccessToken = l.FacebookToken;
+
+                try
+                {
+                    dynamic me = fb.Get("me");
+
+                    if (me == null || me.first_name.Equals(""))
+                        return null;
+                }
+                catch (Exception e)
+                {
+                    return null;
+                }
+
+                c.FacebookAccessToken = l.FacebookToken;
+                repo.Update(c); // store the newest Facebook access token since it may have changed
+            }
+            
             Authorization a = new Authorization("test" + System.DateTime.Now.Ticks.ToString());
             a.CustomerID = c.ID;
-            a.EmailAddress = l.EmailAddress;
+            a.EmailAddress = c.EmailAddress;
 
             IAuthorizationRepository authRepo = new AuthorizationRepository();
             authRepo.Add(a); // store the auth token in the repo
