@@ -16,11 +16,14 @@ namespace DareyaAPI.Controllers
     {
         private IChallengeRepository ChalRepo;
         private IChallengeBidRepository BidRepo;
+        private IChallengeStatusRepository StatusRepo;
+        private Security Security;
 
         public ChallengeController()
         {
             ChalRepo = new ChallengeRepository();
             BidRepo = new ChallengeBidRepository();
+            Security = new Security();
         }
 
         // GET /api/challenge
@@ -48,13 +51,43 @@ namespace DareyaAPI.Controllers
         [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
         public void PostAccept(int id)
         {
+            Challenge c = ChalRepo.Get(id);
+            ChallengeStatus s = new ChallengeStatus();
 
+            if (!Security.CanManipulateContent(c))
+                throw new HttpResponseException(System.Net.HttpStatusCode.Forbidden);
+
+            s.ChallengeID = c.ID;
+            s.CustomerID = ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
+            s.Status = (int)ChallengeStatus.StatusCodes.Accepted;
+            s.UniqueID = System.Guid.NewGuid().ToString();
+
+            StatusRepo.Add(s);
         }
 
+        // Reject is specifically for when a Challenge has been sent directly to you
         [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
-        public void PostReject(int id)
+        public void PostReject(ChallengeStatus status)
         {
+            Challenge c = ChalRepo.Get((int)status.ChallengeID);
 
+            if (c.Privacy != (int)Challenge.ChallengePrivacy.SinglePerson || c.TargetCustomerID != ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID)
+                throw new HttpResponseException(System.Net.HttpStatusCode.NotImplemented);
+
+            ChallengeStatus s=StatusRepo.Get(status.ChallengeID, status.UniqueID);
+
+            if (!Security.CanManipulateContent(c))
+                throw new HttpResponseException(System.Net.HttpStatusCode.Forbidden);
+
+            s.ChallengeID = c.ID;
+            s.CustomerID = ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
+            s.Status = (int)ChallengeStatus.StatusCodes.TargetRejected;
+            s.UniqueID = System.Guid.NewGuid().ToString();
+
+            StatusRepo.Add(s);
+
+            c.State = (int)Challenge.ChallengeState.Rejected;
+            ChalRepo.Update(c);
         }
 
         // POST /api/challenge

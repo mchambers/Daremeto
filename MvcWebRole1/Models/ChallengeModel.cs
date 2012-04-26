@@ -7,6 +7,25 @@ namespace DareyaAPI.Models
 {
     public class Challenge
     {
+        public enum ChallengePrivacy
+        {
+            Public=0,
+            FriendsOnly=1,
+            Geotargeted=2,
+            SinglePerson=3
+        }
+
+        public enum ChallengeState
+        {
+            Open,
+            Accepted,
+            BidsClosed,
+            Completed,
+            Failed,
+            Expired,
+            Rejected
+        }
+
         public long ID { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }

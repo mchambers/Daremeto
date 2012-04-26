@@ -27,7 +27,7 @@ namespace DareyaAPI.Models
 
         public List<ChallengeBid> Get(long ChallengeID)
         {
-            IEnumerable<ChallengeBidDb> b = (from e in context.CreateQuery<ChallengeBidDb>(TableName) where e.PartitionKey == "CBids"+ChallengeID.ToString() select e).AsEnumerable();
+            CloudTableQuery<ChallengeBidDb> b = (from e in context.CreateQuery<ChallengeBidDb>(TableName) where e.PartitionKey == "CBids"+ChallengeID.ToString() select e).AsTableServiceQuery<ChallengeBidDb>();
             List<ChallengeBid> items=new List<ChallengeBid>();
 
             foreach (ChallengeBidDb item in b)

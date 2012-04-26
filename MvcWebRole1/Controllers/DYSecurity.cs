@@ -26,6 +26,41 @@ namespace DareyaAPI.Controllers
             return Audience.Users;
         }
 
+        public bool CanManipulateContent(Challenge c)
+        {
+            if (!HttpContext.Current.User.Identity.IsAuthenticated)
+                return false;
+
+            if (c.Privacy == (int)Challenge.ChallengePrivacy.SinglePerson)
+            {
+                if (c.TargetCustomerID == ((Models.DareyaIdentity)HttpContext.Current.User.Identity).CustomerID)
+                    return true;
+                else
+                    return false;
+            }
+
+            Audience a = CoreDetermineAudience(((Models.DareyaIdentity)HttpContext.Current.User.Identity).CustomerID);
+            switch (a)
+            {
+                case Audience.Users:
+                    if (c.Privacy == (int)Challenge.ChallengePrivacy.FriendsOnly)
+                        return false;
+
+                    return true;
+
+                case Audience.Owner:
+                    return true;
+
+                case Audience.Friends:
+                    return true;
+
+                case Audience.Anybody:
+                default:
+                    return false;
+            }
+
+        }
+
         /* DetermineAudience reports the audience the current user falls into with regards to the specified content.
          * 
          *      Example: 
@@ -34,20 +69,25 @@ namespace DareyaAPI.Controllers
          *          if the content is owned by them, return Owner
          *          if they are logged in but the content doesn't fit any of these groups, return Users
         */
-        public Audience DetermineAudience(Customer c)
+        private Audience CoreDetermineAudience(long CustomerID)
         {
-            if (HttpContext.Current.User.Identity.IsAuthenticated && c.ID == ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID)
+            if (HttpContext.Current.User.Identity.IsAuthenticated && CustomerID == ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID)
                 return Audience.Owner;
+
+            if (HttpContext.Current.User.Identity.IsAuthenticated)
+                return Audience.Users;
 
             return Audience.Anybody;
         }
 
+        public Audience DetermineAudience(Customer c)
+        {
+            return CoreDetermineAudience(c.ID);
+        }
+
         public Audience DetermineAudience(Challenge c)
         {
-            if (HttpContext.Current.User.Identity.IsAuthenticated && c.CustomerID == ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID)
-                return Audience.Owner;
-
-            return Audience.Anybody;
+            return CoreDetermineAudience(c.CustomerID);
         }
 
         public Authorization AuthorizeCustomer(Login l)

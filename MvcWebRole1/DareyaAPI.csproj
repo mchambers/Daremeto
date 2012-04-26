@@ -150,6 +150,7 @@
     <Compile Include="Models\ChallengeModel.cs" />
     <Compile Include="Models\ChallengeRepository.cs" />
     <Compile Include="Models\ChallengeStatus.cs" />
+    <Compile Include="Models\ChallengeStatusRepository.cs" />
     <Compile Include="Models\CustomerModel.cs" />
     <Compile Include="Models\CustomerRepository.cs" />
     <Compile Include="Models\DareyaIdentity.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="Models\IAuthorizationRepository.cs" />
     <Compile Include="Models\IChallengeBidRepository.cs" />
     <Compile Include="Models\IChallengeRepository.cs" />
+    <Compile Include="Models\IChallengeStatusRepository.cs" />
     <Compile Include="Models\ICustomerRepository.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
