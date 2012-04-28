@@ -32,10 +32,28 @@ namespace DareyaAPI.Models
         public int Privacy { get; set; }
         public int CurrentBid { get; set; }
         public int State { get; set; }
-
+        public bool Anonymous { get; set; }
         public long CustomerID { get; set; }
         public long TargetCustomerID { get; set; }
-
         public List<ChallengeBid> Bids { get; set; }
+    }
+
+    public class NewChallenge : Challenge
+    {
+        public enum TargetCustomerType
+        {
+            Default,
+            Facebook,
+            PhoneNumber,
+            EmailAddress
+        }
+
+        // for inbound challenge create requests,
+        // add some fields so we can target non-users
+        // and create unclaimed customer records for them.
+        public string FacebookUID { get; set; }
+        public string PhoneNumber { get; set; }
+        public string EmailAddress { get; set; }
+        public int TargetType { get; set; }
     }
 }

@@ -44,10 +44,13 @@ C:\Users\Marc Chambers\documents\visual studio 2010\Projects\Dareya\Dareya\obj\D
 C:\Users\Marc Chambers\documents\visual studio 2010\Projects\Dareya\Dareya\obj\Debug\DareyaAPI\bin\Global.asax
 C:\Users\Marc Chambers\documents\visual studio 2010\Projects\Dareya\Dareya\obj\Debug\DareyaAPI\bin\Global.asax.cs
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\bin\Debug\ServiceConfiguration.cscfg
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\CodeScales.Http.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\DareyaAPI.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\DareyaAPI.pdb
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\EntityFramework.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\EntityFramework.xml
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\Facebook.dll
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\Facebook.xml
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\Global.asax
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\Global.asax.cs
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\Microsoft.Web.Infrastructure.dll
@@ -60,6 +63,7 @@ C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\Newtonsoft.Json.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\Newtonsoft.Json.pdb
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\Newtonsoft.Json.xml
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\SendGridMail.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\System.Json.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\System.Json.xml
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\System.Net.Http.dll

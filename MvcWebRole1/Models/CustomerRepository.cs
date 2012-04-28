@@ -24,15 +24,20 @@ namespace DareyaAPI.Models
             c.ID = dbCust.ID;
             c.FirstName = dbCust.FirstName;
             c.LastName = dbCust.LastName;
+            c.EmailAddress = dbCust.EmailAddress;
             c.Address = dbCust.Address1;
             c.Address2 = dbCust.Address2;
             c.City = dbCust.City;
             c.State = dbCust.State;
             c.ZIPCode = dbCust.ZIPCode;
+            c.FacebookUserID = dbCust.FacebookUserID;
             c.FacebookAccessToken = dbCust.FacebookAccessToken;
             c.FacebookExpires = dbCust.FacebookExpires;
             c.BillingID = dbCust.BillingID;
-            c.BillingType = (int)dbCust.BillingType;
+            c.Password = dbCust.Password;
+
+            if(dbCust.BillingType!=null)
+                c.BillingType = (int)dbCust.BillingType;
 
             return c;
         }
@@ -69,15 +74,20 @@ namespace DareyaAPI.Models
             return DbCustomerToCustomer(db.Customer.FirstOrDefault(cust => cust.ID == ID));
         }
 
-        public void Add(Customer c)
+        public long Add(Customer c)
         {
             c.EmailAddress = c.EmailAddress.Trim().ToLower(); // store email addresses trimmed and in lowercase
-            db.Customer.AddObject(CustomerToDbCustomer(c));
+            Database.Customer dbc = CustomerToDbCustomer(c);
+            db.Customer.AddObject(dbc);
             db.SaveChanges();
+            db.Refresh(System.Data.Objects.RefreshMode.StoreWins, dbc);
+            return dbc.ID;
         }
 
         public void Update(Customer c)
         {
+            Database.Customer dbc=CustomerToDbCustomer(c);
+            db.Customer.Attach(dbc);
             db.SaveChanges();
         }
 

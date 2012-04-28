@@ -8,7 +8,7 @@ namespace DareyaAPI.Models
     public interface ICustomerRepository
     {
         Customer GetWithID(long ID);
-        void Add(Customer c);
+        long Add(Customer c);
         void Update(Customer c);
         Customer GetWithEmailAddress(string EmailAddress);
         Customer GetWithFacebookID(string FBID);

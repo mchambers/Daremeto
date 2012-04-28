@@ -41,16 +41,19 @@ namespace DareyaAPI.Models
             return dc;
         }
 
-        public Challenge Get(int id)
+        public Challenge Get(long id)
         {
             Database.Challenge dc = repo.Challenge.FirstOrDefault(chal => chal.ID == id);
             return DbChallengeToChallenge(dc);
         }
 
-        public void Add(Challenge item)
+        public long Add(Challenge item)
         {
-            repo.Challenge.AddObject(ChallengeToDbChallenge(item));
+            Database.Challenge c = ChallengeToDbChallenge(item);
+            repo.Challenge.AddObject(c);
             repo.SaveChanges();
+            repo.Refresh(System.Data.Objects.RefreshMode.StoreWins, c);
+            return c.ID;
         }
 
         public void Remove(int id)

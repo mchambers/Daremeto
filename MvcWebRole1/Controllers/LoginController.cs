@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Web.Http;
 using DareyaAPI.Models;
 
-namespace DareyaAPI.Controllers.Controllers
+namespace DareyaAPI.Controllers
 {
     public class LoginController : ApiController
     {

@@ -54,6 +54,7 @@ namespace DareyaAPI
 
             JsonSerializerSettings serializerSettings = new JsonSerializerSettings();
             serializerSettings.Converters.Add(new IsoDateTimeConverter());
+            serializerSettings.DefaultValueHandling = DefaultValueHandling.Ignore;
             config.Formatters.Add(new JsonNetFormatter(serializerSettings));
         }
 

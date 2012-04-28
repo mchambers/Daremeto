@@ -22,6 +22,7 @@
           <Property Name="CurrentBid" Type="int" />
           <Property Name="TargetCustomerID" Type="bigint" />
           <Property Name="State" Type="int" />
+          <Property Name="Anonymous" Type="tinyint" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -43,6 +44,7 @@
           <Property Name="FacebookUserID" Type="nvarchar(max)" />
           <Property Name="FacebookAccessToken" Type="text" />
           <Property Name="FacebookExpires" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
         </EntityType>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -70,6 +72,7 @@
           <Property Type="Int32" Name="CurrentBid" />
           <Property Type="Int64" Name="TargetCustomerID" />
           <Property Type="Int32" Name="State" />
+          <Property Type="Byte" Name="Anonymous" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -92,6 +95,7 @@
           <Property Type="String" Name="FacebookUserID" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="FacebookAccessToken" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="FacebookExpires" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PhoneNumber" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Challenge_0">
           <End Role="Customer" Type="DbModels.Customer" Multiplicity="1" />
@@ -112,7 +116,8 @@
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="DbModelsStoreContainer" CdmEntityContainer="DYDbEntities">
           <EntitySetMapping Name="Challenge"><EntityTypeMapping TypeName="DbModels.Challenge"><MappingFragment StoreEntitySet="Challenge">
-            <ScalarProperty Name="State" ColumnName="State" />
+            <ScalarProperty Name="Anonymous" ColumnName="Anonymous" />
+                <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="TargetCustomerID" ColumnName="TargetCustomerID" />
                 <ScalarProperty Name="CurrentBid" ColumnName="CurrentBid" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -123,7 +128,8 @@
             <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Customer"><EntityTypeMapping TypeName="DbModels.Customer"><MappingFragment StoreEntitySet="Customer">
-            <ScalarProperty Name="FacebookExpires" ColumnName="FacebookExpires" />
+            <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="FacebookExpires" ColumnName="FacebookExpires" />
                 <ScalarProperty Name="FacebookAccessToken" ColumnName="FacebookAccessToken" />
                 <ScalarProperty Name="FacebookUserID" ColumnName="FacebookUserID" />
                 <ScalarProperty Name="Verified" ColumnName="Verified" />
@@ -162,10 +168,10 @@
     <Diagrams>
       <Diagram Name="DbModels">
         <EntityTypeShape EntityType="DbModels.Challenge" Width="1.5" PointX="3" PointY="4" Height="2.5783902994791674" IsExpanded="true" />
-        <EntityTypeShape EntityType="DbModels.Customer" Width="1.5" PointX="0.75" PointY="3.625" Height="3.2357796223958317" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbModels.Customer" Width="1.5" PointX="0.75" PointY="3.625" Height="4.480205078125" IsExpanded="true" />
         <AssociationConnector Association="DbModels.FK_Challenge_0" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="5.2891951497395837" />
-          <ConnectorPoint PointX="3" PointY="5.2891951497395837" />
+          <ConnectorPoint PointX="2.25" PointY="5.5670475260416659" />
+          <ConnectorPoint PointX="3" PointY="5.5670475260416659" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>

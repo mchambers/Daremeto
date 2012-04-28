@@ -12,6 +12,12 @@ namespace DareyaAPI.Controllers
         private ICustomerRepository Repo;
         private Security Security;
 
+        private enum SignupType
+        {
+            Credentials,
+            Facebook
+        }
+
         public CustomerController()
         {
             Repo = new CustomerRepository();
@@ -19,10 +25,10 @@ namespace DareyaAPI.Controllers
         }
 
         // GET /api/customer
-        public Database.Customer Get()
+        /*public Database.Customer Get()
         {
-            return Database.Customer.CreateCustomer(0, "Shouldbe", "You");
-        }
+            //return Database.Customer.CreateCustomer(0, "Shouldbe", "You");
+        }*/
 
         private Customer FilterForAudience(Customer c, Security.Audience Audience)
         {
@@ -58,21 +64,53 @@ namespace DareyaAPI.Controllers
             return FilterForAudience(c, Security.DetermineAudience(c));
         }
 
-        // POST /api/customer/signup
-        public void PostSignup(Customer newCustomer)
+        private void CoreHandleFacebookSignup(Customer newCustomer)
         {
-            if (newCustomer.FirstName.Equals("") ||
-                newCustomer.LastName.Equals("") ||
-                newCustomer.EmailAddress.Equals(""))
+            Customer tryFB = Repo.GetWithFacebookID(newCustomer.FacebookUserID);
+
+            // if we have an unclaimed FB user, claim them now
+            // rather than making a new account.
+            if (tryFB != null && tryFB.FacebookUserID == newCustomer.FacebookUserID)
             {
-                // invalid
-                throw new HttpResponseException(System.Net.HttpStatusCode.InternalServerError);
+                tryFB.Type = (int)Customer.TypeCodes.Default;
+                tryFB.FacebookAccessToken = newCustomer.FacebookAccessToken;
+                tryFB.FacebookExpires = newCustomer.FacebookExpires;
+
+                Repo.Update(tryFB);
+            }
+            else
+            {
+                Repo.Add(newCustomer);
             }
 
-            if(newCustomer.FacebookAccessToken.Equals("") && newCustomer.Password.Equals(""))
+        }
+
+        private void CoreCreateSendVerificationEmail(Customer newCustomer)
+        {
+            AuthorizationRepository authRepo = new AuthorizationRepository();
+            
+            Authorization a = new Authorization("verify-" + Guid.NewGuid().ToString());
+            a.Valid = false;
+            a.EmailAddress = newCustomer.EmailAddress;
+            a.CustomerID = newCustomer.ID;
+
+            authRepo.Add(a);
+
+            String authUrl = "http://dareme.to/verify/" + a.PartitionKey;
+
+        }
+
+        private void CoreHandleCredentialSignup(Customer newCustomer)
+        {
+            newCustomer.EmailAddress = newCustomer.EmailAddress.ToLower();
+
+            Customer tryEmail = Repo.GetWithEmailAddress(newCustomer.EmailAddress);
+            if (tryEmail != null && tryEmail.EmailAddress.Equals(newCustomer.EmailAddress))
             {
-                // no authentication details provided for this customer
-                throw new HttpResponseException(System.Net.HttpStatusCode.InternalServerError);
+                if (tryEmail.Type == (int)Customer.TypeCodes.Unclaimed)
+                {
+                    CoreCreateSendVerificationEmail(newCustomer);
+                }
             }
 
             try
@@ -82,6 +120,46 @@ namespace DareyaAPI.Controllers
             catch (Exception e)
             {
                 throw new HttpResponseException(System.Net.HttpStatusCode.InternalServerError);
+            }
+        }
+
+        public void PostVerify(Authorization verify)
+        {
+
+        }
+
+        // POST /api/customer/signup
+        public void PostSignup(Customer newCustomer)
+        {
+            SignupType signupType = SignupType.Credentials;
+
+            if (newCustomer.FacebookUserID == null || newCustomer.FacebookUserID.Equals(""))
+            {
+                if (newCustomer.EmailAddress.Equals(""))
+                {
+                    // invalid
+                    throw new HttpResponseException(System.Net.HttpStatusCode.InternalServerError);
+                }
+                else
+                    signupType = SignupType.Credentials;
+            }
+            else
+                signupType = SignupType.Facebook;
+
+            if(newCustomer.FacebookAccessToken.Equals("") && newCustomer.Password.Equals(""))
+            {
+                // no authentication details provided for this customer
+                throw new HttpResponseException(System.Net.HttpStatusCode.InternalServerError);
+            }
+
+            switch (signupType)
+            {
+                case SignupType.Credentials:
+                    CoreHandleCredentialSignup(newCustomer);
+                    break;
+                case SignupType.Facebook:
+                    CoreHandleFacebookSignup(newCustomer);
+                    break;
             }
 
             // queue an email to be sent welcoming the user

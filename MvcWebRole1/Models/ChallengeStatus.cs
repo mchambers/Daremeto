@@ -11,6 +11,7 @@ namespace DareyaAPI.Models
         public enum StatusCodes
         {
             None,
+            New,
             Accepted,
             TargetRejected,
             Submitted,
@@ -46,11 +47,15 @@ namespace DareyaAPI.Models
         public ChallengeStatusDb(ChallengeStatus s)
         {
             //this.PartitionKey = "Chal" + s.ChallengeID;
-            
+             
             if (s.UniqueID == null || s.UniqueID.Equals(""))
                 s.UniqueID = System.Guid.NewGuid().ToString();
 
             this.RowKey = s.UniqueID;
+            this.ChallengeID = s.ChallengeID;
+            this.ChallengeOriginatorCustomerID = s.ChallengeOriginatorCustomerID;
+            this.Status = s.Status;
+            this.CustomerID = s.CustomerID;
         }
 
         public long CustomerID { get; set; }

@@ -57,25 +57,32 @@ namespace DareyaAPI.Models
 
         public void Add(ChallengeStatus value)
         {
-            ChallengeStatusDb sourceCust=new ChallengeStatusDb(value);
+            CoreAddOrUpdate(value);
+        }
+
+        private void CoreAddOrUpdate(ChallengeStatus value)
+        {
+            ChallengeStatusDb sourceCust = new ChallengeStatusDb(value);
             ChallengeStatusDb targetCust = new ChallengeStatusDb(value);
-            ChallengeStatusDb chal=new ChallengeStatusDb(value);
+            ChallengeStatusDb chal = new ChallengeStatusDb(value);
 
-            targetCust.PartitionKey="Cust"+value.CustomerID;
+            targetCust.PartitionKey = "Cust" + value.CustomerID;
             sourceCust.PartitionKey = "SourceCust" + value.ChallengeOriginatorCustomerID;
-            chal.PartitionKey="Chal"+value.ChallengeID;
+            chal.PartitionKey = "Chal" + value.ChallengeID;
 
-            context.AddObject(TableName, chal);
-            context.AddObject(TableName, targetCust);
-            context.AddObject(TableName, sourceCust);
+            context.AttachTo(TableName, sourceCust);
+            context.AttachTo(TableName, targetCust);
+            context.AttachTo(TableName, chal);
 
-            context.SaveChangesWithRetries();
+            context.SaveChangesWithRetries(SaveChangesOptions.ContinueOnError);   
         }
 
         public void Update(ChallengeStatus value)
         {
             if (value.UniqueID == null || value.UniqueID.Equals(""))
                 throw new InvalidOperationException("UniqueID is a required parameter");
+
+            CoreAddOrUpdate(value);
 
             // update all three partitions using the rowkey
         }

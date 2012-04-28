@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Dareya" generation="1" functional="0" release="0" Id="26192b56-bcb6-4c8e-b380-36b6f03a8cf0" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
+<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Dareya" generation="1" functional="0" release="0" Id="b2af2f60-fb0b-4658-b4a4-f5b29ee9bb8f" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
   <groups>
     <group name="DareyaGroup" generation="1" functional="0" release="0">
       <componentports>
@@ -127,7 +127,7 @@
       </maps>
       <components>
         <groupHascomponents>
-          <role name="DareyaAPI" generation="1" functional="0" release="0" software="C:\Users\Marc Chambers\documents\visual studio 2010\Projects\Dareya\Dareya\csx\Release\roles\DareyaAPI" entryPoint="base\x86\WaHostBootstrapper.exe" parameters="base\x86\WaIISHost.exe " memIndex="768" hostingEnvironment="frontendadmin" hostingEnvironmentVersion="2">
+          <role name="DareyaAPI" generation="1" functional="0" release="0" software="C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\csx\Release\roles\DareyaAPI" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaIISHost.exe " memIndex="768" hostingEnvironment="frontendadmin" hostingEnvironmentVersion="2">
             <componentports>
               <inPort name="Endpoint1" protocol="http" portRanges="80" />
               <inPort name="Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput" protocol="tcp" />
@@ -176,14 +176,14 @@
     </group>
   </groups>
   <implements>
-    <implementation Id="c3e4b8c5-bd20-48b0-953e-1ceec6766d01" ref="Microsoft.RedDog.Contract\ServiceContract\DareyaContract@ServiceDefinition.build">
+    <implementation Id="15b40c3a-a9e5-4eb6-bad8-b66eb4596f47" ref="Microsoft.RedDog.Contract\ServiceContract\DareyaContract@ServiceDefinition.build">
       <interfacereferences>
-        <interfaceReference Id="fb0b50bf-96c8-4299-8dda-7dc942b98b7e" ref="Microsoft.RedDog.Contract\Interface\DareyaAPI:Endpoint1@ServiceDefinition.build">
+        <interfaceReference Id="93694c8f-04da-4131-815e-3ff854a6e5b6" ref="Microsoft.RedDog.Contract\Interface\DareyaAPI:Endpoint1@ServiceDefinition.build">
           <inPort>
             <inPortMoniker name="/Dareya/DareyaGroup/DareyaAPI:Endpoint1" />
           </inPort>
         </interfaceReference>
-        <interfaceReference Id="cc5b2b01-0898-44ae-adba-d8305409dcf8" ref="Microsoft.RedDog.Contract\Interface\DareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput@ServiceDefinition.build">
+        <interfaceReference Id="dd781468-7c56-4512-91bd-b8782f13de6e" ref="Microsoft.RedDog.Contract\Interface\DareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput@ServiceDefinition.build">
           <inPort>
             <inPortMoniker name="/Dareya/DareyaGroup/DareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput" />
           </inPort>

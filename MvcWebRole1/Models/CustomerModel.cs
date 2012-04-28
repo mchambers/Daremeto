@@ -7,6 +7,13 @@ namespace DareyaAPI.Models
 {
     public class Customer
     {
+        public enum TypeCodes
+        {
+            Default,
+            Unclaimed,
+            Unverified
+        }
+
         public long ID { get; set; }
 
         public string FirstName { get; set; }
@@ -26,5 +33,7 @@ namespace DareyaAPI.Models
 
         public int BillingType { get; set; }
         public string BillingID { get; set; }
+
+        public int Type { get; set; }
     }
 }

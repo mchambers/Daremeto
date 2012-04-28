@@ -380,6 +380,30 @@ namespace DareyaAPI.Database
         private Nullable<global::System.Int32> _State;
         partial void OnStateChanging(Nullable<global::System.Int32> value);
         partial void OnStateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Byte> Anonymous
+        {
+            get
+            {
+                return _Anonymous;
+            }
+            set
+            {
+                OnAnonymousChanging(value);
+                ReportPropertyChanging("Anonymous");
+                _Anonymous = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Anonymous");
+                OnAnonymousChanged();
+            }
+        }
+        private Nullable<global::System.Byte> _Anonymous;
+        partial void OnAnonymousChanging(Nullable<global::System.Byte> value);
+        partial void OnAnonymousChanged();
 
         #endregion
 
@@ -843,6 +867,30 @@ namespace DareyaAPI.Database
         private global::System.String _FacebookExpires;
         partial void OnFacebookExpiresChanging(global::System.String value);
         partial void OnFacebookExpiresChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String PhoneNumber
+        {
+            get
+            {
+                return _PhoneNumber;
+            }
+            set
+            {
+                OnPhoneNumberChanging(value);
+                ReportPropertyChanging("PhoneNumber");
+                _PhoneNumber = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("PhoneNumber");
+                OnPhoneNumberChanged();
+            }
+        }
+        private global::System.String _PhoneNumber;
+        partial void OnPhoneNumberChanging(global::System.String value);
+        partial void OnPhoneNumberChanged();
 
         #endregion
 

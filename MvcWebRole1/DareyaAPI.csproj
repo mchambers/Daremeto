@@ -54,6 +54,9 @@
     <Reference Include="SendGridMail">
       <HintPath>..\packages\Sendgrid.1.0.1\lib\net40\SendGridMail.dll</HintPath>
     </Reference>
+    <Reference Include="Stripe.net">
+      <HintPath>..\packages\Stripe.net.1.1.12\lib\net40\Stripe.net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -131,9 +134,13 @@
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
+    <Reference Include="UrbanBlimp">
+      <HintPath>..\packages\UrbanBlimp.0.2.0.0\Lib\net40\UrbanBlimp.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ChallengeController.cs" />
+    <Compile Include="Controllers\ChallengeStatusController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DYSecurity.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -160,6 +167,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DbModels.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Friendship.cs" />
     <Compile Include="Models\IAuthorizationRepository.cs" />
     <Compile Include="Models\IChallengeBidRepository.cs" />
     <Compile Include="Models\IChallengeRepository.cs" />

@@ -17,12 +17,15 @@ namespace DareyaAPI.Controllers
         private IChallengeRepository ChalRepo;
         private IChallengeBidRepository BidRepo;
         private IChallengeStatusRepository StatusRepo;
+        private ICustomerRepository CustRepo;
         private Security Security;
 
         public ChallengeController()
         {
             ChalRepo = new ChallengeRepository();
             BidRepo = new ChallengeBidRepository();
+            StatusRepo = new ChallengeStatusRepository();
+            CustRepo = new CustomerRepository();
             Security = new Security();
         }
 
@@ -33,7 +36,7 @@ namespace DareyaAPI.Controllers
         }
 
         // GET /api/challenge/5
-        public Challenge Get(int id)
+        public Challenge Get(long id)
         {
             Challenge c = ChalRepo.Get(id);
             c.Bids = BidRepo.Get(c.ID);
@@ -44,64 +47,96 @@ namespace DareyaAPI.Controllers
         [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
         public void PutBid(int id, ChallengeBid value)
         {
+
             // validate the data first prolly.
             BidRepo.Add(value);
         }
 
-        [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
-        public void PostAccept(int id)
-        {
-            Challenge c = ChalRepo.Get(id);
-            ChallengeStatus s = new ChallengeStatus();
-
-            if (!Security.CanManipulateContent(c))
-                throw new HttpResponseException(System.Net.HttpStatusCode.Forbidden);
-
-            s.ChallengeID = c.ID;
-            s.CustomerID = ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
-            s.Status = (int)ChallengeStatus.StatusCodes.Accepted;
-            s.UniqueID = System.Guid.NewGuid().ToString();
-
-            StatusRepo.Add(s);
-        }
-
-        // Reject is specifically for when a Challenge has been sent directly to you
-        [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
-        public void PostReject(ChallengeStatus status)
-        {
-            Challenge c = ChalRepo.Get((int)status.ChallengeID);
-
-            if (c.Privacy != (int)Challenge.ChallengePrivacy.SinglePerson || c.TargetCustomerID != ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID)
-                throw new HttpResponseException(System.Net.HttpStatusCode.NotImplemented);
-
-            ChallengeStatus s=StatusRepo.Get(status.ChallengeID, status.UniqueID);
-
-            if (!Security.CanManipulateContent(c))
-                throw new HttpResponseException(System.Net.HttpStatusCode.Forbidden);
-
-            s.ChallengeID = c.ID;
-            s.CustomerID = ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
-            s.Status = (int)ChallengeStatus.StatusCodes.TargetRejected;
-            s.UniqueID = System.Guid.NewGuid().ToString();
-
-            StatusRepo.Add(s);
-
-            c.State = (int)Challenge.ChallengeState.Rejected;
-            ChalRepo.Update(c);
-        }
-
         // POST /api/challenge
         [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
-        public void PostNew(Challenge value)
+        public void PostNew(NewChallenge value)
         {
             if (value.Description.Equals(""))
             {
                 throw new HttpResponseException(System.Net.HttpStatusCode.InternalServerError);
             }
-
+            
             value.CustomerID = ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
 
-            ChalRepo.Add(value);
+            long newID=ChalRepo.Add(value);
+            bool createTargetStatus=false;
+
+            switch (value.TargetType)
+            {
+                case (int)NewChallenge.TargetCustomerType.Default:
+                    if (value.TargetCustomerID > 0)
+                    {
+                        createTargetStatus = true;
+
+
+                    }
+                    else
+                        createTargetStatus = false;
+                    break;
+                case (int)NewChallenge.TargetCustomerType.Facebook:
+                    if (value.FacebookUID != null && !value.FacebookUID.Equals(""))
+                    {
+                        Customer tryFB = CustRepo.GetWithFacebookID(value.FacebookUID);
+                        if (tryFB != null && tryFB.ID>0)
+                        {
+                            value.TargetCustomerID = tryFB.ID;
+                        }
+                        else
+                        {
+                            Customer unclaimedFB = new Customer();
+                            unclaimedFB.FacebookUserID = value.FacebookUID;
+                            unclaimedFB.Type = (int)Customer.TypeCodes.Unclaimed;
+                            value.TargetCustomerID=CustRepo.Add(unclaimedFB);
+                        }
+                        createTargetStatus = true;
+                    }
+                    break;
+                case (int)NewChallenge.TargetCustomerType.PhoneNumber:
+                    if (value.PhoneNumber != null && !value.PhoneNumber.Equals(""))
+                    {
+                        createTargetStatus = true;
+                    }
+                    break;
+                case (int)NewChallenge.TargetCustomerType.EmailAddress:
+                    if (value.EmailAddress != null && !value.EmailAddress.Equals(""))
+                    {
+                        value.EmailAddress=value.EmailAddress.ToLower();
+
+                        Customer tryEMail = CustRepo.GetWithEmailAddress(value.EmailAddress);
+                        if (tryEMail != null && tryEMail.EmailAddress.Equals(value.EmailAddress))
+                        {
+                            value.TargetCustomerID = tryEMail.ID;
+                        }
+                        else
+                        {
+                            Customer unclaimedEmail = new Customer();
+                            unclaimedEmail.EmailAddress = value.EmailAddress;
+                            unclaimedEmail.Type = (int)Customer.TypeCodes.Unclaimed;
+                            value.TargetCustomerID = CustRepo.Add(unclaimedEmail);
+                        }
+                        createTargetStatus = true;
+                    }
+                    break;
+            }
+
+            if (createTargetStatus)
+            {
+                ChallengeStatus s = new ChallengeStatus();
+                s.ChallengeID = newID;
+                s.ChallengeOriginatorCustomerID = value.CustomerID;
+                s.CustomerID = value.TargetCustomerID;
+                s.UniqueID = System.Guid.NewGuid().ToString();
+                s.Status = (int)ChallengeStatus.StatusCodes.None;
+                StatusRepo.Add(s);
+
+                // notify the receipient of the new challenge.
+            }
+
         }
 
         // PUT /api/challenge/5

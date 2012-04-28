@@ -4,6 +4,7 @@
     <EntitySetMapping Name="Challenge">
       <EntityTypeMapping TypeName="DbModels.Challenge">
         <MappingFragment StoreEntitySet="Challenge">
+          <ScalarProperty Name="Anonymous" ColumnName="Anonymous" />
           <ScalarProperty Name="State" ColumnName="State" />
           <ScalarProperty Name="TargetCustomerID" ColumnName="TargetCustomerID" />
           <ScalarProperty Name="CurrentBid" ColumnName="CurrentBid" />
@@ -19,6 +20,7 @@
     <EntitySetMapping Name="Customer">
       <EntityTypeMapping TypeName="DbModels.Customer">
         <MappingFragment StoreEntitySet="Customer">
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
           <ScalarProperty Name="FacebookExpires" ColumnName="FacebookExpires" />
           <ScalarProperty Name="FacebookAccessToken" ColumnName="FacebookAccessToken" />
           <ScalarProperty Name="FacebookUserID" ColumnName="FacebookUserID" />

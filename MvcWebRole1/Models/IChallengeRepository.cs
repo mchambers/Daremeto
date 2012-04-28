@@ -7,8 +7,8 @@ namespace DareyaAPI.Models
 {
     interface IChallengeRepository
     {
-        Challenge Get(int id);
-        void Add(Challenge item);
+        Challenge Get(long id);
+        long Add(Challenge item);
         void Remove(int id);
         bool Update(Challenge item);
 

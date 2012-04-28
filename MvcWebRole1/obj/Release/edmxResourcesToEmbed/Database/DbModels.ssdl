@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DbModels.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="DbModelsStoreContainer">
+    <EntitySet Name="Challenge" EntityType="DbModels.Store.Challenge" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Customer" EntityType="DbModels.Store.Customer" store:Type="Tables" Schema="dbo" />
+  </EntityContainer>
+  <EntityType Name="Challenge">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="Title" Type="text" Nullable="false" />
+    <Property Name="Description" Type="text" Nullable="false" />
+    <Property Name="Privacy" Type="tinyint" />
+    <Property Name="Type" Type="tinyint" />
+    <Property Name="CustomerID" Type="bigint" Nullable="false" />
+    <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CurrentBid" Type="int" />
+    <Property Name="TargetCustomerID" Type="bigint" />
+    <Property Name="State" Type="int" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="FirstName" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="LastName" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Address1" Type="nvarchar(max)" />
+    <Property Name="Address2" Type="nvarchar(max)" />
+    <Property Name="City" Type="nvarchar(max)" />
+    <Property Name="State" Type="nvarchar" MaxLength="2" />
+    <Property Name="ZIPCode" Type="nvarchar" MaxLength="10" />
+    <Property Name="BillingType" Type="int" />
+    <Property Name="BillingID" Type="nvarchar(max)" />
+    <Property Name="Password" Type="text" />
+    <Property Name="EmailAddress" Type="nvarchar(max)" />
+    <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Verified" Type="int" />
+    <Property Name="FacebookUserID" Type="nvarchar(max)" />
+    <Property Name="FacebookAccessToken" Type="text" />
+    <Property Name="FacebookExpires" Type="nvarchar(max)" />
+  </EntityType>
+</Schema>

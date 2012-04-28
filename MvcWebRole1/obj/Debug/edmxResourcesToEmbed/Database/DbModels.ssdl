@@ -17,6 +17,7 @@
     <Property Name="CurrentBid" Type="int" />
     <Property Name="TargetCustomerID" Type="bigint" />
     <Property Name="State" Type="int" />
+    <Property Name="Anonymous" Type="tinyint" />
   </EntityType>
   <EntityType Name="Customer">
     <Key>
@@ -38,5 +39,6 @@
     <Property Name="FacebookUserID" Type="nvarchar(max)" />
     <Property Name="FacebookAccessToken" Type="text" />
     <Property Name="FacebookExpires" Type="nvarchar(max)" />
+    <Property Name="PhoneNumber" Type="nvarchar(max)" />
   </EntityType>
 </Schema>

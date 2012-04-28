@@ -22,6 +22,7 @@
     <Property Type="Int32" Name="CurrentBid" />
     <Property Type="Int64" Name="TargetCustomerID" />
     <Property Type="Int32" Name="State" />
+    <Property Type="Byte" Name="Anonymous" />
   </EntityType>
   <EntityType Name="Customer">
     <Key>
@@ -44,6 +45,7 @@
     <Property Type="String" Name="FacebookUserID" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Type="String" Name="FacebookAccessToken" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Type="String" Name="FacebookExpires" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="PhoneNumber" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <Association Name="FK_Challenge_0">
     <End Role="Customer" Type="DbModels.Customer" Multiplicity="1" />
