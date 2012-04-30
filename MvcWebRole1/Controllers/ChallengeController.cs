@@ -43,12 +43,29 @@ namespace DareyaAPI.Controllers
             return c;
         }
 
+        public List<ChallengeStatus> GetStatus(long id)
+        {
+            return StatusRepo.GetActiveStatusesForChallenge(id);
+        }
+
         // PUT /api/challenge/bid/5
         [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
         public void PutBid(int id, ChallengeBid value)
         {
+            Challenge c = ChalRepo.Get(value.ChallengeID);
 
-            // validate the data first prolly.
+            if (c == null)
+                throw new HttpResponseException("The requested Challenge resource doesn't exist.", System.Net.HttpStatusCode.NotFound);
+
+            if (c.Privacy == (int)Challenge.ChallengePrivacy.FriendsOnly)
+            {
+                if (Security.DetermineAudience(c) < Security.Audience.Friends)
+                    throw new HttpResponseException("This item is friends-only.", System.Net.HttpStatusCode.Forbidden);
+            }
+            
+            c.CurrentBid += value.Amount;
+            ChalRepo.Update(c);
+
             BidRepo.Add(value);
         }
 
@@ -58,7 +75,7 @@ namespace DareyaAPI.Controllers
         {
             if (value.Description.Equals(""))
             {
-                throw new HttpResponseException(System.Net.HttpStatusCode.InternalServerError);
+                throw new HttpResponseException("You have to specify a description.", System.Net.HttpStatusCode.InternalServerError);
             }
             
             value.CustomerID = ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;

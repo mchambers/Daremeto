@@ -109,17 +109,25 @@ namespace DareyaAPI.Controllers
             {
                 if (tryEmail.Type == (int)Customer.TypeCodes.Unclaimed)
                 {
-                    CoreCreateSendVerificationEmail(newCustomer);
+                    CoreCreateSendVerificationEmail(tryEmail);
                 }
             }
 
+            newCustomer.Type = (int)Customer.TypeCodes.Unverified;
+            
             try
             {
-                Repo.Add(newCustomer);
+                if (tryEmail == null)
+                {
+                    CoreCreateSendVerificationEmail(newCustomer);
+                    Repo.Add(newCustomer);
+                }
+                else
+                    Repo.Update(tryEmail);
             }
             catch (Exception e)
             {
-                throw new HttpResponseException(System.Net.HttpStatusCode.InternalServerError);
+                throw new HttpResponseException(e.Message, System.Net.HttpStatusCode.InternalServerError);
             }
         }
 
@@ -138,7 +146,7 @@ namespace DareyaAPI.Controllers
                 if (newCustomer.EmailAddress.Equals(""))
                 {
                     // invalid
-                    throw new HttpResponseException(System.Net.HttpStatusCode.InternalServerError);
+                    throw new HttpResponseException("No Facebook Connect information was found and no email address specified.", System.Net.HttpStatusCode.InternalServerError);
                 }
                 else
                     signupType = SignupType.Credentials;
@@ -149,7 +157,7 @@ namespace DareyaAPI.Controllers
             if(newCustomer.FacebookAccessToken.Equals("") && newCustomer.Password.Equals(""))
             {
                 // no authentication details provided for this customer
-                throw new HttpResponseException(System.Net.HttpStatusCode.InternalServerError);
+                throw new HttpResponseException("No credentials were supplied -- either a Facebook access token or a password are required.", System.Net.HttpStatusCode.InternalServerError);
             }
 
             switch (signupType)

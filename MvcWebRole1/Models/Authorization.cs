@@ -6,7 +6,24 @@ using Microsoft.WindowsAzure.StorageClient;
 
 namespace DareyaAPI.Models
 {
-    public class Authorization : TableServiceEntity
+    public class AuthorizationDb : TableServiceEntity
+    {
+        public AuthorizationDb()
+        {
+        }
+
+        public AuthorizationDb(Authorization a)
+        {
+            this.PartitionKey = a.Token;
+            this.RowKey = a.UniqueID;
+        }
+
+        public long CustomerID { get; set; }
+        public bool Valid { get; set; }
+        public string EmailAddress { get; set; }
+    }
+
+    public class Authorization
     {
         public Authorization()
         {
@@ -14,10 +31,12 @@ namespace DareyaAPI.Models
 
         public Authorization(String Token)
         {
-            this.PartitionKey = Token;
-            this.RowKey = System.DateTime.Now.ToString().Replace("/", "").Replace(":", "");
+            this.Token = Token;
+            this.UniqueID = System.DateTime.Now.ToString().Replace("/", "").Replace(":", "");
         }
 
+        public String Token { get; set; }
+        public String UniqueID { get; set; }
         public long CustomerID { get; set; }
         public bool Valid { get; set; }
         public string EmailAddress { get; set; }

@@ -27,12 +27,6 @@ namespace DareyaAPI.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        // GET /api/<controller>/5
-        public string Get(int id)
-        {
-            return "value";
-        }
-
         [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
         public void PostAccept(ChallengeStatus status)
         {
