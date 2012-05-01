@@ -143,6 +143,7 @@
     <Compile Include="Controllers\ChallengeStatusController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DYSecurity.cs" />
+    <Compile Include="Controllers\EvidenceController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Filters\DareyoutoAuthorizationAttribute.cs" />
     <Compile Include="Formatters\JsonNetFormatter.cs" />
@@ -167,12 +168,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DbModels.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Evidence.cs" />
+    <Compile Include="Models\EvidenceRepository.cs" />
     <Compile Include="Models\Friendship.cs" />
     <Compile Include="Models\IAuthorizationRepository.cs" />
     <Compile Include="Models\IChallengeBidRepository.cs" />
     <Compile Include="Models\IChallengeRepository.cs" />
     <Compile Include="Models\IChallengeStatusRepository.cs" />
     <Compile Include="Models\ICustomerRepository.cs" />
+    <Compile Include="Models\IEvidenceRepository.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebRole.cs" />
