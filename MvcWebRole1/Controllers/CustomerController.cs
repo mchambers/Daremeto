@@ -96,7 +96,7 @@ namespace DareyaAPI.Controllers
 
             authRepo.Add(a);
 
-            String authUrl = "http://dareme.to/verify/" + a.PartitionKey;
+            String authUrl = "http://dareme.to/verify/" + a.Token;
 
         }
 
