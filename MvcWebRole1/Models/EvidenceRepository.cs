@@ -33,13 +33,14 @@ namespace DareyaAPI.Models
             e.MediaURL = item.MediaURL;
             e.Type = item.Type;
             e.UniqueID = item.UniqueID;
+            e.Content = item.Content;
 
             return e;
         }
 
-        public List<Evidence> GetAllForChallengeStatus(ChallengeStatus s)
+        public List<Evidence> GetAllForChallengeStatus(string ChallengeStatusUniqueID)
         {
-            CloudTableQuery<EvidenceDb> b = (from e in context.CreateQuery<EvidenceDb>(TableName) where e.PartitionKey == s.UniqueID select e).AsTableServiceQuery<EvidenceDb>();
+            CloudTableQuery<EvidenceDb> b = (from e in context.CreateQuery<EvidenceDb>(TableName) where e.PartitionKey == ChallengeStatusUniqueID select e).AsTableServiceQuery<EvidenceDb>();
             List<Evidence> items = new List<Evidence>();
 
             foreach (EvidenceDb item in b)
@@ -50,7 +51,7 @@ namespace DareyaAPI.Models
             return items;
         }
 
-        public void Add(ChallengeStatus s, Evidence e)
+        public void Add(Evidence e)
         {
             throw new NotImplementedException();
         }

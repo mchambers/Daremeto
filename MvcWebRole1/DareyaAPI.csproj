@@ -178,6 +178,7 @@
     <Compile Include="Models\ICustomerRepository.cs" />
     <Compile Include="Models\IEvidenceRepository.cs" />
     <Compile Include="Models\Login.cs" />
+    <Compile Include="Models\SQLChallengeBidRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebRole.cs" />
   </ItemGroup>

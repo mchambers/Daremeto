@@ -9,7 +9,7 @@ using System.Data.Services.Client;
 
 namespace DareyaAPI.Models
 {
-    public class ChallengeBidRepository : IChallengeBidRepository
+    public class AZTChallengeBidRepository : IChallengeBidRepository
     {
         CloudStorageAccount storage;
         CloudTableClient client;
@@ -17,7 +17,7 @@ namespace DareyaAPI.Models
 
         private const string TableName = "ChallengeBid";
 
-        public ChallengeBidRepository()
+        public AZTChallengeBidRepository()
         {
             storage = CloudStorageAccount.Parse(RoleEnvironment.GetConfigurationSettingValue("StorageConnectionString"));
             client = storage.CreateCloudTableClient();

@@ -7,7 +7,7 @@ namespace DareyaAPI.Models
 {
     public interface IEvidenceRepository
     {
-        public List<Evidence> GetAllForChallengeStatus(ChallengeStatus s);
-        public void Add(ChallengeStatus s, Evidence e);
+        public List<Evidence> GetAllForChallengeStatus(string ChallengeStatusUniqueID);
+        public void Add(Evidence e);
     }
 }

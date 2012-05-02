@@ -20,7 +20,7 @@ namespace DareyaAPI.Models
             this.Amount = dbItem.Amount;
             this.UniqueID = dbItem.RowKey;
         }
-
+        
         public long ChallengeID { get; set; }
         public long CustomerID { get; set; }
         public bool Active { get; set; }
@@ -36,10 +36,10 @@ namespace DareyaAPI.Models
 
         public ChallengeBidDb(ChallengeBid bid)
         {
-            this.PartitionKey = "CBids" + bid.ChallengeID.ToString();
+            //this.PartitionKey = bid.ChallengeID.ToString();
 
             if (bid.UniqueID.Equals(""))
-                this.RowKey = System.DateTime.Now.ToString().Replace("/", "").Replace(":", "");
+                this.RowKey = System.Guid.NewGuid().ToString();
             else
                 this.RowKey = bid.UniqueID;
 
@@ -51,8 +51,8 @@ namespace DareyaAPI.Models
 
         public ChallengeBidDb(long ChallengeID)
         {
-            this.PartitionKey = "CBids"+ChallengeID.ToString();
-            this.RowKey = System.DateTime.Now.ToString().Replace("/", "").Replace(":", "");
+            this.PartitionKey = ChallengeID.ToString();
+            this.RowKey = System.Guid.NewGuid().ToString();
         }
 
         public int Amount { get; set; }

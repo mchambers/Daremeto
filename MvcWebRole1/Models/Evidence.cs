@@ -20,12 +20,14 @@ namespace DareyaAPI.Models
             this.Type = e.Type;
             this.MediaURL = e.MediaURL;
             this.UniqueID = e.UniqueID;
+            this.Content = e.Content;
         }
 
         public long Type { get; set; }
         public string MediaURL { get; set; }
         public string UniqueID { get; set; }
         public string ChallengeStatusID { get; set; }
+        public string Content { get; set; }
     }
 
     public class Evidence
@@ -41,5 +43,6 @@ namespace DareyaAPI.Models
         public string UniqueID { get; set; }
         public long Type { get; set; }
         public string MediaURL { get; set; }
+        public string Content { get; set; }
     }
 }

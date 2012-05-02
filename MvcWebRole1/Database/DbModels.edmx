@@ -6,9 +6,19 @@
     <edmx:StorageModels>
     <Schema Namespace="DbModels.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="DbModelsStoreContainer">
+          <EntitySet Name="Bid" EntityType="DbModels.Store.Bid" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Challenge" EntityType="DbModels.Store.Challenge" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Customer" EntityType="DbModels.Store.Customer" store:Type="Tables" Schema="dbo" />
         </EntityContainer>
+        <EntityType Name="Bid">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerID" Type="bigint" Nullable="false" />
+          <Property Name="Amount" Type="int" Nullable="false" />
+          <Property Name="ChallengeID" Type="bigint" />
+        </EntityType>
         <EntityType Name="Challenge">
           <Key>
             <PropertyRef Name="ID" />
@@ -45,6 +55,8 @@
           <Property Name="FacebookAccessToken" Type="text" />
           <Property Name="FacebookExpires" Type="nvarchar(max)" />
           <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="Type" Type="int" />
+          <Property Name="CurrentBalance" Type="money" />
         </EntityType>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -57,6 +69,7 @@
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Challenge" EntitySet="Challenge" />
           </AssociationSet>
+          <EntitySet Name="Bid" EntityType="DbModels.Bid" />
           </EntityContainer>
         <EntityType Name="Challenge">
           <Key>
@@ -96,6 +109,8 @@
           <Property Type="String" Name="FacebookAccessToken" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="FacebookExpires" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="PhoneNumber" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Type" />
+          <Property Type="Decimal" Name="CurrentBalance" Precision="19" Scale="4" />
         </EntityType>
         <Association Name="FK_Challenge_0">
           <End Role="Customer" Type="DbModels.Customer" Multiplicity="1" />
@@ -109,6 +124,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Bid">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="CustomerID" Nullable="false" />
+          <Property Type="Int32" Name="Amount" Nullable="false" />
+          <Property Type="Int64" Name="ChallengeID" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -128,7 +152,9 @@
             <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Customer"><EntityTypeMapping TypeName="DbModels.Customer"><MappingFragment StoreEntitySet="Customer">
-            <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+            <ScalarProperty Name="CurrentBalance" ColumnName="CurrentBalance" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="FacebookExpires" ColumnName="FacebookExpires" />
                 <ScalarProperty Name="FacebookAccessToken" ColumnName="FacebookAccessToken" />
                 <ScalarProperty Name="FacebookUserID" ColumnName="FacebookUserID" />
@@ -146,6 +172,16 @@
             <ScalarProperty Name="BillingType" ColumnName="BillingType" />
             <ScalarProperty Name="BillingID" ColumnName="BillingID" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Bid">
+            <EntityTypeMapping TypeName="DbModels.Bid">
+              <MappingFragment StoreEntitySet="Bid">
+                <ScalarProperty Name="ChallengeID" ColumnName="ChallengeID" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -173,6 +209,7 @@
           <ConnectorPoint PointX="2.25" PointY="5.5670475260416659" />
           <ConnectorPoint PointX="3" PointY="5.5670475260416659" />
         </AssociationConnector>
+        <EntityTypeShape EntityType="DbModels.Bid" Width="1.5" PointX="5.875" PointY="4.25" Height="1.7879850260416665" />
       </Diagram>
     </Diagrams>
   </Designer>
