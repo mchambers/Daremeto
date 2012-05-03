@@ -17,7 +17,8 @@
           <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="CustomerID" Type="bigint" Nullable="false" />
           <Property Name="Amount" Type="int" Nullable="false" />
-          <Property Name="ChallengeID" Type="bigint" />
+          <Property Name="ChallengeID" Type="bigint" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Challenge">
           <Key>
@@ -25,14 +26,14 @@
           </Key>
           <Property Name="Title" Type="text" Nullable="false" />
           <Property Name="Description" Type="text" Nullable="false" />
-          <Property Name="Privacy" Type="tinyint" />
-          <Property Name="Type" Type="tinyint" />
+          <Property Name="Privacy" Type="tinyint" Nullable="false" />
+          <Property Name="Type" Type="tinyint" Nullable="false" />
           <Property Name="CustomerID" Type="bigint" Nullable="false" />
           <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="CurrentBid" Type="int" />
+          <Property Name="CurrentBid" Type="int" Nullable="false" />
           <Property Name="TargetCustomerID" Type="bigint" />
-          <Property Name="State" Type="int" />
-          <Property Name="Anonymous" Type="tinyint" />
+          <Property Name="State" Type="int" Nullable="false" />
+          <Property Name="Anonymous" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -78,14 +79,14 @@
           <Property Name="ID" Type="Int64" Nullable="false" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
-          <Property Name="Privacy" Type="Byte" />
-          <Property Name="Type" Type="Byte" />
+          <Property Name="Privacy" Type="Byte" Nullable="false" />
+          <Property Name="Type" Type="Byte" Nullable="false" />
           <Property Name="CustomerID" Type="Int64" Nullable="false" />
           <NavigationProperty Name="Customer" Relationship="DbModels.FK_Challenge_0" FromRole="Challenge" ToRole="Customer" />
-          <Property Type="Int32" Name="CurrentBid" />
+          <Property Type="Int32" Name="CurrentBid" Nullable="false" />
           <Property Type="Int64" Name="TargetCustomerID" />
-          <Property Type="Int32" Name="State" />
-          <Property Type="Byte" Name="Anonymous" />
+          <Property Type="Int32" Name="State" Nullable="false" />
+          <Property Type="Byte" Name="Anonymous" Nullable="false" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -131,7 +132,8 @@
           <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Int64" Name="CustomerID" Nullable="false" />
           <Property Type="Int32" Name="Amount" Nullable="false" />
-          <Property Type="Int64" Name="ChallengeID" />
+          <Property Type="Int64" Name="ChallengeID" Nullable="false" />
+          <Property Type="Int32" Name="Status" Nullable="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -175,6 +177,7 @@
           <EntitySetMapping Name="Bid">
             <EntityTypeMapping TypeName="DbModels.Bid">
               <MappingFragment StoreEntitySet="Bid">
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="ChallengeID" ColumnName="ChallengeID" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />

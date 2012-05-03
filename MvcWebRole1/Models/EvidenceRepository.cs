@@ -38,9 +38,26 @@ namespace DareyaAPI.Models
             return e;
         }
 
-        public List<Evidence> GetAllForChallengeStatus(string ChallengeStatusUniqueID)
+        private EvidenceDb EvidenceToDbEvidence(Evidence item)
         {
-            CloudTableQuery<EvidenceDb> b = (from e in context.CreateQuery<EvidenceDb>(TableName) where e.PartitionKey == ChallengeStatusUniqueID select e).AsTableServiceQuery<EvidenceDb>();
+            EvidenceDb d = new EvidenceDb();
+
+            d.ChallengeStatusID = item.ChallengeStatusID;
+            d.Content = item.Content;
+            d.MediaURL = item.MediaURL;
+            d.UniqueID = item.UniqueID;
+            d.Type = item.Type;
+            d.ChallengeID = item.ChallengeID;
+
+            d.PartitionKey = item.ChallengeID + "_" + item.UniqueID;
+            d.RowKey = item.UniqueID;
+
+            return d;
+        }
+
+        public List<Evidence> GetAllForChallengeStatus(ChallengeStatus status)
+        {
+            CloudTableQuery<EvidenceDb> b = (from e in context.CreateQuery<EvidenceDb>(TableName) where e.PartitionKey == status.ChallengeID+"_"+status.UniqueID select e).AsTableServiceQuery<EvidenceDb>();
             List<Evidence> items = new List<Evidence>();
 
             foreach (EvidenceDb item in b)
@@ -53,7 +70,9 @@ namespace DareyaAPI.Models
 
         public void Add(Evidence e)
         {
-            throw new NotImplementedException();
+            EvidenceDb d = EvidenceToDbEvidence(e);
+            context.AttachTo(TableName, d);
+            context.SaveChangesWithRetries();
         }
     }
 }

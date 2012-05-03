@@ -8,13 +8,12 @@
 //------------------------------------------------------------------------------
 
 using System;
-using System.ComponentModel;
-using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
-using System.Linq;
-using System.Runtime.Serialization;
+using System.Data.EntityClient;
+using System.ComponentModel;
 using System.Xml.Serialization;
+using System.Runtime.Serialization;
 
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
@@ -120,7 +119,6 @@ namespace DareyaAPI.Database
         private ObjectSet<Bid> _Bid;
 
         #endregion
-
         #region AddTo Methods
     
         /// <summary>
@@ -148,11 +146,11 @@ namespace DareyaAPI.Database
         }
 
         #endregion
-
     }
+    
 
     #endregion
-
+    
     #region Entities
     
     /// <summary>
@@ -171,17 +169,20 @@ namespace DareyaAPI.Database
         /// <param name="id">Initial value of the ID property.</param>
         /// <param name="customerID">Initial value of the CustomerID property.</param>
         /// <param name="amount">Initial value of the Amount property.</param>
-        public static Bid CreateBid(global::System.Int64 id, global::System.Int64 customerID, global::System.Int32 amount)
+        /// <param name="challengeID">Initial value of the ChallengeID property.</param>
+        /// <param name="status">Initial value of the Status property.</param>
+        public static Bid CreateBid(global::System.Int64 id, global::System.Int64 customerID, global::System.Int32 amount, global::System.Int64 challengeID, global::System.Int32 status)
         {
             Bid bid = new Bid();
             bid.ID = id;
             bid.CustomerID = customerID;
             bid.Amount = amount;
+            bid.ChallengeID = challengeID;
+            bid.Status = status;
             return bid;
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -262,9 +263,9 @@ namespace DareyaAPI.Database
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int64> ChallengeID
+        public global::System.Int64 ChallengeID
         {
             get
             {
@@ -279,12 +280,35 @@ namespace DareyaAPI.Database
                 OnChallengeIDChanged();
             }
         }
-        private Nullable<global::System.Int64> _ChallengeID;
-        partial void OnChallengeIDChanging(Nullable<global::System.Int64> value);
+        private global::System.Int64 _ChallengeID;
+        partial void OnChallengeIDChanging(global::System.Int64 value);
         partial void OnChallengeIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Status
+        {
+            get
+            {
+                return _Status;
+            }
+            set
+            {
+                OnStatusChanging(value);
+                ReportPropertyChanging("Status");
+                _Status = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Status");
+                OnStatusChanged();
+            }
+        }
+        private global::System.Int32 _Status;
+        partial void OnStatusChanging(global::System.Int32 value);
+        partial void OnStatusChanged();
 
         #endregion
-
     
     }
     
@@ -304,19 +328,28 @@ namespace DareyaAPI.Database
         /// <param name="id">Initial value of the ID property.</param>
         /// <param name="title">Initial value of the Title property.</param>
         /// <param name="description">Initial value of the Description property.</param>
+        /// <param name="privacy">Initial value of the Privacy property.</param>
+        /// <param name="type">Initial value of the Type property.</param>
         /// <param name="customerID">Initial value of the CustomerID property.</param>
-        public static Challenge CreateChallenge(global::System.Int64 id, global::System.String title, global::System.String description, global::System.Int64 customerID)
+        /// <param name="currentBid">Initial value of the CurrentBid property.</param>
+        /// <param name="state">Initial value of the State property.</param>
+        /// <param name="anonymous">Initial value of the Anonymous property.</param>
+        public static Challenge CreateChallenge(global::System.Int64 id, global::System.String title, global::System.String description, global::System.Byte privacy, global::System.Byte type, global::System.Int64 customerID, global::System.Int32 currentBid, global::System.Int32 state, global::System.Byte anonymous)
         {
             Challenge challenge = new Challenge();
             challenge.ID = id;
             challenge.Title = title;
             challenge.Description = description;
+            challenge.Privacy = privacy;
+            challenge.Type = type;
             challenge.CustomerID = customerID;
+            challenge.CurrentBid = currentBid;
+            challenge.State = state;
+            challenge.Anonymous = anonymous;
             return challenge;
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -397,9 +430,9 @@ namespace DareyaAPI.Database
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Byte> Privacy
+        public global::System.Byte Privacy
         {
             get
             {
@@ -414,16 +447,16 @@ namespace DareyaAPI.Database
                 OnPrivacyChanged();
             }
         }
-        private Nullable<global::System.Byte> _Privacy;
-        partial void OnPrivacyChanging(Nullable<global::System.Byte> value);
+        private global::System.Byte _Privacy;
+        partial void OnPrivacyChanging(global::System.Byte value);
         partial void OnPrivacyChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Byte> Type
+        public global::System.Byte Type
         {
             get
             {
@@ -438,8 +471,8 @@ namespace DareyaAPI.Database
                 OnTypeChanged();
             }
         }
-        private Nullable<global::System.Byte> _Type;
-        partial void OnTypeChanging(Nullable<global::System.Byte> value);
+        private global::System.Byte _Type;
+        partial void OnTypeChanging(global::System.Byte value);
         partial void OnTypeChanged();
     
         /// <summary>
@@ -469,9 +502,9 @@ namespace DareyaAPI.Database
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int32> CurrentBid
+        public global::System.Int32 CurrentBid
         {
             get
             {
@@ -486,8 +519,8 @@ namespace DareyaAPI.Database
                 OnCurrentBidChanged();
             }
         }
-        private Nullable<global::System.Int32> _CurrentBid;
-        partial void OnCurrentBidChanging(Nullable<global::System.Int32> value);
+        private global::System.Int32 _CurrentBid;
+        partial void OnCurrentBidChanging(global::System.Int32 value);
         partial void OnCurrentBidChanged();
     
         /// <summary>
@@ -517,9 +550,9 @@ namespace DareyaAPI.Database
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int32> State
+        public global::System.Int32 State
         {
             get
             {
@@ -534,16 +567,16 @@ namespace DareyaAPI.Database
                 OnStateChanged();
             }
         }
-        private Nullable<global::System.Int32> _State;
-        partial void OnStateChanging(Nullable<global::System.Int32> value);
+        private global::System.Int32 _State;
+        partial void OnStateChanging(global::System.Int32 value);
         partial void OnStateChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Byte> Anonymous
+        public global::System.Byte Anonymous
         {
             get
             {
@@ -558,12 +591,11 @@ namespace DareyaAPI.Database
                 OnAnonymousChanged();
             }
         }
-        private Nullable<global::System.Byte> _Anonymous;
-        partial void OnAnonymousChanging(Nullable<global::System.Byte> value);
+        private global::System.Byte _Anonymous;
+        partial void OnAnonymousChanging(global::System.Byte value);
         partial void OnAnonymousChanged();
 
         #endregion
-
     
         #region Navigation Properties
     
@@ -606,7 +638,6 @@ namespace DareyaAPI.Database
         }
 
         #endregion
-
     }
     
     /// <summary>
@@ -635,7 +666,6 @@ namespace DareyaAPI.Database
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -1098,7 +1128,6 @@ namespace DareyaAPI.Database
         partial void OnCurrentBalanceChanged();
 
         #endregion
-
     
         #region Navigation Properties
     
@@ -1125,10 +1154,8 @@ namespace DareyaAPI.Database
         }
 
         #endregion
-
     }
 
     #endregion
-
     
 }

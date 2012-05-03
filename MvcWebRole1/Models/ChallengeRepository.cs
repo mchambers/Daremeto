@@ -21,10 +21,19 @@ namespace DareyaAPI.Models
             c.ID = dc.ID;
             c.Title = dc.Title;
             c.Description = dc.Description;
-            c.CurrentBid = (int)dc.CurrentBid;
-            c.Privacy = (int)dc.Privacy;
-            c.State = (int)dc.State;
-            c.TargetCustomerID = (int)dc.TargetCustomerID;
+
+            if(dc.CurrentBid!=null)
+                c.CurrentBid = (int)dc.CurrentBid;
+
+            if(dc.Privacy!=null)
+                c.Privacy = (int)dc.Privacy;
+
+            if(dc.State!=null)
+                c.State = (int)dc.State;
+
+            if(c.TargetCustomerID!=null)
+                c.TargetCustomerID = (int)dc.TargetCustomerID;
+
             c.CustomerID = dc.CustomerID;
 
             return c;
@@ -32,11 +41,19 @@ namespace DareyaAPI.Models
 
         private Database.Challenge ChallengeToDbChallenge(Challenge c)
         {
-            Database.Challenge dc = Database.Challenge.CreateChallenge(c.ID, c.Title, c.Description, c.CustomerID);
+            Database.Challenge dc = new Database.Challenge();
 
+            dc.ID = c.ID;
+
+            repo.Challenge.Attach(dc);
+
+            dc.Title = c.Title;
+            dc.Description = c.Description;
+            dc.CustomerID = c.CustomerID;
             dc.Privacy = (byte)c.Privacy;
             dc.State = c.State;
             dc.TargetCustomerID = c.TargetCustomerID;
+            dc.CurrentBid = c.CurrentBid;
 
             return dc;
         }
@@ -44,6 +61,7 @@ namespace DareyaAPI.Models
         public Challenge Get(long id)
         {
             Database.Challenge dc = repo.Challenge.FirstOrDefault(chal => chal.ID == id);
+            repo.Challenge.Detach(dc);
             return DbChallengeToChallenge(dc);
         }
 
@@ -63,7 +81,21 @@ namespace DareyaAPI.Models
 
         public bool Update(Challenge item)
         {
-            throw new NotImplementedException();
+            Database.Challenge c = ChallengeToDbChallenge(item);
+            /*
+            Database.Challenge c = repo.Challenge.FirstOrDefault(d => d.ID == item.ID);
+
+            //c.Anonymous = item.Anonymous;
+            c.CurrentBid = item.CurrentBid;
+            c.CustomerID = item.CustomerID;
+            c.Description = item.Description;
+            c.Privacy = (byte)item.Privacy;
+            c.State = item.State;
+            c.Title = item.Title;
+            c.TargetCustomerID = item.TargetCustomerID;
+            */
+            repo.SaveChanges();
+            return true;
         }
 
         public List<Challenge> GetListForUser(long userID)
@@ -76,10 +108,17 @@ namespace DareyaAPI.Models
             throw new NotImplementedException();
         }
 
-
         public List<Challenge> GetNewest(int startAt, int amount)
         {
-            throw new NotImplementedException();
+            IEnumerable<Database.Challenge> chals = (from c in repo.Challenge select c).OrderByDescending(c=>c.ID).Skip(startAt).Take(amount);
+
+            List<Challenge> listChals = new List<Challenge>();
+            foreach (Database.Challenge c in chals)
+            {
+                listChals.Add(DbChallengeToChallenge(c));
+            }
+
+            return listChals;
         }
     }
 }

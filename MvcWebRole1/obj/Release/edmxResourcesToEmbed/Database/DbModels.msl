@@ -4,6 +4,7 @@
     <EntitySetMapping Name="Challenge">
       <EntityTypeMapping TypeName="DbModels.Challenge">
         <MappingFragment StoreEntitySet="Challenge">
+          <ScalarProperty Name="Anonymous" ColumnName="Anonymous" />
           <ScalarProperty Name="State" ColumnName="State" />
           <ScalarProperty Name="TargetCustomerID" ColumnName="TargetCustomerID" />
           <ScalarProperty Name="CurrentBid" ColumnName="CurrentBid" />
@@ -19,6 +20,9 @@
     <EntitySetMapping Name="Customer">
       <EntityTypeMapping TypeName="DbModels.Customer">
         <MappingFragment StoreEntitySet="Customer">
+          <ScalarProperty Name="CurrentBalance" ColumnName="CurrentBalance" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
           <ScalarProperty Name="FacebookExpires" ColumnName="FacebookExpires" />
           <ScalarProperty Name="FacebookAccessToken" ColumnName="FacebookAccessToken" />
           <ScalarProperty Name="FacebookUserID" ColumnName="FacebookUserID" />
@@ -35,6 +39,17 @@
           <ScalarProperty Name="ZIPCode" ColumnName="ZIPCode" />
           <ScalarProperty Name="BillingType" ColumnName="BillingType" />
           <ScalarProperty Name="BillingID" ColumnName="BillingID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Bid">
+      <EntityTypeMapping TypeName="DbModels.Bid">
+        <MappingFragment StoreEntitySet="Bid">
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ChallengeID" ColumnName="ChallengeID" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -14,7 +14,7 @@ namespace DareyaAPI.Models
             New,
             Accepted,
             TargetRejected,
-            Submitted,
+            ClaimSubmitted,
             NeedMoreEvidence,
             SourceRejected
         }

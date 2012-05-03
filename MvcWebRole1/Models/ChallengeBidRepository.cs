@@ -43,5 +43,26 @@ namespace DareyaAPI.Models
             context.AddObject(TableName, new ChallengeBidDb(b));
             context.SaveChangesWithRetries();
         }
+
+        public List<ChallengeBid> GetForCustomer(long CustomerID)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public void Update(ChallengeBid bid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ChallengeBid CustomerDidBidOnChallenge(long CustomerID, long ChallengeID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetBidCountForChallenge(long ChallengeID)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

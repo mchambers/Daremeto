@@ -92,3 +92,10 @@ C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\System.Web.WebPages.Razor.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\System.Web.WebPages.Razor.xml
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\System.Web.WebPages.xml
+C:\Users\Marc Chambers\documents\visual studio 2010\Projects\Dareya\Dareya\obj\Debug\DareyaAPI\bin\CodeScales.Http.dll
+C:\Users\Marc Chambers\documents\visual studio 2010\Projects\Dareya\Dareya\obj\Debug\DareyaAPI\bin\Facebook.dll
+C:\Users\Marc Chambers\documents\visual studio 2010\Projects\Dareya\Dareya\obj\Debug\DareyaAPI\bin\Facebook.xml
+C:\Users\Marc Chambers\documents\visual studio 2010\Projects\Dareya\Dareya\obj\Debug\DareyaAPI\bin\SendGridMail.dll
+C:\Users\Marc Chambers\documents\visual studio 2010\Projects\Dareya\Dareya\obj\Debug\DareyaAPI\bin\Stripe.net.dll
+C:\Users\Marc Chambers\documents\visual studio 2010\Projects\Dareya\Dareya\obj\Debug\DareyaAPI\bin\UrbanBlimp.dll
+C:\Users\Marc Chambers\documents\visual studio 2010\Projects\Dareya\Dareya\obj\Debug\DareyaAPI\bin\UrbanBlimp.pdb

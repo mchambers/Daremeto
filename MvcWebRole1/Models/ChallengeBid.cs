@@ -8,6 +8,13 @@ namespace DareyaAPI.Models
 {
     public class ChallengeBid
     {
+        public enum BidStatusCodes
+        {
+            Default,
+            BidderAccepts,
+            BidderRejects
+        }
+
         public ChallengeBid()
         {
         }
@@ -26,6 +33,8 @@ namespace DareyaAPI.Models
         public bool Active { get; set; }
         public int Amount { get; set; }
         public string UniqueID { get; set; }
+        public long ID { get; set; }
+        public int Status { get; set; }
     }
 
     public class ChallengeBidDb : TableServiceEntity

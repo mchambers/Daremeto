@@ -7,6 +7,7 @@
       <End Role="Customer" EntitySet="Customer" />
       <End Role="Challenge" EntitySet="Challenge" />
     </AssociationSet>
+    <EntitySet Name="Bid" EntityType="DbModels.Bid" />
   </EntityContainer>
   <EntityType Name="Challenge">
     <Key>
@@ -15,14 +16,14 @@
     <Property Name="ID" Type="Int64" Nullable="false" />
     <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
     <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
-    <Property Name="Privacy" Type="Byte" />
-    <Property Name="Type" Type="Byte" />
+    <Property Name="Privacy" Type="Byte" Nullable="false" />
+    <Property Name="Type" Type="Byte" Nullable="false" />
     <Property Name="CustomerID" Type="Int64" Nullable="false" />
     <NavigationProperty Name="Customer" Relationship="DbModels.FK_Challenge_0" FromRole="Challenge" ToRole="Customer" />
-    <Property Type="Int32" Name="CurrentBid" />
+    <Property Type="Int32" Name="CurrentBid" Nullable="false" />
     <Property Type="Int64" Name="TargetCustomerID" />
-    <Property Type="Int32" Name="State" />
-    <Property Type="Byte" Name="Anonymous" />
+    <Property Type="Int32" Name="State" Nullable="false" />
+    <Property Type="Byte" Name="Anonymous" Nullable="false" />
   </EntityType>
   <EntityType Name="Customer">
     <Key>
@@ -46,6 +47,8 @@
     <Property Type="String" Name="FacebookAccessToken" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Type="String" Name="FacebookExpires" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Type="String" Name="PhoneNumber" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="Type" />
+    <Property Type="Decimal" Name="CurrentBalance" Precision="19" Scale="4" />
   </EntityType>
   <Association Name="FK_Challenge_0">
     <End Role="Customer" Type="DbModels.Customer" Multiplicity="1" />
@@ -59,4 +62,14 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="Bid">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="CustomerID" Nullable="false" />
+    <Property Type="Int32" Name="Amount" Nullable="false" />
+    <Property Type="Int64" Name="ChallengeID" Nullable="false" />
+    <Property Type="Int32" Name="Status" Nullable="false" />
+  </EntityType>
 </Schema>

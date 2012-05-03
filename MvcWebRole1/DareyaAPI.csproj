@@ -143,6 +143,7 @@
     <Compile Include="Controllers\ChallengeStatusController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DYSecurity.cs" />
+    <Compile Include="Controllers\Email.cs" />
     <Compile Include="Controllers\EvidenceController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Filters\DareyoutoAuthorizationAttribute.cs" />
@@ -159,6 +160,8 @@
     <Compile Include="Models\ChallengeRepository.cs" />
     <Compile Include="Models\ChallengeStatus.cs" />
     <Compile Include="Models\ChallengeStatusRepository.cs" />
+    <Compile Include="Models\ChallengeStatusVote.cs" />
+    <Compile Include="Models\ChallengeStatusVoteRepository.cs" />
     <Compile Include="Models\CustomerModel.cs" />
     <Compile Include="Models\CustomerRepository.cs" />
     <Compile Include="Models\DareyaIdentity.cs" />
@@ -175,6 +178,7 @@
     <Compile Include="Models\IChallengeBidRepository.cs" />
     <Compile Include="Models\IChallengeRepository.cs" />
     <Compile Include="Models\IChallengeStatusRepository.cs" />
+    <Compile Include="Models\IChallengeStatusVoteRepository.cs" />
     <Compile Include="Models\ICustomerRepository.cs" />
     <Compile Include="Models\IEvidenceRepository.cs" />
     <Compile Include="Models\Login.cs" />

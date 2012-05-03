@@ -28,7 +28,7 @@ namespace DareyaAPI
 
             routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "v1/{controller}/{id}",
+                routeTemplate: "v1/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
 

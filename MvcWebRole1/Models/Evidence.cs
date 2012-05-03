@@ -28,6 +28,7 @@ namespace DareyaAPI.Models
         public string UniqueID { get; set; }
         public string ChallengeStatusID { get; set; }
         public string Content { get; set; }
+        public long ChallengeID { get; set; }
     }
 
     public class Evidence
@@ -44,5 +45,7 @@ namespace DareyaAPI.Models
         public long Type { get; set; }
         public string MediaURL { get; set; }
         public string Content { get; set; }
+        public long ChallengeID { get; set; }
+
     }
 }

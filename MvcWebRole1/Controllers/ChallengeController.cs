@@ -30,12 +30,14 @@ namespace DareyaAPI.Controllers
         }
 
         // GET /api/challenge
+        [HttpGet]
         public List<Challenge> Get()
         {
             return ChalRepo.GetNewest(0, 10);
         }
 
         // GET /api/challenge/5
+        [HttpGet]
         public Challenge Get(long id)
         {
             Challenge c = ChalRepo.Get(id);
@@ -43,14 +45,16 @@ namespace DareyaAPI.Controllers
             return c;
         }
 
-        public List<ChallengeStatus> GetStatus(long id)
+        [HttpGet]
+        public List<ChallengeStatus> Status(long id)
         {
             return StatusRepo.GetActiveStatusesForChallenge(id);
         }
 
         // PUT /api/challenge/bid/5
+        [HttpPost]
         [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
-        public void PutBid(int id, ChallengeBid value)
+        public void Bid(ChallengeBid value)
         {
             Challenge c = ChalRepo.Get(value.ChallengeID);
 
@@ -66,12 +70,16 @@ namespace DareyaAPI.Controllers
             c.CurrentBid += value.Amount;
             ChalRepo.Update(c);
 
+            value.CustomerID = ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
+            value.Status = (int)ChallengeBid.BidStatusCodes.Default;
+
             BidRepo.Add(value);
         }
 
         // POST /api/challenge
+        [HttpPost]
         [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
-        public void PostNew(NewChallenge value)
+        public void New(NewChallenge value)
         {
             if (value.Description.Equals(""))
             {
@@ -157,10 +165,12 @@ namespace DareyaAPI.Controllers
         }
 
         // PUT /api/challenge/5
+        [HttpPut]
         public void Put(int id, string value)
         {
         }
         
+        [HttpDelete]
         // DELETE /api/challenge/5
         public void Delete(int id)
         {

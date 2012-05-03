@@ -16,16 +16,13 @@ namespace DareyaAPI.Controllers
             EvidenceRepo = new EvidenceRepository();
         }
 
-        // GET /api/<controller>
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
         // GET /api/<controller>/5
-        public List<Evidence> Get(string id)
+        public List<Evidence> Get(long id, string key)
         {
-            return EvidenceRepo.GetAllForChallengeStatus(id);
+            ChallengeStatus s = new ChallengeStatus();
+            s.ChallengeID = id;
+            s.UniqueID = key;
+            return EvidenceRepo.GetAllForChallengeStatus(s);
         }
 
         // POST /api/<controller>
@@ -40,16 +37,6 @@ namespace DareyaAPI.Controllers
             value.UniqueID = System.Guid.NewGuid().ToString();
 
             EvidenceRepo.Add(value);
-        }
-
-        // PUT /api/<controller>/5
-        public void Put(int id, string value)
-        {
-        }
-
-        // DELETE /api/<controller>/5
-        public void Delete(int id)
-        {
         }
     }
 }

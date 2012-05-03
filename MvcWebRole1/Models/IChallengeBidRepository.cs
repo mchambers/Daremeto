@@ -9,5 +9,9 @@ namespace DareyaAPI.Models
     {
         void Add(ChallengeBid bid);
         List<ChallengeBid> Get(long ChallengeID);
+        List<ChallengeBid> GetForCustomer(long CustomerID);
+        void Update(ChallengeBid bid);
+        ChallengeBid CustomerDidBidOnChallenge(long CustomerID, long ChallengeID);
+        int GetBidCountForChallenge(long ChallengeID);
     }
 }
