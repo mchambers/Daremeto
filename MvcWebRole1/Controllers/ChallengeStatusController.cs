@@ -27,7 +27,9 @@ namespace DareyaAPI.Controllers
             CustRepo = new CustomerRepository();
         }
 
-        public void PostAcceptClaim(ChallengeStatus status)
+        [HttpPost]
+        [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
+        public void AcceptClaim(ChallengeStatus status)
         {
             ChallengeStatus s = StatusRepo.Get(status.ChallengeID, status.UniqueID);
 
@@ -58,8 +60,10 @@ namespace DareyaAPI.Controllers
 
             }
         }
-
-        public void PostRejectClaim(ChallengeStatus status)
+        
+        [HttpPost]
+        [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
+        public void RejectClaim(ChallengeStatus status)
         {
             ChallengeStatus s = StatusRepo.Get(status.ChallengeID, status.UniqueID);
             
@@ -91,8 +95,9 @@ namespace DareyaAPI.Controllers
 
         }
 
+        [HttpPost]
         [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
-        public void PostClaim(ChallengeStatus status)
+        public void Claim(ChallengeStatus status)
         {
             ChallengeStatus s = StatusRepo.Get(status.ChallengeID, status.UniqueID);
             Challenge c = ChalRepo.Get(status.ChallengeID);
@@ -110,8 +115,9 @@ namespace DareyaAPI.Controllers
             Email.SendChallengeClaimedEmail(CustRepo.GetWithID(s.ChallengeOriginatorCustomerID), CustRepo.GetWithID(s.CustomerID), c);
         }
 
+        [HttpPost]
         [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
-        public void PostAccept(ChallengeStatus status)
+        public void Accept(ChallengeStatus status)
         {
             Challenge c = ChalRepo.Get(status.ChallengeID);
             ChallengeStatus s = StatusRepo.Get(status.ChallengeID, status.UniqueID);
@@ -135,8 +141,9 @@ namespace DareyaAPI.Controllers
         }
 
         // Reject is specifically for when a Challenge has been sent directly to you
+        [HttpPost]
         [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
-        public void PostReject(ChallengeStatus status)
+        public void Reject(ChallengeStatus status)
         {
             Challenge c = ChalRepo.Get((int)status.ChallengeID);
 

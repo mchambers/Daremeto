@@ -99,3 +99,6 @@ C:\Users\Marc Chambers\documents\visual studio 2010\Projects\Dareya\MvcWebRole1\
 C:\Users\Marc Chambers\documents\visual studio 2010\Projects\Dareya\MvcWebRole1\bin\CodeScales.Http.dll
 C:\Users\Marc Chambers\documents\visual studio 2010\Projects\Dareya\MvcWebRole1\bin\Facebook.xml
 C:\Users\Marc Chambers\documents\visual studio 2010\Projects\Dareya\MvcWebRole1\bin\UrbanBlimp.pdb
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\bin\Stripe.net.dll
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\bin\UrbanBlimp.dll
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\bin\UrbanBlimp.pdb

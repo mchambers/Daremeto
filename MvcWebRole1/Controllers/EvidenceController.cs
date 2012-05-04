@@ -17,6 +17,8 @@ namespace DareyaAPI.Controllers
         }
 
         // GET /api/<controller>/5
+        [HttpGet]
+        [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
         public List<Evidence> Get(long id, string key)
         {
             ChallengeStatus s = new ChallengeStatus();
@@ -26,6 +28,8 @@ namespace DareyaAPI.Controllers
         }
 
         // POST /api/<controller>
+        [HttpPost]
+        [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
         public void Post(Evidence value)
         {
             if (value.ChallengeStatusID == null || value.ChallengeStatusID.Equals(""))

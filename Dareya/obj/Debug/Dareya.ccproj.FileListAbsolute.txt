@@ -99,3 +99,6 @@ C:\Users\Marc Chambers\documents\visual studio 2010\Projects\Dareya\Dareya\obj\D
 C:\Users\Marc Chambers\documents\visual studio 2010\Projects\Dareya\Dareya\obj\Debug\DareyaAPI\bin\Stripe.net.dll
 C:\Users\Marc Chambers\documents\visual studio 2010\Projects\Dareya\Dareya\obj\Debug\DareyaAPI\bin\UrbanBlimp.dll
 C:\Users\Marc Chambers\documents\visual studio 2010\Projects\Dareya\Dareya\obj\Debug\DareyaAPI\bin\UrbanBlimp.pdb
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\Stripe.net.dll
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\UrbanBlimp.dll
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\UrbanBlimp.pdb

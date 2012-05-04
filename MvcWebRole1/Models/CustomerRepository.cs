@@ -47,8 +47,27 @@ namespace DareyaAPI.Models
             if (cust == null)
                 return null;
 
-            Database.Customer dbCust = Database.Customer.CreateCustomer(cust.ID, cust.FirstName, cust.LastName);
+            Database.Customer dbCust = new Database.Customer(); // Database.Customer.CreateCustomer(cust.ID, cust.FirstName, cust.LastName);
 
+            if (cust.FirstName == null) cust.FirstName = "";
+            if (cust.LastName == null) cust.LastName = "";
+            if (cust.EmailAddress == null) cust.EmailAddress = "";
+            if (cust.Password == null) cust.Password = "";
+            if (cust.Address == null) cust.Address = "";
+            if (cust.Address2 == null) cust.Address2 = "";
+            if (cust.City == null) cust.City = "";
+            if (cust.State == null) cust.State = "";
+            if (cust.ZIPCode == null) cust.ZIPCode = "";
+            if (cust.FacebookAccessToken == null) cust.FacebookAccessToken = "";
+            if (cust.FacebookExpires == null) cust.FacebookExpires = "";
+            if (cust.FacebookUserID == null) cust.FacebookUserID = "";
+            if (cust.BillingID == null) cust.BillingID = "";
+            if (cust.BillingType == null) cust.BillingType = 0;
+
+            dbCust.FirstName = cust.FirstName;
+            dbCust.LastName = cust.LastName;
+            dbCust.EmailAddress = cust.EmailAddress;
+            dbCust.Password = cust.Password;
             dbCust.Address1 = cust.Address;
             dbCust.Address2 = cust.Address2;
             dbCust.City = cust.City;

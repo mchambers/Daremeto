@@ -57,6 +57,7 @@ namespace DareyaAPI.Controllers
         }
 
         // GET /api/customer/5
+        [HttpGet]
         [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
         public Customer Get(int id)
         {
@@ -97,7 +98,6 @@ namespace DareyaAPI.Controllers
             authRepo.Add(a);
 
             String authUrl = "http://dareme.to/verify/" + a.Token;
-
         }
 
         private void CoreHandleCredentialSignup(Customer newCustomer)
@@ -110,6 +110,11 @@ namespace DareyaAPI.Controllers
                 if (tryEmail.Type == (int)Customer.TypeCodes.Unclaimed)
                 {
                     CoreCreateSendVerificationEmail(tryEmail);
+                    return;
+                }
+                else
+                {
+                    throw new HttpResponseException(System.Net.HttpStatusCode.Forbidden);
                 }
             }
 
@@ -131,19 +136,21 @@ namespace DareyaAPI.Controllers
             }
         }
 
-        public void PostVerify(Authorization verify)
+        [HttpPost]
+        public void Verify(Authorization verify)
         {
 
         }
 
         // POST /api/customer/signup
-        public void PostSignup(Customer newCustomer)
+        [HttpPost]
+        public void Signup(Customer newCustomer)
         {
             SignupType signupType = SignupType.Credentials;
 
             if (newCustomer.FacebookUserID == null || newCustomer.FacebookUserID.Equals(""))
             {
-                if (newCustomer.EmailAddress.Equals(""))
+                if (newCustomer.EmailAddress==null || newCustomer.EmailAddress.Equals(""))
                 {
                     // invalid
                     throw new HttpResponseException("No Facebook Connect information was found and no email address specified.", System.Net.HttpStatusCode.InternalServerError);
@@ -154,7 +161,7 @@ namespace DareyaAPI.Controllers
             else
                 signupType = SignupType.Facebook;
 
-            if(newCustomer.FacebookAccessToken.Equals("") && newCustomer.Password.Equals(""))
+            if((newCustomer.FacebookAccessToken==null || newCustomer.FacebookAccessToken.Equals("")) && (newCustomer.Password==null || newCustomer.Password.Equals("")))
             {
                 // no authentication details provided for this customer
                 throw new HttpResponseException("No credentials were supplied -- either a Facebook access token or a password are required.", System.Net.HttpStatusCode.InternalServerError);
@@ -173,23 +180,6 @@ namespace DareyaAPI.Controllers
             // queue an email to be sent welcoming the user
 
             // send back a blank 200; the client should now try to authorize
-        }
-
-        // POST /api/customer
-        [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Private)]
-        public void Post(string value)
-        {
-        }
-
-        // PUT /api/customer/5
-        public void Put(int id, string value)
-        {
-        }
-
-        [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Private)]
-        // DELETE /api/customer/5
-        public void Delete(int id)
-        {
         }
     }
 }
