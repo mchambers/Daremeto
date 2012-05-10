@@ -56,6 +56,8 @@ namespace DareyaAPI.Controllers
                     }
                     tempTargetCust = null;
                 }
+
+                c.NumberOfTakers = StatusRepo.GetActiveStatusesForChallenge(c.ID).Count;
             }
 
             return chals;
@@ -66,7 +68,30 @@ namespace DareyaAPI.Controllers
         public Challenge Get(long id)
         {
             Challenge c = ChalRepo.Get(id);
+
+            Customer tempCust = CustRepo.GetWithID(c.CustomerID);
+            c.Customer = new Customer();
+            c.Customer.FirstName = tempCust.FirstName;
+            c.Customer.LastName = tempCust.LastName;
+            c.Customer.AvatarURL = tempCust.AvatarURL;
+            tempCust = null;
+
+            if (c.TargetCustomerID > 0)
+            {
+                Customer tempTargetCust = CustRepo.GetWithID(c.TargetCustomerID);
+                if (tempTargetCust.FirstName != null && !tempTargetCust.FirstName.Equals(""))
+                {
+                    c.TargetCustomer = new Customer();
+                    c.TargetCustomer.FirstName = tempTargetCust.FirstName;
+                    c.TargetCustomer.LastName = tempTargetCust.LastName;
+                    c.TargetCustomer.AvatarURL = tempTargetCust.AvatarURL;
+                }
+                tempTargetCust = null;
+            }
+
+            c.NumberOfTakers = StatusRepo.GetActiveStatusesForChallenge(c.ID).Count;
             c.Bids = BidRepo.Get(c.ID);
+
             return c;
         }
 
@@ -91,14 +116,18 @@ namespace DareyaAPI.Controllers
                 if (Security.DetermineAudience(c) < Security.Audience.Friends)
                     throw new HttpResponseException("This item is friends-only.", System.Net.HttpStatusCode.Forbidden);
             }
-            
+
+            /*
             c.CurrentBid += value.Amount;
             ChalRepo.Update(c);
 
             value.CustomerID = ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
             value.Status = (int)ChallengeBid.BidStatusCodes.Default;
 
-            BidRepo.Add(value);
+            BidRepo.Add(value);*/
+
+            // transactional stored procedure bitches!
+            ChalRepo.AddBidToChallenge(c, ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID, value.Amount);
         }
 
         // POST /api/challenge
@@ -112,8 +141,11 @@ namespace DareyaAPI.Controllers
             }
             
             value.CustomerID = ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
-
+            int firstBid = value.CurrentBid;
+            value.CurrentBid = 0; // IMPORTANT
             value.ID=ChalRepo.Add(value);
+            ChalRepo.AddBidToChallenge(value, value.CustomerID, firstBid);
+
             bool createTargetStatus=false;
 
             switch (value.TargetType)
@@ -173,7 +205,7 @@ namespace DareyaAPI.Controllers
                     }
                     break;
             }
-
+            
             ChalRepo.Update(value);
 
             if (createTargetStatus)

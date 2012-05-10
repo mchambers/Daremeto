@@ -121,5 +121,10 @@ namespace DareyaAPI.Models
 
             return listChals;
         }
+
+        public void AddBidToChallenge(Challenge item, long CustomerID, int BidAmount)
+        {
+            repo.AddBidToChallenge(item.ID.ToString(), BidAmount.ToString(), CustomerID.ToString());
+        }
     }
 }

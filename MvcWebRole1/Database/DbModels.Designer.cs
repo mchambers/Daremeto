@@ -149,6 +149,51 @@ namespace DareyaAPI.Database
 
         #endregion
 
+        #region Function Imports
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="challengeID">No Metadata Documentation available.</param>
+        /// <param name="bidAmount">No Metadata Documentation available.</param>
+        /// <param name="customerID">No Metadata Documentation available.</param>
+        public int AddBidToChallenge(global::System.String challengeID, global::System.String bidAmount, global::System.String customerID)
+        {
+            ObjectParameter challengeIDParameter;
+            if (challengeID != null)
+            {
+                challengeIDParameter = new ObjectParameter("ChallengeID", challengeID);
+            }
+            else
+            {
+                challengeIDParameter = new ObjectParameter("ChallengeID", typeof(global::System.String));
+            }
+    
+            ObjectParameter bidAmountParameter;
+            if (bidAmount != null)
+            {
+                bidAmountParameter = new ObjectParameter("BidAmount", bidAmount);
+            }
+            else
+            {
+                bidAmountParameter = new ObjectParameter("BidAmount", typeof(global::System.String));
+            }
+    
+            ObjectParameter customerIDParameter;
+            if (customerID != null)
+            {
+                customerIDParameter = new ObjectParameter("CustomerID", customerID);
+            }
+            else
+            {
+                customerIDParameter = new ObjectParameter("CustomerID", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction("AddBidToChallenge", challengeIDParameter, bidAmountParameter, customerIDParameter);
+        }
+
+        #endregion
+
     }
 
     #endregion

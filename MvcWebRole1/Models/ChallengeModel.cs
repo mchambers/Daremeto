@@ -39,6 +39,7 @@ namespace DareyaAPI.Models
         public ChallengeStatus Status { get; set; }
         public Customer Customer { get; set; }
         public Customer TargetCustomer { get; set; }
+        public int NumberOfTakers { get; set; }
 
         public Challenge()
         {
@@ -51,6 +52,7 @@ namespace DareyaAPI.Models
             Anonymous = false;
             CustomerID = 0;
             TargetCustomerID = 0;
+            NumberOfTakers = 0;
             Bids = null;
             Status = null;
             Customer = null;

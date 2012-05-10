@@ -60,6 +60,11 @@
           <Property Name="CurrentBalance" Type="money" />
           <Property Name="AvatarURL" Type="nvarchar(max)" />
         </EntityType>
+        <Function Name="AddBidToChallenge" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ChallengeID" Type="nvarchar" Mode="In" />
+          <Parameter Name="BidAmount" Type="nvarchar" Mode="In" />
+          <Parameter Name="CustomerID" Type="nvarchar" Mode="In" />
+        </Function>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -72,6 +77,11 @@
             <End Role="Challenge" EntitySet="Challenge" />
           </AssociationSet>
           <EntitySet Name="Bid" EntityType="DbModels.Bid" />
+          <FunctionImport Name="AddBidToChallenge">
+            <Parameter Name="ChallengeID" Mode="In" Type="String" />
+            <Parameter Name="BidAmount" Mode="In" Type="String" />
+            <Parameter Name="CustomerID" Mode="In" Type="String" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="Challenge">
           <Key>
@@ -188,6 +198,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="AddBidToChallenge" FunctionName="DbModels.Store.AddBidToChallenge" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
