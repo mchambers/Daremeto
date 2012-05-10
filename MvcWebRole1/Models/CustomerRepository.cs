@@ -8,7 +8,7 @@ namespace DareyaAPI.Models
     public class CustomerRepository : ICustomerRepository
     {
         Database.DYDbEntities db;
-
+         
         public CustomerRepository()
         {
             db = new Database.DYDbEntities();
@@ -35,6 +35,7 @@ namespace DareyaAPI.Models
             c.FacebookExpires = dbCust.FacebookExpires;
             c.BillingID = dbCust.BillingID;
             c.Password = dbCust.Password;
+            c.AvatarURL = dbCust.AvatarURL;
 
             if(dbCust.BillingType!=null)
                 c.BillingType = (int)dbCust.BillingType;
@@ -63,6 +64,7 @@ namespace DareyaAPI.Models
             if (cust.FacebookUserID == null) cust.FacebookUserID = "";
             if (cust.BillingID == null) cust.BillingID = "";
             if (cust.BillingType == null) cust.BillingType = 0;
+            if (cust.AvatarURL == null) cust.AvatarURL = "";
 
             dbCust.FirstName = cust.FirstName;
             dbCust.LastName = cust.LastName;
@@ -78,6 +80,7 @@ namespace DareyaAPI.Models
             dbCust.FacebookUserID = cust.FacebookUserID;
             dbCust.BillingID = cust.BillingID;
             dbCust.BillingType = cust.BillingType;
+            dbCust.AvatarURL = cust.AvatarURL;
 
             return dbCust;
         }

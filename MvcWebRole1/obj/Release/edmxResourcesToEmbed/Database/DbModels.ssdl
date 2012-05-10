@@ -12,8 +12,8 @@
     <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="CustomerID" Type="bigint" Nullable="false" />
     <Property Name="Amount" Type="int" Nullable="false" />
-    <Property Name="ChallengeID" Type="bigint" />
-    <Property Name="Status" Type="int" />
+    <Property Name="ChallengeID" Type="bigint" Nullable="false" />
+    <Property Name="Status" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Challenge">
     <Key>
@@ -21,14 +21,14 @@
     </Key>
     <Property Name="Title" Type="text" Nullable="false" />
     <Property Name="Description" Type="text" Nullable="false" />
-    <Property Name="Privacy" Type="tinyint" />
-    <Property Name="Type" Type="tinyint" />
+    <Property Name="Privacy" Type="tinyint" Nullable="false" />
+    <Property Name="Type" Type="tinyint" Nullable="false" />
     <Property Name="CustomerID" Type="bigint" Nullable="false" />
     <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="CurrentBid" Type="int" />
+    <Property Name="CurrentBid" Type="int" Nullable="false" />
     <Property Name="TargetCustomerID" Type="bigint" />
-    <Property Name="State" Type="int" />
-    <Property Name="Anonymous" Type="tinyint" />
+    <Property Name="State" Type="int" Nullable="false" />
+    <Property Name="Anonymous" Type="tinyint" Nullable="false" />
   </EntityType>
   <EntityType Name="Customer">
     <Key>
@@ -53,5 +53,6 @@
     <Property Name="PhoneNumber" Type="nvarchar(max)" />
     <Property Name="Type" Type="int" />
     <Property Name="CurrentBalance" Type="money" />
+    <Property Name="AvatarURL" Type="nvarchar(max)" />
   </EntityType>
 </Schema>

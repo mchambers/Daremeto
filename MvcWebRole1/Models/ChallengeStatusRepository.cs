@@ -57,24 +57,35 @@ namespace DareyaAPI.Models
 
         public void Add(ChallengeStatus value)
         {
-            CoreAddOrUpdate(value);
+            CoreAddOrUpdate(value, true);
         }
 
-        private void CoreAddOrUpdate(ChallengeStatus value)
+        private void CoreAddOrUpdate(ChallengeStatus value, bool Add=false)
         {
             ChallengeStatusDb sourceCust = new ChallengeStatusDb(value);
             ChallengeStatusDb targetCust = new ChallengeStatusDb(value);
             ChallengeStatusDb chal = new ChallengeStatusDb(value);
-
+            
             targetCust.PartitionKey = "Cust" + value.CustomerID;
             sourceCust.PartitionKey = "SourceCust" + value.ChallengeOriginatorCustomerID;
             chal.PartitionKey = "Chal" + value.ChallengeID;
 
-            context.AttachTo(TableName, sourceCust);
-            context.AttachTo(TableName, targetCust);
-            context.AttachTo(TableName, chal);
+            if (Add)
+                context.AddObject(TableName, sourceCust);
+            else
+                context.AttachTo(TableName, sourceCust, null);
 
-            context.SaveChangesWithRetries(SaveChangesOptions.ContinueOnError);   
+            if (Add)
+                context.AddObject(TableName, targetCust);
+            else
+                context.AttachTo(TableName, targetCust, null);
+                
+            if (Add)
+                context.AddObject(TableName, chal);
+            else
+                context.AttachTo(TableName, chal, null);
+
+            context.SaveChangesWithRetries(SaveChangesOptions.None);
         }
 
         public void Update(ChallengeStatus value)

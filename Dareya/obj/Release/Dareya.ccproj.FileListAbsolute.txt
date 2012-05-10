@@ -222,6 +222,7 @@ C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Scripts\knockout-2.0.0.js
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Scripts\modernizr-2.0.6-development-only.js
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Scripts\_references.js
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Views\Home\Boiler.cshtml
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Views\Home\Index.cshtml
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Views\Shared\Error.cshtml
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Views\Shared\_Layout.cshtml

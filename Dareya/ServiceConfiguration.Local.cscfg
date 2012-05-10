@@ -2,9 +2,11 @@
 <ServiceConfiguration serviceName="Dareya" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="1" osVersion="*">
   <Role name="DareyaAPI">
     <Instances count="1" />
-    <ConfigurationSettings>
+    <ConfigurationSettings> <!--
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
-      <Setting name="StorageConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="StorageConnectionString" value="UseDevelopmentStorage=true" /> -->
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=daremeto;AccountKey=Zd6EEZ9lRvPELkVjk70rASP1H8OCFcaaZPhlF+p3bYYtWzc0ZZOalsAM7Ldyx22wQt3OTKpz7YbuWsIN0/AyVw==" />
+      <Setting name="StorageConnectionString" value="DefaultEndpointsProtocol=http;AccountName=daremeto;AccountKey=Zd6EEZ9lRvPELkVjk70rASP1H8OCFcaaZPhlF+p3bYYtWzc0ZZOalsAM7Ldyx22wQt3OTKpz7YbuWsIN0/AyVw==" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="daremeto" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="MIIBnQYJKoZIhvcNAQcDoIIBjjCCAYoCAQAxggFOMIIBSgIBADAyMB4xHDAaBgNVBAMME1dpbmRvd3MgQXp1cmUgVG9vbHMCEGG8t0nUVx2NRVdLjjGJUxcwDQYJKoZIhvcNAQEBBQAEggEABdDXD7esaZqcXKsB1cRAGPezohk7vdORPDfGXJvRZDS4xn0SfM384B7msxF/DdhSpOleVK+qU2tiFApAX2ivncYWWnYMKqvYDyB63IAkBepJjT32QBKQFU6AX+ug6HZmGVGDkJ3Bab1Y4EPjR3sLER41XjITUjSaH5vbWXMjDE4eiQoENO1FHgkxWAhjfIiCWuGr+lll2CeFG3md4ycdBCZwGuwdTMFfzuD9TB0luQxBr4hOuouM+ZxFiiaVKsF7hRAKMOlh7Vn5xrbz/0JujgCzGXfwd9KqNKRw91jc7cYXiZPTvUUhbqAJCNFDjc1Fz1ayl7RM1mUJ2+J4b9AHhjAzBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECLy7yLI746f5gBAtDgI26QvyA2YnBFxZk4hi" />

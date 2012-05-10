@@ -53,5 +53,6 @@
     <Property Name="PhoneNumber" Type="nvarchar(max)" />
     <Property Name="Type" Type="int" />
     <Property Name="CurrentBalance" Type="money" />
+    <Property Name="AvatarURL" Type="nvarchar(max)" />
   </EntityType>
 </Schema>

@@ -49,6 +49,7 @@
     <Property Type="String" Name="PhoneNumber" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Type="Int32" Name="Type" />
     <Property Type="Decimal" Name="CurrentBalance" Precision="19" Scale="4" />
+    <Property Type="String" Name="AvatarURL" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <Association Name="FK_Challenge_0">
     <End Role="Customer" Type="DbModels.Customer" Multiplicity="1" />

@@ -36,6 +36,25 @@ namespace DareyaAPI.Models
         public long CustomerID { get; set; }
         public long TargetCustomerID { get; set; }
         public List<ChallengeBid> Bids { get; set; }
+        public ChallengeStatus Status { get; set; }
+        public Customer Customer { get; set; }
+        public Customer TargetCustomer { get; set; }
+
+        public Challenge()
+        {
+            ID = 0;
+            Title = "";
+            Description = "";
+            Privacy = 0;
+            CurrentBid = 0;
+            State = 0;
+            Anonymous = false;
+            CustomerID = 0;
+            TargetCustomerID = 0;
+            Bids = null;
+            Status = null;
+            Customer = null;
+        }
     }
 
     public class NewChallenge : Challenge
@@ -44,7 +63,7 @@ namespace DareyaAPI.Models
         {
             Default,
             Facebook,
-            PhoneNumber,
+            PhoneNumber, 
             EmailAddress
         }
 
@@ -55,5 +74,14 @@ namespace DareyaAPI.Models
         public string PhoneNumber { get; set; }
         public string EmailAddress { get; set; }
         public int TargetType { get; set; }
+
+        public NewChallenge()
+            : base()
+        {
+            FacebookUID = "";
+            PhoneNumber = "";
+            EmailAddress = "";
+            TargetType = 0;
+        }
     }
 }

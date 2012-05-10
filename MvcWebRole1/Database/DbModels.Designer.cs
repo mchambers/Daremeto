@@ -8,12 +8,13 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
+using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
-using System.Data.EntityClient;
-using System.ComponentModel;
-using System.Xml.Serialization;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
@@ -119,6 +120,7 @@ namespace DareyaAPI.Database
         private ObjectSet<Bid> _Bid;
 
         #endregion
+
         #region AddTo Methods
     
         /// <summary>
@@ -146,11 +148,11 @@ namespace DareyaAPI.Database
         }
 
         #endregion
+
     }
-    
 
     #endregion
-    
+
     #region Entities
     
     /// <summary>
@@ -183,6 +185,7 @@ namespace DareyaAPI.Database
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -309,6 +312,7 @@ namespace DareyaAPI.Database
         partial void OnStatusChanged();
 
         #endregion
+
     
     }
     
@@ -350,6 +354,7 @@ namespace DareyaAPI.Database
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -596,6 +601,7 @@ namespace DareyaAPI.Database
         partial void OnAnonymousChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -638,6 +644,7 @@ namespace DareyaAPI.Database
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -666,6 +673,7 @@ namespace DareyaAPI.Database
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -1126,8 +1134,33 @@ namespace DareyaAPI.Database
         private Nullable<global::System.Decimal> _CurrentBalance;
         partial void OnCurrentBalanceChanging(Nullable<global::System.Decimal> value);
         partial void OnCurrentBalanceChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String AvatarURL
+        {
+            get
+            {
+                return _AvatarURL;
+            }
+            set
+            {
+                OnAvatarURLChanging(value);
+                ReportPropertyChanging("AvatarURL");
+                _AvatarURL = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("AvatarURL");
+                OnAvatarURLChanged();
+            }
+        }
+        private global::System.String _AvatarURL;
+        partial void OnAvatarURLChanging(global::System.String value);
+        partial void OnAvatarURLChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -1154,8 +1187,10 @@ namespace DareyaAPI.Database
         }
 
         #endregion
+
     }
 
     #endregion
+
     
 }

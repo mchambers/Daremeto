@@ -35,5 +35,27 @@ namespace DareyaAPI.Models
         public string BillingID { get; set; }
 
         public int Type { get; set; }
+
+        public string AvatarURL { get; set; }
+
+        public Customer()
+        {
+            FirstName = "";
+            LastName = "";
+            EmailAddress = "";
+            Address = "";
+            Address2 = "";
+            City = "";
+            State = "";
+            ZIPCode = "";
+            FacebookAccessToken = "";
+            FacebookExpires = "";
+            FacebookUserID = "";
+            Password = "";
+            BillingType = 0;
+            BillingID = "";
+            Type = 0;
+            AvatarURL = "";
+        }
     }
 }

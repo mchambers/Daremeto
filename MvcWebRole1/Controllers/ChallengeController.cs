@@ -31,9 +31,34 @@ namespace DareyaAPI.Controllers
 
         // GET /api/challenge
         [HttpGet]
-        public List<Challenge> Get()
+        public List<Challenge> Get(int StartAt=0, int Limit=10)
         {
-            return ChalRepo.GetNewest(0, 10);
+            List<Challenge> chals = ChalRepo.GetNewest(0, 10);
+
+            foreach (Challenge c in chals)
+            {
+                Customer tempCust =  CustRepo.GetWithID(c.CustomerID);
+                c.Customer = new Customer();
+                c.Customer.FirstName = tempCust.FirstName;
+                c.Customer.LastName = tempCust.LastName;
+                c.Customer.AvatarURL = tempCust.AvatarURL;
+                tempCust = null;
+
+                if (c.TargetCustomerID > 0)
+                {
+                    Customer tempTargetCust = CustRepo.GetWithID(c.TargetCustomerID);
+                    if (tempTargetCust.FirstName != null && !tempTargetCust.FirstName.Equals(""))
+                    {
+                        c.TargetCustomer = new Customer();
+                        c.TargetCustomer.FirstName = tempTargetCust.FirstName;
+                        c.TargetCustomer.LastName = tempTargetCust.LastName;
+                        c.TargetCustomer.AvatarURL = tempTargetCust.AvatarURL;
+                    }
+                    tempTargetCust = null;
+                }
+            }
+
+            return chals;
         }
 
         // GET /api/challenge/5
@@ -88,7 +113,7 @@ namespace DareyaAPI.Controllers
             
             value.CustomerID = ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
 
-            long newID=ChalRepo.Add(value);
+            value.ID=ChalRepo.Add(value);
             bool createTargetStatus=false;
 
             switch (value.TargetType)
@@ -149,10 +174,12 @@ namespace DareyaAPI.Controllers
                     break;
             }
 
+            ChalRepo.Update(value);
+
             if (createTargetStatus)
             {
                 ChallengeStatus s = new ChallengeStatus();
-                s.ChallengeID = newID;
+                s.ChallengeID = value.ID;
                 s.ChallengeOriginatorCustomerID = value.CustomerID;
                 s.CustomerID = value.TargetCustomerID;
                 s.UniqueID = System.Guid.NewGuid().ToString();

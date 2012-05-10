@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
 using DareyaAPI.Models;
+using System.Web;
 
 namespace DareyaAPI.Controllers
 {
@@ -11,6 +12,8 @@ namespace DareyaAPI.Controllers
     {
         private ICustomerRepository Repo;
         private Security Security;
+        private IChallengeStatusRepository StatusRepo;
+        private IChallengeRepository ChalRepo;
 
         private enum SignupType
         {
@@ -22,6 +25,8 @@ namespace DareyaAPI.Controllers
         {
             Repo = new CustomerRepository();
             Security = new Security();
+            StatusRepo = new ChallengeStatusRepository();
+            ChalRepo = new ChallengeRepository();
         }
 
         // GET /api/customer
@@ -107,12 +112,7 @@ namespace DareyaAPI.Controllers
             Customer tryEmail = Repo.GetWithEmailAddress(newCustomer.EmailAddress);
             if (tryEmail != null && tryEmail.EmailAddress.Equals(newCustomer.EmailAddress))
             {
-                if (tryEmail.Type == (int)Customer.TypeCodes.Unclaimed)
-                {
-                    CoreCreateSendVerificationEmail(tryEmail);
-                    return;
-                }
-                else
+                if (tryEmail.Type != (int)Customer.TypeCodes.Unclaimed)
                 {
                     throw new HttpResponseException(System.Net.HttpStatusCode.Forbidden);
                 }
@@ -122,11 +122,9 @@ namespace DareyaAPI.Controllers
             
             try
             {
+                CoreCreateSendVerificationEmail(newCustomer);
                 if (tryEmail == null)
-                {
-                    CoreCreateSendVerificationEmail(newCustomer);
                     Repo.Add(newCustomer);
-                }
                 else
                     Repo.Update(tryEmail);
             }
@@ -139,7 +137,36 @@ namespace DareyaAPI.Controllers
         [HttpPost]
         public void Verify(Authorization verify)
         {
+            
+        }
 
+        [HttpGet]
+        [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
+        public List<Challenge> ActiveChallenges(long id)
+        {
+            if(id==0) id=((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
+
+            Customer c = Repo.GetWithID(id);
+            Security.Audience audience = Security.DetermineAudience(c);
+            if ((audience != Security.Audience.Owner) && (audience != Security.Audience.Friends))
+                throw new HttpResponseException(System.Net.HttpStatusCode.Forbidden);
+
+            /*
+             * 
+             * array of challenge objects with a Status object in them
+             * 
+             * */
+            List<ChallengeStatus> statuses = StatusRepo.GetActiveChallengesForCustomer(id);
+            List<Challenge> challenges = new List<Challenge>();
+
+            foreach (ChallengeStatus s in statuses)
+            {
+                Challenge chal = ChalRepo.Get(s.ChallengeID);
+                chal.Status = s;
+                challenges.Add(chal);
+            }
+
+            return challenges;
         }
 
         // POST /api/customer/signup
@@ -180,6 +207,7 @@ namespace DareyaAPI.Controllers
             // queue an email to be sent welcoming the user
 
             // send back a blank 200; the client should now try to authorize
+            
         }
     }
 }

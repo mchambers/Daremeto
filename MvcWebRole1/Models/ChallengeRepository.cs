@@ -39,13 +39,13 @@ namespace DareyaAPI.Models
             return c;
         }
 
-        private Database.Challenge ChallengeToDbChallenge(Challenge c)
+        private Database.Challenge ChallengeToDbChallenge(Challenge c, bool Attach=true)
         {
             Database.Challenge dc = new Database.Challenge();
 
             dc.ID = c.ID;
 
-            repo.Challenge.Attach(dc);
+            if(Attach) repo.Challenge.Attach(dc);
 
             dc.Title = c.Title;
             dc.Description = c.Description;
@@ -67,10 +67,11 @@ namespace DareyaAPI.Models
 
         public long Add(Challenge item)
         {
-            Database.Challenge c = ChallengeToDbChallenge(item);
+            Database.Challenge c = ChallengeToDbChallenge(item, false);
             repo.Challenge.AddObject(c);
             repo.SaveChanges();
             repo.Refresh(System.Data.Objects.RefreshMode.StoreWins, c);
+            repo.Detach(c);
             return c.ID;
         }
 

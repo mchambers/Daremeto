@@ -58,6 +58,7 @@
           <Property Name="PhoneNumber" Type="nvarchar(max)" />
           <Property Name="Type" Type="int" />
           <Property Name="CurrentBalance" Type="money" />
+          <Property Name="AvatarURL" Type="nvarchar(max)" />
         </EntityType>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -112,6 +113,7 @@
           <Property Type="String" Name="PhoneNumber" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="Type" />
           <Property Type="Decimal" Name="CurrentBalance" Precision="19" Scale="4" />
+          <Property Type="String" Name="AvatarURL" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Challenge_0">
           <End Role="Customer" Type="DbModels.Customer" Multiplicity="1" />
@@ -154,7 +156,8 @@
             <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Customer"><EntityTypeMapping TypeName="DbModels.Customer"><MappingFragment StoreEntitySet="Customer">
-            <ScalarProperty Name="CurrentBalance" ColumnName="CurrentBalance" />
+            <ScalarProperty Name="AvatarURL" ColumnName="AvatarURL" />
+                <ScalarProperty Name="CurrentBalance" ColumnName="CurrentBalance" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="FacebookExpires" ColumnName="FacebookExpires" />
