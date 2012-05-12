@@ -54,5 +54,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="AddBidToChallenge" FunctionName="DbModels.Store.AddBidToChallenge" />
   </EntityContainerMapping>
 </Mapping>

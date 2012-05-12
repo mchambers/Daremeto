@@ -124,7 +124,7 @@ namespace DareyaAPI.Models
 
         public void AddBidToChallenge(Challenge item, long CustomerID, int BidAmount)
         {
-            repo.AddBidToChallenge(item.ID.ToString(), BidAmount.ToString(), CustomerID.ToString());
+            repo.AddBidToChallenge(item.ID, BidAmount, CustomerID);
         }
     }
 }

@@ -21,6 +21,7 @@ namespace DareyaAPI.Models
 
         public ChallengeStatus()
         {
+            this.Customer = null;
         }
 
         public ChallengeStatus(ChallengeStatusDb d)
@@ -29,6 +30,8 @@ namespace DareyaAPI.Models
             this.CustomerID = d.CustomerID;
             this.ChallengeID = d.ChallengeID;
             this.Status = d.Status;
+
+            this.Customer = null;
         }
 
         public string UniqueID { get; set; }
@@ -36,6 +39,8 @@ namespace DareyaAPI.Models
         public int Status { get; set; }
         public long ChallengeID { get; set; }
         public long ChallengeOriginatorCustomerID { get; set; }
+
+        public Customer Customer;
     }
 
     public class ChallengeStatusDb : TableServiceEntity

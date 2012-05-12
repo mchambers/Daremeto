@@ -16,6 +16,7 @@ namespace DareyaAPI.Controllers
         private IChallengeBidRepository BidRepo;
         private IChallengeStatusVoteRepository VoteRepo;
         private ICustomerRepository CustRepo;
+        private IFriendshipRepository FriendRepo;
 
         public ChallengeStatusController()
         {
@@ -25,6 +26,7 @@ namespace DareyaAPI.Controllers
             BidRepo = new ChallengeBidRepository();
             VoteRepo = new ChallengeStatusVoteRepository();
             CustRepo = new CustomerRepository();
+            FriendRepo=new FriendshipRepository();
         }
 
         [HttpPost]
@@ -111,6 +113,10 @@ namespace DareyaAPI.Controllers
             // close the bidding on this challenge until the claim can be verified.
             c.State = (int)Challenge.ChallengeState.BidsClosed;
             ChalRepo.Update(c);
+            
+            // set all of the bids for this challenge to "VotePending"
+            // so the bidders can see what they need to vote on
+            BidRepo.UpdateStatusForBidsOnChallenge(status.ChallengeID, status.UniqueID, ChallengeBid.BidStatusCodes.VotePending);
 
             Email.SendChallengeClaimedEmail(CustRepo.GetWithID(s.ChallengeOriginatorCustomerID), CustRepo.GetWithID(s.CustomerID), c);
         }
@@ -132,10 +138,9 @@ namespace DareyaAPI.Controllers
 
             StatusRepo.Update(s);
 
-            // transition this to the Bids Closed state
-            // no more bids can be put in while the request is being reviewed.
-            c.State = (int)Challenge.ChallengeState.BidsClosed;
-            ChalRepo.Update(c);
+            // add a friendship between these folk if one doesn't exist.
+            if (!FriendRepo.CustomersAreFriends(s.CustomerID, ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID))
+                FriendRepo.Add(s.CustomerID, ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID);
 
             Email.SendChallengeAcceptedEmail(CustRepo.GetWithID(s.ChallengeOriginatorCustomerID), CustRepo.GetWithID(s.CustomerID), c);
         }

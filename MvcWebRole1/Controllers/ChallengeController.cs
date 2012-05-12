@@ -29,51 +29,14 @@ namespace DareyaAPI.Controllers
             Security = new Security();
         }
 
-        // GET /api/challenge
-        [HttpGet]
-        public List<Challenge> Get(int StartAt=0, int Limit=10)
+        private Challenge PrepOutboundChallenge(Challenge c)
         {
-            List<Challenge> chals = ChalRepo.GetNewest(0, 10);
-
-            foreach (Challenge c in chals)
-            {
-                Customer tempCust =  CustRepo.GetWithID(c.CustomerID);
-                c.Customer = new Customer();
-                c.Customer.FirstName = tempCust.FirstName;
-                c.Customer.LastName = tempCust.LastName;
-                c.Customer.AvatarURL = tempCust.AvatarURL;
-                tempCust = null;
-
-                if (c.TargetCustomerID > 0)
-                {
-                    Customer tempTargetCust = CustRepo.GetWithID(c.TargetCustomerID);
-                    if (tempTargetCust.FirstName != null && !tempTargetCust.FirstName.Equals(""))
-                    {
-                        c.TargetCustomer = new Customer();
-                        c.TargetCustomer.FirstName = tempTargetCust.FirstName;
-                        c.TargetCustomer.LastName = tempTargetCust.LastName;
-                        c.TargetCustomer.AvatarURL = tempTargetCust.AvatarURL;
-                    }
-                    tempTargetCust = null;
-                }
-
-                c.NumberOfTakers = StatusRepo.GetActiveStatusesForChallenge(c.ID).Count;
-            }
-
-            return chals;
-        }
-
-        // GET /api/challenge/5
-        [HttpGet]
-        public Challenge Get(long id)
-        {
-            Challenge c = ChalRepo.Get(id);
-
             Customer tempCust = CustRepo.GetWithID(c.CustomerID);
             c.Customer = new Customer();
             c.Customer.FirstName = tempCust.FirstName;
             c.Customer.LastName = tempCust.LastName;
             c.Customer.AvatarURL = tempCust.AvatarURL;
+
             tempCust = null;
 
             if (c.TargetCustomerID > 0)
@@ -89,8 +52,69 @@ namespace DareyaAPI.Controllers
                 tempTargetCust = null;
             }
 
+            c.NumberOfBidders = BidRepo.Get(c.ID).Count;
             c.NumberOfTakers = StatusRepo.GetActiveStatusesForChallenge(c.ID).Count;
-            c.Bids = BidRepo.Get(c.ID);
+
+            return c;
+        }
+
+        [HttpGet]
+        public List<Challenge> Featured(int StartAt = 0, int Limit = 10)
+        {
+            throw new NotImplementedException();
+        }
+
+        // GET /api/challenge
+        [HttpGet]
+        public List<Challenge> Get(int StartAt=0, int Limit=10)
+        {
+            List<Challenge> chals = ChalRepo.GetNewest(0, 10);
+            List<Challenge> outChals = new List<Challenge>(chals.Count);
+
+            foreach (Challenge c in chals)
+            {
+                outChals.Add(PrepOutboundChallenge(c));
+            }
+
+            return outChals;
+        }
+
+        [HttpGet]
+        [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
+        public List<Challenge> ActiveForCustomer(long id)
+        {
+            if (id == 0) id = ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
+
+            Customer c = CustRepo.GetWithID(id);
+            Security.Audience audience = Security.DetermineAudience(c);
+            if ((audience != Security.Audience.Owner) && (audience != Security.Audience.Friends))
+                throw new HttpResponseException(System.Net.HttpStatusCode.Forbidden);
+
+            /*
+             * 
+             * array of challenge objects with a Status object in them
+             * 
+             * */
+            List<ChallengeStatus> statuses = StatusRepo.GetActiveChallengesForCustomer(id);
+            List<Challenge> challenges = new List<Challenge>();
+
+            foreach (ChallengeStatus s in statuses)
+            {
+                Challenge chal = PrepOutboundChallenge(ChalRepo.Get(s.ChallengeID));
+                chal.Status = s;
+                challenges.Add(chal);
+            }
+
+            return challenges;
+        }
+
+        // GET /api/challenge/5
+        [HttpGet]
+        public Challenge Get(long id)
+        {
+            Challenge c = PrepOutboundChallenge(ChalRepo.Get(id));
+
+            //c.Bids = BidRepo.Get(c.ID);
 
             return c;
         }
@@ -99,6 +123,19 @@ namespace DareyaAPI.Controllers
         public List<ChallengeStatus> Status(long id)
         {
             return StatusRepo.GetActiveStatusesForChallenge(id);
+        }
+
+        [HttpGet]
+        public List<ChallengeBid> ActiveBids()
+        {
+            List<ChallengeBid> bids=BidRepo.GetForCustomer(((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID);
+
+            foreach (ChallengeBid b in bids)
+            {
+                b.Challenge = PrepOutboundChallenge(ChalRepo.Get(b.ChallengeID));
+            }
+
+            return bids;
         }
 
         // PUT /api/challenge/bid/5

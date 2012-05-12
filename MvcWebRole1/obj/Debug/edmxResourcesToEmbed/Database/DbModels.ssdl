@@ -55,4 +55,9 @@
     <Property Name="CurrentBalance" Type="money" />
     <Property Name="AvatarURL" Type="nvarchar(max)" />
   </EntityType>
+  <Function Name="AddBidToChallenge" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ChallengeID" Type="nvarchar" Mode="In" />
+    <Parameter Name="BidAmount" Type="nvarchar" Mode="In" />
+    <Parameter Name="CustomerID" Type="nvarchar" Mode="In" />
+  </Function>
 </Schema>

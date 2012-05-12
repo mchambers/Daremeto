@@ -157,7 +157,7 @@ namespace DareyaAPI.Database
         /// <param name="challengeID">No Metadata Documentation available.</param>
         /// <param name="bidAmount">No Metadata Documentation available.</param>
         /// <param name="customerID">No Metadata Documentation available.</param>
-        public int AddBidToChallenge(global::System.String challengeID, global::System.String bidAmount, global::System.String customerID)
+        public int AddBidToChallenge(long challengeID, int bidAmount, long customerID)
         {
             ObjectParameter challengeIDParameter;
             if (challengeID != null)

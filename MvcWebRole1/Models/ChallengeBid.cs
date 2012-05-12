@@ -12,7 +12,8 @@ namespace DareyaAPI.Models
         {
             Default,
             BidderAccepts,
-            BidderRejects
+            BidderRejects,
+            VotePending
         }
 
         public ChallengeBid()
@@ -35,6 +36,8 @@ namespace DareyaAPI.Models
         public string UniqueID { get; set; }
         public long ID { get; set; }
         public int Status { get; set; }
+
+        public Challenge Challenge { get; set; }
     }
 
     public class ChallengeBidDb : TableServiceEntity

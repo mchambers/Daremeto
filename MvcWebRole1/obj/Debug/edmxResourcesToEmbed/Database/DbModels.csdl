@@ -8,6 +8,11 @@
       <End Role="Challenge" EntitySet="Challenge" />
     </AssociationSet>
     <EntitySet Name="Bid" EntityType="DbModels.Bid" />
+    <FunctionImport Name="AddBidToChallenge">
+      <Parameter Name="ChallengeID" Mode="In" Type="String" />
+      <Parameter Name="BidAmount" Mode="In" Type="String" />
+      <Parameter Name="CustomerID" Mode="In" Type="String" />
+    </FunctionImport>
   </EntityContainer>
   <EntityType Name="Challenge">
     <Key>

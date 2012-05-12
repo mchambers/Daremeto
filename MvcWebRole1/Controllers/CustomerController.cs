@@ -140,35 +140,6 @@ namespace DareyaAPI.Controllers
             
         }
 
-        [HttpGet]
-        [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
-        public List<Challenge> ActiveChallenges(long id)
-        {
-            if(id==0) id=((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
-
-            Customer c = Repo.GetWithID(id);
-            Security.Audience audience = Security.DetermineAudience(c);
-            if ((audience != Security.Audience.Owner) && (audience != Security.Audience.Friends))
-                throw new HttpResponseException(System.Net.HttpStatusCode.Forbidden);
-
-            /*
-             * 
-             * array of challenge objects with a Status object in them
-             * 
-             * */
-            List<ChallengeStatus> statuses = StatusRepo.GetActiveChallengesForCustomer(id);
-            List<Challenge> challenges = new List<Challenge>();
-
-            foreach (ChallengeStatus s in statuses)
-            {
-                Challenge chal = ChalRepo.Get(s.ChallengeID);
-                chal.Status = s;
-                challenges.Add(chal);
-            }
-
-            return challenges;
-        }
-
         // POST /api/customer/signup
         [HttpPost]
         public void Signup(Customer newCustomer)

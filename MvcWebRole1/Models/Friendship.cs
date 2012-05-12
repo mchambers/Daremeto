@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Microsoft.WindowsAzure.StorageClient;
 
 namespace DareyaAPI.Models
 {
-    public class Friendship
+    public class FriendshipDb : TableServiceEntity
     {
-        public long SourceCustomerID;
-        public long TargetCustomerID;
-        public int Status;
+        public long CustomerID { get; set; }
+        public long FriendCustomerID { get; set; }
+        public int Status { get; set; }
     }
 }
