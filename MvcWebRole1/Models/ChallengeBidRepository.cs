@@ -75,5 +75,11 @@ namespace DareyaAPI.Models
         {
             throw new NotImplementedException();
         }
+
+
+        public List<ChallengeBid> GetActiveBidsForCustomer(long CustomerID)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

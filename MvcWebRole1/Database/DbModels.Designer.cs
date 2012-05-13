@@ -150,7 +150,7 @@ namespace DareyaAPI.Database
         #endregion
 
         #region Function Imports
-    
+        
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -160,35 +160,11 @@ namespace DareyaAPI.Database
         public int AddBidToChallenge(long challengeID, int bidAmount, long customerID)
         {
             ObjectParameter challengeIDParameter;
-            if (challengeID != null)
-            {
-                challengeIDParameter = new ObjectParameter("ChallengeID", challengeID);
-            }
-            else
-            {
-                challengeIDParameter = new ObjectParameter("ChallengeID", typeof(global::System.String));
-            }
-    
+            challengeIDParameter = new ObjectParameter("ChallengeID", challengeID);
             ObjectParameter bidAmountParameter;
-            if (bidAmount != null)
-            {
-                bidAmountParameter = new ObjectParameter("BidAmount", bidAmount);
-            }
-            else
-            {
-                bidAmountParameter = new ObjectParameter("BidAmount", typeof(global::System.String));
-            }
-    
+            bidAmountParameter = new ObjectParameter("BidAmount", bidAmount);
             ObjectParameter customerIDParameter;
-            if (customerID != null)
-            {
-                customerIDParameter = new ObjectParameter("CustomerID", customerID);
-            }
-            else
-            {
-                customerIDParameter = new ObjectParameter("CustomerID", typeof(global::System.String));
-            }
-    
+            customerIDParameter = new ObjectParameter("CustomerID", customerID);
             return base.ExecuteFunction("AddBidToChallenge", challengeIDParameter, bidAmountParameter, customerIDParameter);
         }
 
