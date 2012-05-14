@@ -32,10 +32,7 @@ namespace DareyaAPI.Controllers
         private Challenge PrepOutboundChallenge(Challenge c)
         {
             Customer tempCust = CustRepo.GetWithID(c.CustomerID);
-            c.Customer = new Customer();
-            c.Customer.FirstName = tempCust.FirstName;
-            c.Customer.LastName = tempCust.LastName;
-            c.Customer.AvatarURL = tempCust.AvatarURL;
+            c.Customer = Customer.Filter(tempCust);
 
             tempCust = null;
 
@@ -44,10 +41,7 @@ namespace DareyaAPI.Controllers
                 Customer tempTargetCust = CustRepo.GetWithID(c.TargetCustomerID);
                 if (tempTargetCust.FirstName != null && !tempTargetCust.FirstName.Equals(""))
                 {
-                    c.TargetCustomer = new Customer();
-                    c.TargetCustomer.FirstName = tempTargetCust.FirstName;
-                    c.TargetCustomer.LastName = tempTargetCust.LastName;
-                    c.TargetCustomer.AvatarURL = tempTargetCust.AvatarURL;
+                    c.TargetCustomer = Customer.Filter(tempTargetCust);
                 }
                 tempTargetCust = null;
             }
@@ -258,6 +252,32 @@ namespace DareyaAPI.Controllers
                 // notify the receipient of the new challenge.
             }
 
+        }
+
+        [HttpPost]
+        [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
+        public ChallengeStatus Take(long id)
+        {
+            Challenge c = ChalRepo.Get(id);
+
+            if (c == null)
+                throw new HttpResponseException("The requested Challenge resource doesn't exist.", System.Net.HttpStatusCode.NotFound);
+
+            if (!Security.CanManipulateContent(c))
+                throw new HttpResponseException(System.Net.HttpStatusCode.Forbidden);
+
+            if (c.TargetCustomerID == ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID)
+                throw new HttpResponseException("This Challenge was sent to the current user; call /challengestatus/accept instead", System.Net.HttpStatusCode.Conflict);
+
+            ChallengeStatus s = new ChallengeStatus();
+            s.ChallengeID = c.ID;
+            s.ChallengeOriginatorCustomerID = c.CustomerID;
+            s.CustomerID = ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
+            s.UniqueID = System.Guid.NewGuid().ToString();
+            s.Status = (int)ChallengeStatus.StatusCodes.Accepted;
+            StatusRepo.Add(s);
+
+            return s;
         }
 
         // PUT /api/challenge/5

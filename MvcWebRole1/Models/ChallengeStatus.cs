@@ -30,6 +30,7 @@ namespace DareyaAPI.Models
             this.CustomerID = d.CustomerID;
             this.ChallengeID = d.ChallengeID;
             this.Status = d.Status;
+            this.ChallengeOriginatorCustomerID = d.ChallengeOriginatorCustomerID;
 
             this.Customer = null;
         }

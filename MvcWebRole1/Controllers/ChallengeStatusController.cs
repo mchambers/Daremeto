@@ -134,13 +134,16 @@ namespace DareyaAPI.Controllers
             s.ChallengeID = c.ID;
             s.CustomerID = ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
             s.Status = (int)ChallengeStatus.StatusCodes.Accepted;
-            s.UniqueID = System.Guid.NewGuid().ToString();
+            s.UniqueID = status.UniqueID;
 
             StatusRepo.Update(s);
 
             // add a friendship between these folk if one doesn't exist.
-            if (!FriendRepo.CustomersAreFriends(s.CustomerID, ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID))
+            if (!FriendRepo.CustomersAreFriends(s.ChallengeOriginatorCustomerID, ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID))
                 FriendRepo.Add(s.CustomerID, ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID);
+
+            c.State = (int)Challenge.ChallengeState.Accepted;
+            ChalRepo.Update(c);
 
             Email.SendChallengeAcceptedEmail(CustRepo.GetWithID(s.ChallengeOriginatorCustomerID), CustRepo.GetWithID(s.CustomerID), c);
         }
@@ -163,9 +166,9 @@ namespace DareyaAPI.Controllers
             s.ChallengeID = c.ID;
             s.CustomerID = ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
             s.Status = (int)ChallengeStatus.StatusCodes.TargetRejected;
-            s.UniqueID = System.Guid.NewGuid().ToString();
+            s.UniqueID = status.UniqueID;
 
-            StatusRepo.Add(s);
+            StatusRepo.Update(s);
 
             // the recipient has rejected this challenge. it dies here.
             // the creator will have to make a new one to re-issue it.

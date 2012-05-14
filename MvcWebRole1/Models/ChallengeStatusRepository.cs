@@ -65,7 +65,7 @@ namespace DareyaAPI.Models
             ChallengeStatusDb sourceCust = new ChallengeStatusDb(value);
             ChallengeStatusDb targetCust = new ChallengeStatusDb(value);
             ChallengeStatusDb chal = new ChallengeStatusDb(value);
-            
+
             targetCust.PartitionKey = "Cust" + value.CustomerID;
             sourceCust.PartitionKey = "SourceCust" + value.ChallengeOriginatorCustomerID;
             chal.PartitionKey = "Chal" + value.ChallengeID;
@@ -73,19 +73,28 @@ namespace DareyaAPI.Models
             if (Add)
                 context.AddObject(TableName, sourceCust);
             else
+            {
                 context.AttachTo(TableName, sourceCust, null);
+                context.UpdateObject(sourceCust);
+            }
 
             if (Add)
                 context.AddObject(TableName, targetCust);
             else
+            {
                 context.AttachTo(TableName, targetCust, null);
-                
+                context.UpdateObject(targetCust);
+            }
+
             if (Add)
                 context.AddObject(TableName, chal);
             else
+            {
                 context.AttachTo(TableName, chal, null);
+                context.UpdateObject(chal);
+            }
 
-            context.SaveChangesWithRetries(SaveChangesOptions.None);
+            context.SaveChangesWithRetries();
         }
 
         public void Update(ChallengeStatus value)

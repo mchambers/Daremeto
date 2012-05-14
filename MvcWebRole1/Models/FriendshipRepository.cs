@@ -27,7 +27,17 @@ namespace DareyaAPI.Models
 
         public bool CustomersAreFriends(long Customer1ID, long Customer2ID)
         {
-            FriendshipDb f = (from e in context.CreateQuery<FriendshipDb>(TableName) where e.PartitionKey == "Cust" + Customer1ID.ToString() && e.RowKey == "Cust" + Customer2ID.ToString() select e).FirstOrDefault();
+            FriendshipDb f=null;
+
+            try
+            {
+                f = (from e in context.CreateQuery<FriendshipDb>(TableName) where e.PartitionKey == "Cust" + Customer1ID.ToString() && e.RowKey == "Cust" + Customer2ID.ToString() select e).FirstOrDefault();
+            }
+            catch (DataServiceQueryException e)
+            {
+                f = null;
+            }
+
             if (f != null) return true;
             return false;
         }
@@ -39,15 +49,33 @@ namespace DareyaAPI.Models
 
             f1.PartitionKey = "Cust" + Customer1ID.ToString();
             f1.RowKey = "Cust" + Customer2ID.ToString();
-            
+
+            f1.CustomerID = Customer1ID;
+            f1.FriendCustomerID = Customer2ID;
+
             f2.PartitionKey = f1.RowKey;
             f2.RowKey = f1.PartitionKey;
 
-            context.AddObject(TableName, f1);
-            context.SaveChangesWithRetries();
+            f2.CustomerID = Customer2ID;
+            f2.FriendCustomerID = Customer1ID;
+            
+            try
+            {
+                context.AddObject(TableName, f1);
+                context.SaveChangesWithRetries();
+            }
+            catch (Exception e)
+            {
+            }
 
-            context.AddObject(TableName, f2);
-            context.SaveChangesWithRetries();
+            try
+            {
+                context.AddObject(TableName, f2);
+                context.SaveChangesWithRetries();
+            }
+            catch (Exception e)
+            {
+            }
         }
     }
 }

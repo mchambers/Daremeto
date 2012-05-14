@@ -38,6 +38,31 @@ namespace DareyaAPI.Models
 
         public string AvatarURL { get; set; }
 
+        public static Customer Filter(Customer c)
+        {
+            Customer filtered = new Customer();
+
+            filtered.Address = null;
+            filtered.Address2 = null;
+            filtered.BillingID = null;
+            filtered.BillingType = 0;
+            filtered.City = null;
+            filtered.State = null;
+            filtered.ZIPCode = null;
+            filtered.Password = null;
+            filtered.EmailAddress = null;
+            filtered.FacebookAccessToken = null;
+            filtered.FacebookExpires = null;
+            filtered.FacebookUserID = null;
+
+            filtered.ID = c.ID;
+            filtered.FirstName = c.FirstName;
+            filtered.LastName = c.LastName;
+            filtered.AvatarURL = c.AvatarURL;
+
+            return filtered;
+        }
+
         public Customer()
         {
             FirstName = "";
