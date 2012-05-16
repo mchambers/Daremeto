@@ -5,7 +5,7 @@ using System.Web;
 
 namespace DareyaAPI.Models
 {
-    interface IAuthorizationRepository
+    public interface IAuthorizationRepository
     {
         Authorization GetWithToken(String Token);
         void Add(Authorization a);

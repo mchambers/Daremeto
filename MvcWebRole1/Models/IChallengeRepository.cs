@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DareyaAPI.Models
 {
-    interface IChallengeRepository
+    public interface IChallengeRepository
     {
         Challenge Get(long id);
         long Add(Challenge item);

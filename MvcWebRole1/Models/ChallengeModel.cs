@@ -26,10 +26,17 @@ namespace DareyaAPI.Models
             Rejected
         }
 
+        public enum ChallengeVisibility
+        {
+            Public,
+            Private
+        }
+
         public long ID { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public int Privacy { get; set; }
+        public int Visibility { get; set; }
         public int CurrentBid { get; set; }
         public int State { get; set; }
         public bool Anonymous { get; set; }
@@ -48,6 +55,7 @@ namespace DareyaAPI.Models
             Title = "";
             Description = "";
             Privacy = 0;
+            Visibility = 0;
             CurrentBid = 0;
             State = 0;
             Anonymous = false;

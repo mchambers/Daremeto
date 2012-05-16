@@ -150,21 +150,45 @@ namespace DareyaAPI.Database
         #endregion
 
         #region Function Imports
-        
+    
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         /// <param name="challengeID">No Metadata Documentation available.</param>
         /// <param name="bidAmount">No Metadata Documentation available.</param>
         /// <param name="customerID">No Metadata Documentation available.</param>
-        public int AddBidToChallenge(long challengeID, int bidAmount, long customerID)
+        public int AddBidToChallenge(Nullable<global::System.Int64> challengeID, Nullable<global::System.Int32> bidAmount, Nullable<global::System.Int64> customerID)
         {
             ObjectParameter challengeIDParameter;
-            challengeIDParameter = new ObjectParameter("ChallengeID", challengeID);
+            if (challengeID.HasValue)
+            {
+                challengeIDParameter = new ObjectParameter("ChallengeID", challengeID);
+            }
+            else
+            {
+                challengeIDParameter = new ObjectParameter("ChallengeID", typeof(global::System.Int64));
+            }
+    
             ObjectParameter bidAmountParameter;
-            bidAmountParameter = new ObjectParameter("BidAmount", bidAmount);
+            if (bidAmount.HasValue)
+            {
+                bidAmountParameter = new ObjectParameter("BidAmount", bidAmount);
+            }
+            else
+            {
+                bidAmountParameter = new ObjectParameter("BidAmount", typeof(global::System.Int32));
+            }
+    
             ObjectParameter customerIDParameter;
-            customerIDParameter = new ObjectParameter("CustomerID", customerID);
+            if (customerID.HasValue)
+            {
+                customerIDParameter = new ObjectParameter("CustomerID", customerID);
+            }
+            else
+            {
+                customerIDParameter = new ObjectParameter("CustomerID", typeof(global::System.Int64));
+            }
+    
             return base.ExecuteFunction("AddBidToChallenge", challengeIDParameter, bidAmountParameter, customerIDParameter);
         }
 
@@ -620,6 +644,30 @@ namespace DareyaAPI.Database
         private global::System.Byte _Anonymous;
         partial void OnAnonymousChanging(global::System.Byte value);
         partial void OnAnonymousChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> Visibility
+        {
+            get
+            {
+                return _Visibility;
+            }
+            set
+            {
+                OnVisibilityChanging(value);
+                ReportPropertyChanging("Visibility");
+                _Visibility = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Visibility");
+                OnVisibilityChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _Visibility;
+        partial void OnVisibilityChanging(Nullable<global::System.Int32> value);
+        partial void OnVisibilityChanged();
 
         #endregion
 

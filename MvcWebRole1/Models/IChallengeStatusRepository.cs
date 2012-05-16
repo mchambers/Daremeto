@@ -10,6 +10,7 @@ namespace DareyaAPI.Models
         List<ChallengeStatus> GetActiveChallengesForCustomer(long CustomerID);
         List<ChallengeStatus> GetActiveStatusesForChallenge(long ChallengeID);
         List<ChallengeStatus> GetChallengesBySourceCustomer(long CustomerID);
+        List<ChallengeStatus> GetActiveChallengesBySourceCustomer(long CustomerID);
 
         void Add(ChallengeStatus value);
         ChallengeStatus Get(long id, string key);

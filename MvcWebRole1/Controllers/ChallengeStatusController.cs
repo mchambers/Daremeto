@@ -20,13 +20,13 @@ namespace DareyaAPI.Controllers
 
         public ChallengeStatusController()
         {
-            StatusRepo = new ChallengeStatusRepository();
-            ChalRepo = new ChallengeRepository();
+            StatusRepo = RepoFactory.GetChallengeStatusRepo();
+            ChalRepo = RepoFactory.GetChallengeRepo();
             Security = new Security();
-            BidRepo = new ChallengeBidRepository();
-            VoteRepo = new ChallengeStatusVoteRepository();
-            CustRepo = new CustomerRepository();
-            FriendRepo=new FriendshipRepository();
+            BidRepo = RepoFactory.GetChallengeBidRepo();
+            VoteRepo = RepoFactory.GetChallengeStatusVoteRepo();
+            CustRepo = RepoFactory.GetCustomerRepo();
+            FriendRepo = RepoFactory.GetFriendshipRepo();
         }
 
         [HttpPost]

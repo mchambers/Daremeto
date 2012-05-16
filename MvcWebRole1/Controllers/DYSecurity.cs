@@ -43,8 +43,8 @@ namespace DareyaAPI.Controllers
             switch (a)
             {
                 case Audience.Users:
-                    if (c.Privacy == (int)Challenge.ChallengePrivacy.FriendsOnly)
-                        return false;
+                    //if (c.Privacy == (int)Challenge.ChallengePrivacy.FriendsOnly)
+                    //    return false;
 
                     return true;
 

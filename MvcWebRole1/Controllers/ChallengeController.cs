@@ -22,10 +22,10 @@ namespace DareyaAPI.Controllers
 
         public ChallengeController()
         {
-            ChalRepo = new ChallengeRepository();
-            BidRepo = new ChallengeBidRepository();
-            StatusRepo = new ChallengeStatusRepository();
-            CustRepo = new CustomerRepository();
+            ChalRepo = RepoFactory.GetChallengeRepo();
+            BidRepo = RepoFactory.GetChallengeBidRepo();
+            StatusRepo = RepoFactory.GetChallengeStatusRepo();
+            CustRepo = RepoFactory.GetCustomerRepo();
             Security = new Security();
         }
 
@@ -164,7 +164,7 @@ namespace DareyaAPI.Controllers
         // POST /api/challenge
         [HttpPost]
         [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
-        public void New(NewChallenge value)
+        public Challenge New(NewChallenge value)
         {
             if (value.Description.Equals(""))
             {
@@ -252,6 +252,7 @@ namespace DareyaAPI.Controllers
                 // notify the receipient of the new challenge.
             }
 
+            return PrepOutboundChallenge(value);
         }
 
         [HttpPost]
@@ -269,6 +270,9 @@ namespace DareyaAPI.Controllers
             if (c.TargetCustomerID == ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID)
                 throw new HttpResponseException("This Challenge was sent to the current user; call /challengestatus/accept instead", System.Net.HttpStatusCode.Conflict);
 
+            if (c.CustomerID == ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID)
+                throw new HttpResponseException("This Challenge originated from the current user; you can't take your own dare", System.Net.HttpStatusCode.Conflict);
+            
             ChallengeStatus s = new ChallengeStatus();
             s.ChallengeID = c.ID;
             s.ChallengeOriginatorCustomerID = c.CustomerID;

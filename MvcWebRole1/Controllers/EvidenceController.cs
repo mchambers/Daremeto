@@ -9,11 +9,11 @@ namespace DareyaAPI.Controllers
 {
     public class EvidenceController : ApiController
     {
-        private EvidenceRepository EvidenceRepo;
+        private IEvidenceRepository EvidenceRepo;
 
         public EvidenceController()
         {
-            EvidenceRepo = new EvidenceRepository();
+            EvidenceRepo = RepoFactory.GetEvidenceRepo();
         }
 
         // GET /api/<controller>/5

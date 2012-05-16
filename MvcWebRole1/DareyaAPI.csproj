@@ -185,7 +185,11 @@
     <Compile Include="Models\ICustomerRepository.cs" />
     <Compile Include="Models\IEvidenceRepository.cs" />
     <Compile Include="Models\IFriendshipRepository.cs" />
+    <Compile Include="Models\IPushServiceTokenRepository.cs" />
     <Compile Include="Models\Login.cs" />
+    <Compile Include="Models\PushServiceToken.cs" />
+    <Compile Include="Models\PushServiceTokenRepository.cs" />
+    <Compile Include="Models\RepoFactory.cs" />
     <Compile Include="Models\SQLChallengeBidRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebRole.cs" />

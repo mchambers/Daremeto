@@ -14,6 +14,7 @@ namespace DareyaAPI.Controllers
         private Security Security;
         private IChallengeStatusRepository StatusRepo;
         private IChallengeRepository ChalRepo;
+        private IPushServiceTokenRepository TokenRepo;
 
         private enum SignupType
         {
@@ -23,10 +24,11 @@ namespace DareyaAPI.Controllers
 
         public CustomerController()
         {
-            Repo = new CustomerRepository();
+            Repo = RepoFactory.GetCustomerRepo();
             Security = new Security();
-            StatusRepo = new ChallengeStatusRepository();
-            ChalRepo = new ChallengeRepository();
+            StatusRepo = RepoFactory.GetChallengeStatusRepo();
+            ChalRepo = RepoFactory.GetChallengeRepo();
+            TokenRepo = RepoFactory.GetPushServiceTokenRepo();
         }
 
         // GET /api/customer
@@ -68,6 +70,15 @@ namespace DareyaAPI.Controllers
         {
             Customer c=Repo.GetWithID(id);
             return FilterForAudience(c, Security.DetermineAudience(c));
+        }
+
+        [HttpPost]
+        [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
+        public void PushServiceToken(PushServiceToken t)
+        {
+            t.UniqueID = System.Guid.NewGuid().ToString();
+            t.CustomerID = ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
+            TokenRepo.Add(t);
         }
 
         private void CoreHandleFacebookSignup(Customer newCustomer)

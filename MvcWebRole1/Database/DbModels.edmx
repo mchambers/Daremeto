@@ -34,6 +34,7 @@
           <Property Name="TargetCustomerID" Type="bigint" />
           <Property Name="State" Type="int" Nullable="false" />
           <Property Name="Anonymous" Type="tinyint" Nullable="false" />
+          <Property Name="Visibility" Type="int" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -61,9 +62,9 @@
           <Property Name="AvatarURL" Type="nvarchar(max)" />
         </EntityType>
         <Function Name="AddBidToChallenge" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ChallengeID" Type="nvarchar" Mode="In" />
-          <Parameter Name="BidAmount" Type="nvarchar" Mode="In" />
-          <Parameter Name="CustomerID" Type="nvarchar" Mode="In" />
+          <Parameter Name="ChallengeID" Type="bigint" Mode="In" />
+          <Parameter Name="BidAmount" Type="int" Mode="In" />
+          <Parameter Name="CustomerID" Type="bigint" Mode="In" />
         </Function>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -78,9 +79,9 @@
           </AssociationSet>
           <EntitySet Name="Bid" EntityType="DbModels.Bid" />
           <FunctionImport Name="AddBidToChallenge">
-            <Parameter Name="ChallengeID" Mode="In" Type="String" />
-            <Parameter Name="BidAmount" Mode="In" Type="String" />
-            <Parameter Name="CustomerID" Mode="In" Type="String" />
+            <Parameter Name="ChallengeID" Mode="In" Type="Int64" />
+            <Parameter Name="BidAmount" Mode="In" Type="Int32" />
+            <Parameter Name="CustomerID" Mode="In" Type="Int64" />
           </FunctionImport>
           </EntityContainer>
         <EntityType Name="Challenge">
@@ -98,6 +99,7 @@
           <Property Type="Int64" Name="TargetCustomerID" />
           <Property Type="Int32" Name="State" Nullable="false" />
           <Property Type="Byte" Name="Anonymous" Nullable="false" />
+          <Property Type="Int32" Name="Visibility" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -154,7 +156,8 @@
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="DbModelsStoreContainer" CdmEntityContainer="DYDbEntities">
           <EntitySetMapping Name="Challenge"><EntityTypeMapping TypeName="DbModels.Challenge"><MappingFragment StoreEntitySet="Challenge">
-            <ScalarProperty Name="Anonymous" ColumnName="Anonymous" />
+            <ScalarProperty Name="Visibility" ColumnName="Visibility" />
+                <ScalarProperty Name="Anonymous" ColumnName="Anonymous" />
                 <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="TargetCustomerID" ColumnName="TargetCustomerID" />
                 <ScalarProperty Name="CurrentBid" ColumnName="CurrentBid" />
@@ -219,7 +222,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="DbModels">
+      <Diagram Name="DbModels" ZoomLevel="85">
         <EntityTypeShape EntityType="DbModels.Challenge" Width="1.5" PointX="3" PointY="4" Height="2.5783902994791674" IsExpanded="true" />
         <EntityTypeShape EntityType="DbModels.Customer" Width="1.5" PointX="0.75" PointY="3.625" Height="4.480205078125" IsExpanded="true" />
         <AssociationConnector Association="DbModels.FK_Challenge_0" ManuallyRouted="false">

@@ -95,6 +95,10 @@ namespace DareyaAPI.Models
             }
 
             context.SaveChangesWithRetries();
+
+            context.Detach(sourceCust);
+            context.Detach(targetCust);
+            context.Detach(chal);
         }
 
         public void Update(ChallengeStatus value)
@@ -110,7 +114,23 @@ namespace DareyaAPI.Models
         public ChallengeStatus Get(long id, string key)
         {
             ChallengeStatusDb s = (from e in context.CreateQuery<ChallengeStatusDb>(TableName) where e.PartitionKey == "Chal"+id.ToString() && e.RowKey == key select e).FirstOrDefault();
-            return new ChallengeStatus(s);
+            ChallengeStatus outS = new ChallengeStatus(s);
+            context.Detach(s);
+            return outS;
+        }
+
+        public List<ChallengeStatus> GetActiveChallengesBySourceCustomer(long CustomerID)
+        {
+            CloudTableQuery<ChallengeStatusDb> b = (from e in context.CreateQuery<ChallengeStatusDb>(TableName) where e.PartitionKey == "SourceCust" + CustomerID.ToString() select e).AsTableServiceQuery<ChallengeStatusDb>();
+            List<ChallengeStatus> items = new List<ChallengeStatus>();
+
+            foreach (ChallengeStatusDb item in b)
+            {
+                items.Add(new ChallengeStatus(item));
+                context.Detach(item);
+            }
+
+            return items;
         }
     }
 }

@@ -35,6 +35,7 @@ namespace DareyaAPI.Models
                 c.TargetCustomerID = (int)dc.TargetCustomerID;
 
             c.CustomerID = dc.CustomerID;
+            c.Visibility = dc.Visibility;
 
             return c;
         }
@@ -54,6 +55,7 @@ namespace DareyaAPI.Models
             dc.State = c.State;
             dc.TargetCustomerID = c.TargetCustomerID;
             dc.CurrentBid = c.CurrentBid;
+            dc.Visibility = c.Visibility;
 
             return dc;
         }
@@ -111,7 +113,7 @@ namespace DareyaAPI.Models
 
         public List<Challenge> GetNewest(int startAt, int amount)
         {
-            IEnumerable<Database.Challenge> chals = (from c in repo.Challenge select c).OrderByDescending(c=>c.ID).Skip(startAt).Take(amount);
+            IEnumerable<Database.Challenge> chals = (from c in repo.Challenge where c.Visibility==null || c.Visibility==(int)Challenge.ChallengeVisibility.Public select c).OrderByDescending(c=>c.ID).Skip(startAt).Take(amount);
 
             List<Challenge> listChals = new List<Challenge>();
             foreach (Database.Challenge c in chals)
