@@ -23,7 +23,7 @@ namespace DareyaAPI.Models
             d.CustomerID = b.CustomerID;
             d.Amount = b.Amount;
             d.ChallengeID = b.ChallengeID;
-
+            d.ComputedFees = b.ComputedFees;
             return d;
         }
 
@@ -35,6 +35,11 @@ namespace DareyaAPI.Models
             b.ChallengeID = (long)d.ChallengeID;
             b.CustomerID = d.CustomerID;
             b.ID = d.ID;
+
+            if (d.ComputedFees != null)
+                b.ComputedFees = (decimal)d.ComputedFees;
+            else
+                b.ComputedFees = 0m;
 
             return b;
         }

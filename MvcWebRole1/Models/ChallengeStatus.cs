@@ -16,7 +16,9 @@ namespace DareyaAPI.Models
             TargetRejected,
             ClaimSubmitted,
             NeedMoreEvidence,
-            SourceRejected
+            SourceRejected,
+            Paid,
+            PartialPaid
         }
 
         public ChallengeStatus()

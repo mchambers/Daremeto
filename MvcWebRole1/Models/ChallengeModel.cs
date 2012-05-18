@@ -23,7 +23,9 @@ namespace DareyaAPI.Models
             Completed,
             Failed,
             Expired,
-            Rejected
+            Rejected,
+            Paid,
+            PartialPaid
         }
 
         public enum ChallengeVisibility

@@ -34,6 +34,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.2.1.267\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper">
+      <HintPath>..\packages\Dapper.1.8\lib\net40\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.4.1.10331.0\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
@@ -140,6 +146,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\BidController.cs" />
+    <Compile Include="Controllers\Billing.cs" />
+    <Compile Include="Controllers\BillingProcessorFactory.cs" />
     <Compile Include="Controllers\ChallengeController.cs" />
     <Compile Include="Controllers\ChallengeStatusController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
@@ -147,7 +155,9 @@
     <Compile Include="Controllers\Email.cs" />
     <Compile Include="Controllers\EvidenceController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IBillingProcessor.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\StripeBillingProcessor.cs" />
     <Compile Include="Filters\DareyoutoAuthorizationAttribute.cs" />
     <Compile Include="Formatters\JsonNetFormatter.cs" />
     <Compile Include="Global.asax.cs">
@@ -178,6 +188,7 @@
     <Compile Include="Models\Friendship.cs" />
     <Compile Include="Models\FriendshipRepository.cs" />
     <Compile Include="Models\IAuthorizationRepository.cs" />
+    <Compile Include="Models\IBillingQueue.cs" />
     <Compile Include="Models\IChallengeBidRepository.cs" />
     <Compile Include="Models\IChallengeRepository.cs" />
     <Compile Include="Models\IChallengeStatusRepository.cs" />
@@ -185,12 +196,17 @@
     <Compile Include="Models\ICustomerRepository.cs" />
     <Compile Include="Models\IEvidenceRepository.cs" />
     <Compile Include="Models\IFriendshipRepository.cs" />
+    <Compile Include="Models\IProcessingQueue.cs" />
     <Compile Include="Models\IPushServiceTokenRepository.cs" />
+    <Compile Include="Models\ITransactionRepository.cs" />
     <Compile Include="Models\Login.cs" />
+    <Compile Include="Models\ProcessingQueue.cs" />
     <Compile Include="Models\PushServiceToken.cs" />
     <Compile Include="Models\PushServiceTokenRepository.cs" />
     <Compile Include="Models\RepoFactory.cs" />
     <Compile Include="Models\SQLChallengeBidRepository.cs" />
+    <Compile Include="Models\Transaction.cs" />
+    <Compile Include="Models\TransactionRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebRole.cs" />
   </ItemGroup>

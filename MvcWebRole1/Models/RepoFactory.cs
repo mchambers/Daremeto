@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using DareyaAPI.ProcessingQueue;
 
 namespace DareyaAPI.Models
 {
@@ -16,6 +17,33 @@ namespace DareyaAPI.Models
         private static IFriendshipRepository friendshipRepo;
         private static ICustomerRepository customerRepo;
         private static IPushServiceTokenRepository tokenRepo;
+        private static IProcessingQueue processingQueue;
+        private static IAccountRepository accountRepository;
+        private static ITransactionRepository transRepository;
+
+        public static ITransactionRepository GetTransactionRepo()
+        {
+            if (transRepository == null)
+                transRepository = new TransactionRepository();
+
+            return transRepository;
+        }
+
+        public static IAccountRepository GetAccountRepo()
+        {
+            if (accountRepository == null)
+                accountRepository = new AccountRepository();
+
+            return accountRepository;
+        }
+
+        public static IProcessingQueue GetProcessingQueue()
+        {
+            if (processingQueue == null)
+                processingQueue = new ProcessingQueue.ProcessingQueue();
+
+            return processingQueue;
+        }
 
         public static IAuthorizationRepository GetAuthorizationRepo()
         {

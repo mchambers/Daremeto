@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+# Visual Web Developer Express 2010
 Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "Dareya", "Dareya\Dareya.ccproj", "{7EE26C52-EFAA-47FD-946C-C0F26E6EFEE2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DareyaAPI", "MvcWebRole1\DareyaAPI.csproj", "{6FFCC16A-5AC0-40E0-9AB7-40E3581A8620}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DaremetoWorker", "DaremetoWorker\DaremetoWorker.csproj", "{6829EA11-38D7-4C45-B035-414983871765}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,6 +21,10 @@ Global
 		{6FFCC16A-5AC0-40E0-9AB7-40E3581A8620}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FFCC16A-5AC0-40E0-9AB7-40E3581A8620}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FFCC16A-5AC0-40E0-9AB7-40E3581A8620}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6829EA11-38D7-4C45-B035-414983871765}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6829EA11-38D7-4C45-B035-414983871765}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6829EA11-38D7-4C45-B035-414983871765}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6829EA11-38D7-4C45-B035-414983871765}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

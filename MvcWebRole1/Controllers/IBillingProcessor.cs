@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DareyaAPI.Controllers
 {
-    interface IBillingProcessor
+    public interface IBillingProcessor
     {
         // These are the money we're charged to take this amount via this billing processor.
         decimal GetProcessingFeesForAmount(decimal Amount);

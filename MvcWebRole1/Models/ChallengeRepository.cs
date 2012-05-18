@@ -21,21 +21,20 @@ namespace DareyaAPI.Models
             c.ID = dc.ID;
             c.Title = dc.Title;
             c.Description = dc.Description;
-
-            if(dc.CurrentBid!=null)
-                c.CurrentBid = (int)dc.CurrentBid;
-
-            if(dc.Privacy!=null)
-                c.Privacy = (int)dc.Privacy;
-
-            if(dc.State!=null)
-                c.State = (int)dc.State;
-
-            if(c.TargetCustomerID!=null)
-                c.TargetCustomerID = (int)dc.TargetCustomerID;
-
+            c.CurrentBid = (int)dc.CurrentBid;
+            c.Privacy = (int)dc.Privacy;
+            c.State = (int)dc.State;
+            c.TargetCustomerID = (int)dc.TargetCustomerID;
             c.CustomerID = dc.CustomerID;
-            c.Visibility = dc.Visibility;
+
+            try
+            {
+                c.Visibility = Convert.ToInt32(dc.Visibility);
+            }
+            catch (Exception ex)
+            {
+                c.Visibility = 0;
+            }
 
             return c;
         }

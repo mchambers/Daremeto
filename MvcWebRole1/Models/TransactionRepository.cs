@@ -2,11 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using AutoMapper;
 
 namespace DareyaAPI.Models
 {
     public class TransactionRepository : ITransactionRepository
     {
+        private Database.DYDbEntities context;
+
+        public TransactionRepository()
+        {
+            context = new Database.DYDbEntities();
+
+            Mapper.CreateMap<Database.Transaction, Transaction>();
+            Mapper.CreateMap<Transaction, Database.Transaction>();
+        }
+
         public string RecordTransactionBatch(List<Transaction> Transactions, string TransactionGroupID = "")
         {
             TransactionGroup tg = new TransactionGroup();
@@ -19,10 +30,10 @@ namespace DareyaAPI.Models
             foreach (Transaction t in Transactions)
             {
                 t.TransactionBatchID = tg.UniqueID;
+                context.Transaction.AddObject(Mapper.Map<Transaction, Database.Transaction>(t));
             }
-
-            // record transactions in ... a transaction
-            // mind=blown
+            
+            context.SaveChanges();
 
             return tg.UniqueID;
         }

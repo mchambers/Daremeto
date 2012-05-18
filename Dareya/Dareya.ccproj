@@ -37,6 +37,14 @@
     <ServiceConfiguration Include="ServiceConfiguration.Cloud.cscfg" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DaremetoWorker\DaremetoWorker.csproj">
+      <Name>DaremetoWorker</Name>
+      <Project>{6829ea11-38d7-4c45-b035-414983871765}</Project>
+      <Private>True</Private>
+      <RoleType>Worker</RoleType>
+      <RoleName>DaremetoWorker</RoleName>
+      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+    </ProjectReference>
     <ProjectReference Include="..\MvcWebRole1\DareyaAPI.csproj">
       <Name>DareyaAPI</Name>
       <Project>{6ffcc16a-5ac0-40e0-9ab7-40e3581a8620}</Project>

@@ -43,7 +43,6 @@ C:\Users\Marc Chambers\documents\visual studio 2010\Projects\Dareya\Dareya\obj\D
 C:\Users\Marc Chambers\documents\visual studio 2010\Projects\Dareya\Dareya\obj\Debug\DareyaAPI\bin\System.Web.WebPages.xml
 C:\Users\Marc Chambers\documents\visual studio 2010\Projects\Dareya\Dareya\obj\Debug\DareyaAPI\bin\Global.asax
 C:\Users\Marc Chambers\documents\visual studio 2010\Projects\Dareya\Dareya\obj\Debug\DareyaAPI\bin\Global.asax.cs
-C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\bin\Debug\ServiceConfiguration.cscfg
 C:\Users\Marc Chambers\documents\visual studio 2010\Projects\Dareya\Dareya\obj\Debug\DareyaAPI\bin\CodeScales.Http.dll
 C:\Users\Marc Chambers\documents\visual studio 2010\Projects\Dareya\Dareya\obj\Debug\DareyaAPI\bin\Facebook.dll
 C:\Users\Marc Chambers\documents\visual studio 2010\Projects\Dareya\Dareya\obj\Debug\DareyaAPI\bin\Facebook.xml
@@ -51,3 +50,4 @@ C:\Users\Marc Chambers\documents\visual studio 2010\Projects\Dareya\Dareya\obj\D
 C:\Users\Marc Chambers\documents\visual studio 2010\Projects\Dareya\Dareya\obj\Debug\DareyaAPI\bin\Stripe.net.dll
 C:\Users\Marc Chambers\documents\visual studio 2010\Projects\Dareya\Dareya\obj\Debug\DareyaAPI\bin\UrbanBlimp.dll
 C:\Users\Marc Chambers\documents\visual studio 2010\Projects\Dareya\Dareya\obj\Debug\DareyaAPI\bin\UrbanBlimp.pdb
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\bin\Debug\ServiceConfiguration.cscfg

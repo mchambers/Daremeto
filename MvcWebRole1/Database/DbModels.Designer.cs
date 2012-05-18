@@ -118,6 +118,38 @@ namespace DareyaAPI.Database
             }
         }
         private ObjectSet<Bid> _Bid;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Transaction> Transaction
+        {
+            get
+            {
+                if ((_Transaction == null))
+                {
+                    _Transaction = base.CreateObjectSet<Transaction>("Transaction");
+                }
+                return _Transaction;
+            }
+        }
+        private ObjectSet<Transaction> _Transaction;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Account> Account
+        {
+            get
+            {
+                if ((_Account == null))
+                {
+                    _Account = base.CreateObjectSet<Account>("Account");
+                }
+                return _Account;
+            }
+        }
+        private ObjectSet<Account> _Account;
 
         #endregion
 
@@ -145,6 +177,22 @@ namespace DareyaAPI.Database
         public void AddToBid(Bid bid)
         {
             base.AddObject("Bid", bid);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Transaction EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToTransaction(Transaction transaction)
+        {
+            base.AddObject("Transaction", transaction);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Account EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToAccount(Account account)
+        {
+            base.AddObject("Account", account);
         }
 
         #endregion
@@ -191,6 +239,36 @@ namespace DareyaAPI.Database
     
             return base.ExecuteFunction("AddBidToChallenge", challengeIDParameter, bidAmountParameter, customerIDParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="customerID">No Metadata Documentation available.</param>
+        /// <param name="amount">No Metadata Documentation available.</param>
+        public int ModifyCustomerAccountBalance(Nullable<global::System.Int64> customerID, Nullable<global::System.Decimal> amount)
+        {
+            ObjectParameter customerIDParameter;
+            if (customerID.HasValue)
+            {
+                customerIDParameter = new ObjectParameter("CustomerID", customerID);
+            }
+            else
+            {
+                customerIDParameter = new ObjectParameter("CustomerID", typeof(global::System.Int64));
+            }
+    
+            ObjectParameter amountParameter;
+            if (amount.HasValue)
+            {
+                amountParameter = new ObjectParameter("Amount", amount);
+            }
+            else
+            {
+                amountParameter = new ObjectParameter("Amount", typeof(global::System.Decimal));
+            }
+    
+            return base.ExecuteFunction("ModifyCustomerAccountBalance", customerIDParameter, amountParameter);
+        }
 
         #endregion
 
@@ -199,6 +277,139 @@ namespace DareyaAPI.Database
     #endregion
 
     #region Entities
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DbModels", Name="Account")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Account : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Account object.
+        /// </summary>
+        /// <param name="id">Initial value of the ID property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
+        /// <param name="balance">Initial value of the Balance property.</param>
+        public static Account CreateAccount(global::System.Int64 id, global::System.String name, global::System.Decimal balance)
+        {
+            Account account = new Account();
+            account.ID = id;
+            account.Name = name;
+            account.Balance = balance;
+            return account;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int64 _ID;
+        partial void OnIDChanging(global::System.Int64 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal Balance
+        {
+            get
+            {
+                return _Balance;
+            }
+            set
+            {
+                OnBalanceChanging(value);
+                ReportPropertyChanging("Balance");
+                _Balance = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Balance");
+                OnBalanceChanged();
+            }
+        }
+        private global::System.Decimal _Balance;
+        partial void OnBalanceChanging(global::System.Decimal value);
+        partial void OnBalanceChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> CustomerID
+        {
+            get
+            {
+                return _CustomerID;
+            }
+            set
+            {
+                OnCustomerIDChanging(value);
+                ReportPropertyChanging("CustomerID");
+                _CustomerID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CustomerID");
+                OnCustomerIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _CustomerID;
+        partial void OnCustomerIDChanging(Nullable<global::System.Int32> value);
+        partial void OnCustomerIDChanged();
+
+        #endregion
+
+    
+    }
     
     /// <summary>
     /// No Metadata Documentation available.
@@ -218,7 +429,7 @@ namespace DareyaAPI.Database
         /// <param name="amount">Initial value of the Amount property.</param>
         /// <param name="challengeID">Initial value of the ChallengeID property.</param>
         /// <param name="status">Initial value of the Status property.</param>
-        public static Bid CreateBid(global::System.Int64 id, global::System.Int64 customerID, global::System.Int32 amount, global::System.Int64 challengeID, global::System.Int32 status)
+        public static Bid CreateBid(global::System.Int64 id, global::System.Int64 customerID, global::System.Decimal amount, global::System.Int64 challengeID, global::System.Int32 status)
         {
             Bid bid = new Bid();
             bid.ID = id;
@@ -289,7 +500,7 @@ namespace DareyaAPI.Database
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 Amount
+        public global::System.Decimal Amount
         {
             get
             {
@@ -304,8 +515,8 @@ namespace DareyaAPI.Database
                 OnAmountChanged();
             }
         }
-        private global::System.Int32 _Amount;
-        partial void OnAmountChanging(global::System.Int32 value);
+        private global::System.Decimal _Amount;
+        partial void OnAmountChanging(global::System.Decimal value);
         partial void OnAmountChanged();
     
         /// <summary>
@@ -355,6 +566,54 @@ namespace DareyaAPI.Database
         private global::System.Int32 _Status;
         partial void OnStatusChanging(global::System.Int32 value);
         partial void OnStatusChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> ComputedFees
+        {
+            get
+            {
+                return _ComputedFees;
+            }
+            set
+            {
+                OnComputedFeesChanging(value);
+                ReportPropertyChanging("ComputedFees");
+                _ComputedFees = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ComputedFees");
+                OnComputedFeesChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _ComputedFees;
+        partial void OnComputedFeesChanging(Nullable<global::System.Decimal> value);
+        partial void OnComputedFeesChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int64> TransactionID
+        {
+            get
+            {
+                return _TransactionID;
+            }
+            set
+            {
+                OnTransactionIDChanging(value);
+                ReportPropertyChanging("TransactionID");
+                _TransactionID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("TransactionID");
+                OnTransactionIDChanged();
+            }
+        }
+        private Nullable<global::System.Int64> _TransactionID;
+        partial void OnTransactionIDChanging(Nullable<global::System.Int64> value);
+        partial void OnTransactionIDChanged();
 
         #endregion
 
@@ -1257,6 +1516,353 @@ namespace DareyaAPI.Database
 
         #endregion
 
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="DbModels", Name="Transaction")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Transaction : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Transaction object.
+        /// </summary>
+        /// <param name="id">Initial value of the ID property.</param>
+        /// <param name="debitCustomerID">Initial value of the DebitCustomerID property.</param>
+        public static Transaction CreateTransaction(global::System.Int64 id, global::System.Int64 debitCustomerID)
+        {
+            Transaction transaction = new Transaction();
+            transaction.ID = id;
+            transaction.DebitCustomerID = debitCustomerID;
+            return transaction;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int64 _ID;
+        partial void OnIDChanging(global::System.Int64 value);
+        partial void OnIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String TransactionBatchID
+        {
+            get
+            {
+                return _TransactionBatchID;
+            }
+            set
+            {
+                OnTransactionBatchIDChanging(value);
+                ReportPropertyChanging("TransactionBatchID");
+                _TransactionBatchID = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("TransactionBatchID");
+                OnTransactionBatchIDChanged();
+            }
+        }
+        private global::System.String _TransactionBatchID;
+        partial void OnTransactionBatchIDChanging(global::System.String value);
+        partial void OnTransactionBatchIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> Type
+        {
+            get
+            {
+                return _Type;
+            }
+            set
+            {
+                OnTypeChanging(value);
+                ReportPropertyChanging("Type");
+                _Type = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Type");
+                OnTypeChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _Type;
+        partial void OnTypeChanging(Nullable<global::System.Int32> value);
+        partial void OnTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> Amount
+        {
+            get
+            {
+                return _Amount;
+            }
+            set
+            {
+                OnAmountChanging(value);
+                ReportPropertyChanging("Amount");
+                _Amount = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Amount");
+                OnAmountChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _Amount;
+        partial void OnAmountChanging(Nullable<global::System.Decimal> value);
+        partial void OnAmountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> Reason
+        {
+            get
+            {
+                return _Reason;
+            }
+            set
+            {
+                OnReasonChanging(value);
+                ReportPropertyChanging("Reason");
+                _Reason = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Reason");
+                OnReasonChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _Reason;
+        partial void OnReasonChanging(Nullable<global::System.Int32> value);
+        partial void OnReasonChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> Source
+        {
+            get
+            {
+                return _Source;
+            }
+            set
+            {
+                OnSourceChanging(value);
+                ReportPropertyChanging("Source");
+                _Source = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Source");
+                OnSourceChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _Source;
+        partial void OnSourceChanging(Nullable<global::System.Int32> value);
+        partial void OnSourceChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> AgentID
+        {
+            get
+            {
+                return _AgentID;
+            }
+            set
+            {
+                OnAgentIDChanging(value);
+                ReportPropertyChanging("AgentID");
+                _AgentID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AgentID");
+                OnAgentIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _AgentID;
+        partial void OnAgentIDChanging(Nullable<global::System.Int32> value);
+        partial void OnAgentIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Comment
+        {
+            get
+            {
+                return _Comment;
+            }
+            set
+            {
+                OnCommentChanging(value);
+                ReportPropertyChanging("Comment");
+                _Comment = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Comment");
+                OnCommentChanged();
+            }
+        }
+        private global::System.String _Comment;
+        partial void OnCommentChanging(global::System.String value);
+        partial void OnCommentChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 DebitCustomerID
+        {
+            get
+            {
+                return _DebitCustomerID;
+            }
+            set
+            {
+                OnDebitCustomerIDChanging(value);
+                ReportPropertyChanging("DebitCustomerID");
+                _DebitCustomerID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DebitCustomerID");
+                OnDebitCustomerIDChanged();
+            }
+        }
+        private global::System.Int64 _DebitCustomerID;
+        partial void OnDebitCustomerIDChanging(global::System.Int64 value);
+        partial void OnDebitCustomerIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> State
+        {
+            get
+            {
+                return _State;
+            }
+            set
+            {
+                OnStateChanging(value);
+                ReportPropertyChanging("State");
+                _State = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("State");
+                OnStateChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _State;
+        partial void OnStateChanging(Nullable<global::System.Int32> value);
+        partial void OnStateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ForeignTransactionID
+        {
+            get
+            {
+                return _ForeignTransactionID;
+            }
+            set
+            {
+                OnForeignTransactionIDChanging(value);
+                ReportPropertyChanging("ForeignTransactionID");
+                _ForeignTransactionID = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ForeignTransactionID");
+                OnForeignTransactionIDChanged();
+            }
+        }
+        private global::System.String _ForeignTransactionID;
+        partial void OnForeignTransactionIDChanging(global::System.String value);
+        partial void OnForeignTransactionIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> BillingProcessorType
+        {
+            get
+            {
+                return _BillingProcessorType;
+            }
+            set
+            {
+                OnBillingProcessorTypeChanging(value);
+                ReportPropertyChanging("BillingProcessorType");
+                _BillingProcessorType = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("BillingProcessorType");
+                OnBillingProcessorTypeChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _BillingProcessorType;
+        partial void OnBillingProcessorTypeChanging(Nullable<global::System.Int32> value);
+        partial void OnBillingProcessorTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int64> CreditCustomerID
+        {
+            get
+            {
+                return _CreditCustomerID;
+            }
+            set
+            {
+                OnCreditCustomerIDChanging(value);
+                ReportPropertyChanging("CreditCustomerID");
+                _CreditCustomerID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreditCustomerID");
+                OnCreditCustomerIDChanged();
+            }
+        }
+        private Nullable<global::System.Int64> _CreditCustomerID;
+        partial void OnCreditCustomerIDChanging(Nullable<global::System.Int64> value);
+        partial void OnCreditCustomerIDChanged();
+
+        #endregion
+
+    
     }
 
     #endregion

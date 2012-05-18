@@ -20,6 +20,7 @@ namespace DareyaAPI.Models
         {
         }
 
+        /*
         public ChallengeBid(ChallengeBidDb dbItem)
         {
             this.ChallengeID = dbItem.ChallengeID;
@@ -27,19 +28,21 @@ namespace DareyaAPI.Models
             this.Active = dbItem.Active;
             this.Amount = dbItem.Amount;
             this.UniqueID = dbItem.RowKey;
-        }
+            
+        }*/
         
         public long ChallengeID { get; set; }
         public long CustomerID { get; set; }
         public bool Active { get; set; }
-        public int Amount { get; set; }
+        public decimal Amount { get; set; }
         public string UniqueID { get; set; }
         public long ID { get; set; }
         public int Status { get; set; }
+        public decimal ComputedFees { get; set; }
 
         public Challenge Challenge { get; set; }
     }
-
+    /*
     public class ChallengeBidDb : TableServiceEntity
     {
         public ChallengeBidDb()
@@ -71,5 +74,5 @@ namespace DareyaAPI.Models
         public long ChallengeID { get; set; }
         public long CustomerID { get; set; }
         public bool Active { get; set; }
-    }
+    }*/
 }

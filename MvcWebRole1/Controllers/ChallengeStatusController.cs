@@ -53,7 +53,7 @@ namespace DareyaAPI.Controllers
                 BidRepo.Update(bid);
 
                 // challenge completed! award the money! DO IT DO IT!
-                Email.SendChallengeAwardedToYouEmail(CustRepo.GetWithID(s.CustomerID), ChalRepo.Get(s.ChallengeID));
+                CustomerNotifier.NotifyChallengeAwardedToYou(CustRepo.GetWithID(s.CustomerID), ChalRepo.Get(s.ChallengeID));
             }
             else
             {
@@ -88,7 +88,7 @@ namespace DareyaAPI.Controllers
                 BidRepo.Update(bid);
 
                 // you've failed this challenge my friend.
-                Email.SendChallengeRejectedEmail(CustRepo.GetWithID(s.CustomerID), ChalRepo.Get(s.ChallengeID));
+                CustomerNotifier.NotifyChallengeRejected(CustRepo.GetWithID(s.CustomerID), ChalRepo.Get(s.ChallengeID));
             }
             else
             {
@@ -118,7 +118,7 @@ namespace DareyaAPI.Controllers
             // so the bidders can see what they need to vote on
             BidRepo.UpdateStatusForBidsOnChallenge(status.ChallengeID, status.UniqueID, ChallengeBid.BidStatusCodes.VotePending);
 
-            Email.SendChallengeClaimedEmail(CustRepo.GetWithID(s.ChallengeOriginatorCustomerID), CustRepo.GetWithID(s.CustomerID), c);
+            CustomerNotifier.NotifyChallengeClaimed(CustRepo.GetWithID(s.ChallengeOriginatorCustomerID), CustRepo.GetWithID(s.CustomerID), c);
         }
 
         [HttpPost]
@@ -145,7 +145,7 @@ namespace DareyaAPI.Controllers
             c.State = (int)Challenge.ChallengeState.Accepted;
             ChalRepo.Update(c);
 
-            Email.SendChallengeAcceptedEmail(CustRepo.GetWithID(s.ChallengeOriginatorCustomerID), CustRepo.GetWithID(s.CustomerID), c);
+            CustomerNotifier.NotifyChallengeAccepted(CustRepo.GetWithID(s.ChallengeOriginatorCustomerID), CustRepo.GetWithID(s.CustomerID), c);
         }
 
         // Reject is specifically for when a Challenge has been sent directly to you

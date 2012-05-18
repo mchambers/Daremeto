@@ -9,10 +9,11 @@
     </AssociationSet>
     <EntitySet Name="Bid" EntityType="DbModels.Bid" />
     <FunctionImport Name="AddBidToChallenge">
-      <Parameter Name="ChallengeID" Mode="In" Type="String" />
-      <Parameter Name="BidAmount" Mode="In" Type="String" />
-      <Parameter Name="CustomerID" Mode="In" Type="String" />
+      <Parameter Name="ChallengeID" Mode="In" Type="Int64" />
+      <Parameter Name="BidAmount" Mode="In" Type="Int32" />
+      <Parameter Name="CustomerID" Mode="In" Type="Int64" />
     </FunctionImport>
+    <EntitySet Name="Transaction" EntityType="DbModels.Transaction" />
   </EntityContainer>
   <EntityType Name="Challenge">
     <Key>
@@ -29,6 +30,7 @@
     <Property Type="Int64" Name="TargetCustomerID" />
     <Property Type="Int32" Name="State" Nullable="false" />
     <Property Type="Byte" Name="Anonymous" Nullable="false" />
+    <Property Type="Int32" Name="Visibility" />
   </EntityType>
   <EntityType Name="Customer">
     <Key>
@@ -77,5 +79,25 @@
     <Property Type="Int32" Name="Amount" Nullable="false" />
     <Property Type="Int64" Name="ChallengeID" Nullable="false" />
     <Property Type="Int32" Name="Status" Nullable="false" />
+    <Property Type="Decimal" Name="ComputedFees" Precision="19" Scale="4" />
+    <Property Type="Int64" Name="TransactionID" />
+  </EntityType>
+  <EntityType Name="Transaction">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="TransactionBatchID" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="Type" />
+    <Property Type="Decimal" Name="Amount" Precision="19" Scale="4" />
+    <Property Type="Int32" Name="Reason" />
+    <Property Type="Int32" Name="Source" />
+    <Property Type="Int32" Name="AgentID" />
+    <Property Type="String" Name="Comment" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="Int64" Name="DebitCustomerID" Nullable="false" />
+    <Property Type="Int32" Name="State" />
+    <Property Type="String" Name="ForeignTransactionID" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="BillingProcessorType" />
+    <Property Type="Int64" Name="CreditCustomerID" />
   </EntityType>
 </Schema>

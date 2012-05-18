@@ -6,19 +6,32 @@
     <edmx:StorageModels>
     <Schema Namespace="DbModels.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="DbModelsStoreContainer">
+          <EntitySet Name="Account" EntityType="DbModels.Store.Account" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Bid" EntityType="DbModels.Store.Bid" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Challenge" EntityType="DbModels.Store.Challenge" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Customer" EntityType="DbModels.Store.Customer" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Transaction" EntityType="DbModels.Store.Transaction" store:Type="Tables" Schema="dbo" />
         </EntityContainer>
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Balance" Type="decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="CustomerID" Type="int" />
+        </EntityType>
         <EntityType Name="Bid">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="CustomerID" Type="bigint" Nullable="false" />
-          <Property Name="Amount" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="ChallengeID" Type="bigint" Nullable="false" />
           <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="ComputedFees" Type="decimal" Precision="19" Scale="4" />
+          <Property Name="TransactionID" Type="bigint" />
         </EntityType>
         <EntityType Name="Challenge">
           <Key>
@@ -61,10 +74,32 @@
           <Property Name="CurrentBalance" Type="money" />
           <Property Name="AvatarURL" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="Transaction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TransactionBatchID" Type="nvarchar" MaxLength="255" />
+          <Property Name="DebitCustomerID" Type="bigint" Nullable="false" />
+          <Property Name="Type" Type="int" />
+          <Property Name="Amount" Type="decimal" Precision="19" Scale="4" />
+          <Property Name="Reason" Type="int" />
+          <Property Name="Source" Type="int" />
+          <Property Name="AgentID" Type="int" />
+          <Property Name="Comment" Type="text" />
+          <Property Name="State" Type="int" />
+          <Property Name="ForeignTransactionID" Type="nvarchar(max)" />
+          <Property Name="BillingProcessorType" Type="int" />
+          <Property Name="CreditCustomerID" Type="bigint" />
+        </EntityType>
         <Function Name="AddBidToChallenge" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ChallengeID" Type="bigint" Mode="In" />
           <Parameter Name="BidAmount" Type="int" Mode="In" />
           <Parameter Name="CustomerID" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="ModifyCustomerAccountBalance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CustomerID" Type="bigint" Mode="In" />
+          <Parameter Name="Amount" Type="decimal" Mode="In" />
         </Function>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -82,6 +117,12 @@
             <Parameter Name="ChallengeID" Mode="In" Type="Int64" />
             <Parameter Name="BidAmount" Mode="In" Type="Int32" />
             <Parameter Name="CustomerID" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <EntitySet Name="Transaction" EntityType="DbModels.Transaction" />
+          <EntitySet Name="Account" EntityType="DbModels.Account" />
+          <FunctionImport Name="ModifyCustomerAccountBalance">
+            <Parameter Name="CustomerID" Mode="In" Type="Int64" />
+            <Parameter Name="Amount" Mode="In" Type="Decimal" />
           </FunctionImport>
           </EntityContainer>
         <EntityType Name="Challenge">
@@ -145,9 +186,38 @@
           </Key>
           <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Int64" Name="CustomerID" Nullable="false" />
-          <Property Type="Int32" Name="Amount" Nullable="false" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" />
           <Property Type="Int64" Name="ChallengeID" Nullable="false" />
           <Property Type="Int32" Name="Status" Nullable="false" />
+          <Property Type="Decimal" Name="ComputedFees" Precision="19" Scale="4" />
+          <Property Type="Int64" Name="TransactionID" />
+        </EntityType>
+        <EntityType Name="Transaction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="TransactionBatchID" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Type" />
+          <Property Type="Decimal" Name="Amount" Precision="19" Scale="4" />
+          <Property Type="Int32" Name="Reason" />
+          <Property Type="Int32" Name="Source" />
+          <Property Type="Int32" Name="AgentID" />
+          <Property Type="String" Name="Comment" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="Int64" Name="DebitCustomerID" Nullable="false" />
+          <Property Type="Int32" Name="State" />
+          <Property Type="String" Name="ForeignTransactionID" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="BillingProcessorType" />
+          <Property Type="Int64" Name="CreditCustomerID" />
+        </EntityType>
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="Balance" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Int32" Name="CustomerID" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -193,6 +263,8 @@
           <EntitySetMapping Name="Bid">
             <EntityTypeMapping TypeName="DbModels.Bid">
               <MappingFragment StoreEntitySet="Bid">
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+                <ScalarProperty Name="ComputedFees" ColumnName="ComputedFees" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="ChallengeID" ColumnName="ChallengeID" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
@@ -202,6 +274,36 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="AddBidToChallenge" FunctionName="DbModels.Store.AddBidToChallenge" />
+          <EntitySetMapping Name="Transaction">
+            <EntityTypeMapping TypeName="DbModels.Transaction">
+              <MappingFragment StoreEntitySet="Transaction">
+                <ScalarProperty Name="CreditCustomerID" ColumnName="CreditCustomerID" />
+                <ScalarProperty Name="BillingProcessorType" ColumnName="BillingProcessorType" />
+                <ScalarProperty Name="ForeignTransactionID" ColumnName="ForeignTransactionID" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="DebitCustomerID" ColumnName="DebitCustomerID" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="AgentID" ColumnName="AgentID" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="TransactionBatchID" ColumnName="TransactionBatchID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Account">
+            <EntityTypeMapping TypeName="DbModels.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ModifyCustomerAccountBalance" FunctionName="DbModels.Store.ModifyCustomerAccountBalance" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -230,6 +332,8 @@
           <ConnectorPoint PointX="3" PointY="5.5670475260416659" />
         </AssociationConnector>
         <EntityTypeShape EntityType="DbModels.Bid" Width="1.5" PointX="5.875" PointY="4.25" Height="1.7879850260416665" />
+        <EntityTypeShape EntityType="DbModels.Transaction" Width="1.5" PointX="8.25" PointY="4.5" Height="3.5186979166666656" />
+        <EntityTypeShape EntityType="DbModels.Account" Width="1.5" PointX="10.75" PointY="4.625" Height="1.7879850260416674" />
       </Diagram>
     </Diagrams>
   </Designer>

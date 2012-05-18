@@ -4,6 +4,7 @@
     <EntitySet Name="Bid" EntityType="DbModels.Store.Bid" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Challenge" EntityType="DbModels.Store.Challenge" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Customer" EntityType="DbModels.Store.Customer" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Transaction" EntityType="DbModels.Store.Transaction" store:Type="Tables" Schema="dbo" />
   </EntityContainer>
   <EntityType Name="Bid">
     <Key>
@@ -11,9 +12,11 @@
     </Key>
     <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="CustomerID" Type="bigint" Nullable="false" />
-    <Property Name="Amount" Type="int" Nullable="false" />
+    <Property Name="Amount" Type="decimal" Nullable="false" Precision="19" Scale="4" />
     <Property Name="ChallengeID" Type="bigint" Nullable="false" />
     <Property Name="Status" Type="int" Nullable="false" />
+    <Property Name="ComputedFees" Type="decimal" Precision="19" Scale="4" />
+    <Property Name="TransactionID" Type="bigint" />
   </EntityType>
   <EntityType Name="Challenge">
     <Key>
@@ -29,6 +32,7 @@
     <Property Name="TargetCustomerID" Type="bigint" />
     <Property Name="State" Type="int" Nullable="false" />
     <Property Name="Anonymous" Type="tinyint" Nullable="false" />
+    <Property Name="Visibility" Type="int" />
   </EntityType>
   <EntityType Name="Customer">
     <Key>
@@ -55,9 +59,27 @@
     <Property Name="CurrentBalance" Type="money" />
     <Property Name="AvatarURL" Type="nvarchar(max)" />
   </EntityType>
+  <EntityType Name="Transaction">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TransactionBatchID" Type="nvarchar" MaxLength="255" />
+    <Property Name="DebitCustomerID" Type="bigint" Nullable="false" />
+    <Property Name="Type" Type="int" />
+    <Property Name="Amount" Type="decimal" Precision="19" Scale="4" />
+    <Property Name="Reason" Type="int" />
+    <Property Name="Source" Type="int" />
+    <Property Name="AgentID" Type="int" />
+    <Property Name="Comment" Type="text" />
+    <Property Name="State" Type="int" />
+    <Property Name="ForeignTransactionID" Type="nvarchar(max)" />
+    <Property Name="BillingProcessorType" Type="int" />
+    <Property Name="CreditCustomerID" Type="bigint" />
+  </EntityType>
   <Function Name="AddBidToChallenge" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="ChallengeID" Type="nvarchar" Mode="In" />
-    <Parameter Name="BidAmount" Type="nvarchar" Mode="In" />
-    <Parameter Name="CustomerID" Type="nvarchar" Mode="In" />
+    <Parameter Name="ChallengeID" Type="bigint" Mode="In" />
+    <Parameter Name="BidAmount" Type="int" Mode="In" />
+    <Parameter Name="CustomerID" Type="bigint" Mode="In" />
   </Function>
 </Schema>
