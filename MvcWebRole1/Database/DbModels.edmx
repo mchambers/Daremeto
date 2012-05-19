@@ -97,8 +97,17 @@
           <Parameter Name="BidAmount" Type="int" Mode="In" />
           <Parameter Name="CustomerID" Type="bigint" Mode="In" />
         </Function>
+        <Function Name="AssessFeesAgainstCustomerAccount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DebitCustomerID" Type="bigint" Mode="In" />
+          <Parameter Name="Amount" Type="decimal" Mode="In" />
+        </Function>
         <Function Name="ModifyCustomerAccountBalance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CustomerID" Type="bigint" Mode="In" />
+          <Parameter Name="Amount" Type="decimal" Mode="In" />
+        </Function>
+        <Function Name="ModifyCustomerAccountsForTransaction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DebitCustomerID" Type="bigint" Mode="In" />
+          <Parameter Name="CreditCustomerID" Type="bigint" Mode="In" />
           <Parameter Name="Amount" Type="decimal" Mode="In" />
         </Function>
       </Schema></edmx:StorageModels>
@@ -122,6 +131,15 @@
           <EntitySet Name="Account" EntityType="DbModels.Account" />
           <FunctionImport Name="ModifyCustomerAccountBalance">
             <Parameter Name="CustomerID" Mode="In" Type="Int64" />
+            <Parameter Name="Amount" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="ModifyCustomerAccountsForTransaction">
+            <Parameter Name="DebitCustomerID" Mode="In" Type="Int64" />
+            <Parameter Name="CreditCustomerID" Mode="In" Type="Int64" />
+            <Parameter Name="Amount" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="AssessFeesAgainstCustomerAccount">
+            <Parameter Name="DebitCustomerID" Mode="In" Type="Int64" />
             <Parameter Name="Amount" Mode="In" Type="Decimal" />
           </FunctionImport>
           </EntityContainer>
@@ -304,6 +322,8 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="ModifyCustomerAccountBalance" FunctionName="DbModels.Store.ModifyCustomerAccountBalance" />
+          <FunctionImportMapping FunctionImportName="ModifyCustomerAccountsForTransaction" FunctionName="DbModels.Store.ModifyCustomerAccountsForTransaction" />
+          <FunctionImportMapping FunctionImportName="AssessFeesAgainstCustomerAccount" FunctionName="DbModels.Store.AssessFeesAgainstCustomerAccount" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

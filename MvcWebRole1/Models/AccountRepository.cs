@@ -36,5 +36,15 @@ namespace DareyaAPI.Models
             context.SaveChanges();
             context.Detach(a);
         }
+
+        public bool TransferFundsForTransaction(Transaction t)
+        {
+            return (context.ModifyCustomerAccountsForTransaction(t.DebitAccountID, t.CreditAccountID, t.Amount) != 0);
+        }
+
+        public long CustomerIDForFeesAccount()
+        {
+            return 1;
+        }
     }
 }

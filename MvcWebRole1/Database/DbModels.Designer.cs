@@ -269,6 +269,77 @@ namespace DareyaAPI.Database
     
             return base.ExecuteFunction("ModifyCustomerAccountBalance", customerIDParameter, amountParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="debitCustomerID">No Metadata Documentation available.</param>
+        /// <param name="creditCustomerID">No Metadata Documentation available.</param>
+        /// <param name="amount">No Metadata Documentation available.</param>
+        public int ModifyCustomerAccountsForTransaction(Nullable<global::System.Int64> debitCustomerID, Nullable<global::System.Int64> creditCustomerID, Nullable<global::System.Decimal> amount)
+        {
+            ObjectParameter debitCustomerIDParameter;
+            if (debitCustomerID.HasValue)
+            {
+                debitCustomerIDParameter = new ObjectParameter("DebitCustomerID", debitCustomerID);
+            }
+            else
+            {
+                debitCustomerIDParameter = new ObjectParameter("DebitCustomerID", typeof(global::System.Int64));
+            }
+    
+            ObjectParameter creditCustomerIDParameter;
+            if (creditCustomerID.HasValue)
+            {
+                creditCustomerIDParameter = new ObjectParameter("CreditCustomerID", creditCustomerID);
+            }
+            else
+            {
+                creditCustomerIDParameter = new ObjectParameter("CreditCustomerID", typeof(global::System.Int64));
+            }
+    
+            ObjectParameter amountParameter;
+            if (amount.HasValue)
+            {
+                amountParameter = new ObjectParameter("Amount", amount);
+            }
+            else
+            {
+                amountParameter = new ObjectParameter("Amount", typeof(global::System.Decimal));
+            }
+    
+            return base.ExecuteFunction("ModifyCustomerAccountsForTransaction", debitCustomerIDParameter, creditCustomerIDParameter, amountParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="debitCustomerID">No Metadata Documentation available.</param>
+        /// <param name="amount">No Metadata Documentation available.</param>
+        public int AssessFeesAgainstCustomerAccount(Nullable<global::System.Int64> debitCustomerID, Nullable<global::System.Decimal> amount)
+        {
+            ObjectParameter debitCustomerIDParameter;
+            if (debitCustomerID.HasValue)
+            {
+                debitCustomerIDParameter = new ObjectParameter("DebitCustomerID", debitCustomerID);
+            }
+            else
+            {
+                debitCustomerIDParameter = new ObjectParameter("DebitCustomerID", typeof(global::System.Int64));
+            }
+    
+            ObjectParameter amountParameter;
+            if (amount.HasValue)
+            {
+                amountParameter = new ObjectParameter("Amount", amount);
+            }
+            else
+            {
+                amountParameter = new ObjectParameter("Amount", typeof(global::System.Decimal));
+            }
+    
+            return base.ExecuteFunction("AssessFeesAgainstCustomerAccount", debitCustomerIDParameter, amountParameter);
+        }
 
         #endregion
 

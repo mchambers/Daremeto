@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using DareyaAPI.Models;
 
-namespace DareyaAPI.Controllers
+namespace DareyaAPI.BillingSystem
 {
     public class Billing
     {

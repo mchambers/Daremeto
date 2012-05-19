@@ -26,7 +26,7 @@ namespace DareyaAPI.Models
     public enum TransactionSource
     {
         Unknown,
-        FundedByBillingProcessor,
+        FundedFromBillingProcessor,
         FundedFromBalance,
         Other
     }
@@ -34,10 +34,11 @@ namespace DareyaAPI.Models
     public enum TransactionState
     {
         Unknown,
-        PendingFunds,
-        Retry,
         Successful,
-        ProcessorDeclined
+        PendingFunds,
+        PendingInternalTransfer,
+        ProcessorRetry,
+        ProcessorDecline
     }
 
     public class TransactionGroup

@@ -164,6 +164,8 @@
       <DependentUpon>Global.asax</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\AccountRepository.cs" />
     <Compile Include="Models\Authorization.cs" />
     <Compile Include="Models\AuthorizationRepository.cs" />
     <Compile Include="Models\ChallengeBid.cs" />
@@ -187,6 +189,7 @@
     <Compile Include="Models\EvidenceRepository.cs" />
     <Compile Include="Models\Friendship.cs" />
     <Compile Include="Models\FriendshipRepository.cs" />
+    <Compile Include="Models\IAccountRepository.cs" />
     <Compile Include="Models\IAuthorizationRepository.cs" />
     <Compile Include="Models\IBillingQueue.cs" />
     <Compile Include="Models\IChallengeBidRepository.cs" />
