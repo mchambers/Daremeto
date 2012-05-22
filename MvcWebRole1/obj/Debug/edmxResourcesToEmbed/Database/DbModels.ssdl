@@ -1,11 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="DbModels.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
   <EntityContainer Name="DbModelsStoreContainer">
+    <EntitySet Name="Account" EntityType="DbModels.Store.Account" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Bid" EntityType="DbModels.Store.Bid" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Challenge" EntityType="DbModels.Store.Challenge" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Customer" EntityType="DbModels.Store.Customer" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Transaction" EntityType="DbModels.Store.Transaction" store:Type="Tables" Schema="dbo" />
   </EntityContainer>
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Balance" Type="decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="CustomerID" Type="int" />
+  </EntityType>
   <EntityType Name="Bid">
     <Key>
       <PropertyRef Name="ID" />
@@ -79,7 +89,21 @@
   </EntityType>
   <Function Name="AddBidToChallenge" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="ChallengeID" Type="bigint" Mode="In" />
-    <Parameter Name="BidAmount" Type="int" Mode="In" />
+    <Parameter Name="BidAmount" Type="decimal" Mode="In" />
     <Parameter Name="CustomerID" Type="bigint" Mode="In" />
+    <Parameter Name="FeesAmount" Type="decimal" Mode="In" />
+  </Function>
+  <Function Name="AssessFeesAgainstCustomerAccount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DebitCustomerID" Type="bigint" Mode="In" />
+    <Parameter Name="Amount" Type="decimal" Mode="In" />
+  </Function>
+  <Function Name="ModifyCustomerAccountBalance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CustomerID" Type="bigint" Mode="In" />
+    <Parameter Name="Amount" Type="decimal" Mode="In" />
+  </Function>
+  <Function Name="ModifyCustomerAccountsForTransaction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DebitCustomerID" Type="bigint" Mode="In" />
+    <Parameter Name="CreditCustomerID" Type="bigint" Mode="In" />
+    <Parameter Name="Amount" Type="decimal" Mode="In" />
   </Function>
 </Schema>

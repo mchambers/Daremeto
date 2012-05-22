@@ -76,7 +76,6 @@ namespace DareyaAPI.Controllers
         [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
         public void PushServiceToken(PushServiceToken t)
         {
-            t.UniqueID = System.Guid.NewGuid().ToString();
             t.CustomerID = ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
             TokenRepo.Add(t);
         }
@@ -157,6 +156,11 @@ namespace DareyaAPI.Controllers
         {
             SignupType signupType = SignupType.Credentials;
 
+            if (newCustomer.AvatarURL == null || newCustomer.AvatarURL.Equals(""))
+            {
+                newCustomer.AvatarURL = "http://images.dareme.to/avatars/default.jpg";
+            }
+
             if (newCustomer.FacebookUserID == null || newCustomer.FacebookUserID.Equals(""))
             {
                 if (newCustomer.EmailAddress==null || newCustomer.EmailAddress.Equals(""))
@@ -175,6 +179,9 @@ namespace DareyaAPI.Controllers
                 // no authentication details provided for this customer
                 throw new HttpResponseException("No credentials were supplied -- either a Facebook access token or a password are required.", System.Net.HttpStatusCode.InternalServerError);
             }
+
+            // force all customers onto Stripe for now.
+            newCustomer.BillingType = (int)BillingSystem.BillingProcessorFactory.SupportedBillingProcessor.Stripe;
 
             switch (signupType)
             {

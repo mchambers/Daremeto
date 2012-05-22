@@ -4,6 +4,7 @@
     <EntitySetMapping Name="Challenge">
       <EntityTypeMapping TypeName="DbModels.Challenge">
         <MappingFragment StoreEntitySet="Challenge">
+          <ScalarProperty Name="Visibility" ColumnName="Visibility" />
           <ScalarProperty Name="Anonymous" ColumnName="Anonymous" />
           <ScalarProperty Name="State" ColumnName="State" />
           <ScalarProperty Name="TargetCustomerID" ColumnName="TargetCustomerID" />
@@ -46,6 +47,8 @@
     <EntitySetMapping Name="Bid">
       <EntityTypeMapping TypeName="DbModels.Bid">
         <MappingFragment StoreEntitySet="Bid">
+          <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+          <ScalarProperty Name="ComputedFees" ColumnName="ComputedFees" />
           <ScalarProperty Name="Status" ColumnName="Status" />
           <ScalarProperty Name="ChallengeID" ColumnName="ChallengeID" />
           <ScalarProperty Name="Amount" ColumnName="Amount" />
@@ -54,6 +57,38 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Transaction">
+      <EntityTypeMapping TypeName="DbModels.Transaction">
+        <MappingFragment StoreEntitySet="Transaction">
+          <ScalarProperty Name="CreditCustomerID" ColumnName="CreditCustomerID" />
+          <ScalarProperty Name="BillingProcessorType" ColumnName="BillingProcessorType" />
+          <ScalarProperty Name="ForeignTransactionID" ColumnName="ForeignTransactionID" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="DebitCustomerID" ColumnName="DebitCustomerID" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="AgentID" ColumnName="AgentID" />
+          <ScalarProperty Name="Source" ColumnName="Source" />
+          <ScalarProperty Name="Reason" ColumnName="Reason" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="TransactionBatchID" ColumnName="TransactionBatchID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Account">
+      <EntityTypeMapping TypeName="DbModels.Account">
+        <MappingFragment StoreEntitySet="Account">
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="Balance" ColumnName="Balance" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="ModifyCustomerAccountBalance" FunctionName="DbModels.Store.ModifyCustomerAccountBalance" />
+    <FunctionImportMapping FunctionImportName="ModifyCustomerAccountsForTransaction" FunctionName="DbModels.Store.ModifyCustomerAccountsForTransaction" />
+    <FunctionImportMapping FunctionImportName="AssessFeesAgainstCustomerAccount" FunctionName="DbModels.Store.AssessFeesAgainstCustomerAccount" />
     <FunctionImportMapping FunctionImportName="AddBidToChallenge" FunctionName="DbModels.Store.AddBidToChallenge" />
   </EntityContainerMapping>
 </Mapping>

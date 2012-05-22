@@ -202,47 +202,6 @@ namespace DareyaAPI.Database
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        /// <param name="challengeID">No Metadata Documentation available.</param>
-        /// <param name="bidAmount">No Metadata Documentation available.</param>
-        /// <param name="customerID">No Metadata Documentation available.</param>
-        public int AddBidToChallenge(Nullable<global::System.Int64> challengeID, Nullable<global::System.Int32> bidAmount, Nullable<global::System.Int64> customerID)
-        {
-            ObjectParameter challengeIDParameter;
-            if (challengeID.HasValue)
-            {
-                challengeIDParameter = new ObjectParameter("ChallengeID", challengeID);
-            }
-            else
-            {
-                challengeIDParameter = new ObjectParameter("ChallengeID", typeof(global::System.Int64));
-            }
-    
-            ObjectParameter bidAmountParameter;
-            if (bidAmount.HasValue)
-            {
-                bidAmountParameter = new ObjectParameter("BidAmount", bidAmount);
-            }
-            else
-            {
-                bidAmountParameter = new ObjectParameter("BidAmount", typeof(global::System.Int32));
-            }
-    
-            ObjectParameter customerIDParameter;
-            if (customerID.HasValue)
-            {
-                customerIDParameter = new ObjectParameter("CustomerID", customerID);
-            }
-            else
-            {
-                customerIDParameter = new ObjectParameter("CustomerID", typeof(global::System.Int64));
-            }
-    
-            return base.ExecuteFunction("AddBidToChallenge", challengeIDParameter, bidAmountParameter, customerIDParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         /// <param name="customerID">No Metadata Documentation available.</param>
         /// <param name="amount">No Metadata Documentation available.</param>
         public int ModifyCustomerAccountBalance(Nullable<global::System.Int64> customerID, Nullable<global::System.Decimal> amount)
@@ -339,6 +298,58 @@ namespace DareyaAPI.Database
             }
     
             return base.ExecuteFunction("AssessFeesAgainstCustomerAccount", debitCustomerIDParameter, amountParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="challengeID">No Metadata Documentation available.</param>
+        /// <param name="bidAmount">No Metadata Documentation available.</param>
+        /// <param name="customerID">No Metadata Documentation available.</param>
+        /// <param name="feesAmount">No Metadata Documentation available.</param>
+        public int AddBidToChallenge(Nullable<global::System.Int64> challengeID, Nullable<global::System.Decimal> bidAmount, Nullable<global::System.Int64> customerID, Nullable<global::System.Decimal> feesAmount)
+        {
+            ObjectParameter challengeIDParameter;
+            if (challengeID.HasValue)
+            {
+                challengeIDParameter = new ObjectParameter("ChallengeID", challengeID);
+            }
+            else
+            {
+                challengeIDParameter = new ObjectParameter("ChallengeID", typeof(global::System.Int64));
+            }
+    
+            ObjectParameter bidAmountParameter;
+            if (bidAmount.HasValue)
+            {
+                bidAmountParameter = new ObjectParameter("BidAmount", bidAmount);
+            }
+            else
+            {
+                bidAmountParameter = new ObjectParameter("BidAmount", typeof(global::System.Decimal));
+            }
+    
+            ObjectParameter customerIDParameter;
+            if (customerID.HasValue)
+            {
+                customerIDParameter = new ObjectParameter("CustomerID", customerID);
+            }
+            else
+            {
+                customerIDParameter = new ObjectParameter("CustomerID", typeof(global::System.Int64));
+            }
+    
+            ObjectParameter feesAmountParameter;
+            if (feesAmount.HasValue)
+            {
+                feesAmountParameter = new ObjectParameter("FeesAmount", feesAmount);
+            }
+            else
+            {
+                feesAmountParameter = new ObjectParameter("FeesAmount", typeof(global::System.Decimal));
+            }
+    
+            return base.ExecuteFunction("AddBidToChallenge", challengeIDParameter, bidAmountParameter, customerIDParameter, feesAmountParameter);
         }
 
         #endregion

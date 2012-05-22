@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C97C6DC5-F441-4408-BB4A-B84BA86DD6B7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DMTDataRepositories</RootNamespace>
+    <AssemblyName>DMTDataRepositories</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.2.1.267\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.ServiceRuntime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.WindowsAzure.StorageClient, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files\Windows Azure SDK\v1.6\bin\Microsoft.WindowsAzure.StorageClient.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Services.Client" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Account.cs" />
+    <Compile Include="AccountRepository.cs" />
+    <Compile Include="Authorization.cs" />
+    <Compile Include="AuthorizationRepository.cs" />
+    <Compile Include="Billing.cs" />
+    <Compile Include="BillingProcessorFactory.cs" />
+    <Compile Include="ChallengeBid.cs" />
+    <Compile Include="ChallengeModel.cs" />
+    <Compile Include="ChallengeRepository.cs" />
+    <Compile Include="ChallengeStatus.cs" />
+    <Compile Include="ChallengeStatusRepository.cs" />
+    <Compile Include="ChallengeStatusVote.cs" />
+    <Compile Include="ChallengeStatusVoteRepository.cs" />
+    <Compile Include="CustomerModel.cs" />
+    <Compile Include="CustomerRepository.cs" />
+    <Compile Include="DareyaIdentity.cs" />
+    <Compile Include="DareyaPrincipal.cs" />
+    <Compile Include="Database\DbModels.Designer.cs">
+      <DependentUpon>DbModels.edmx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Email.cs" />
+    <Compile Include="Evidence.cs" />
+    <Compile Include="EvidenceRepository.cs" />
+    <Compile Include="Friendship.cs" />
+    <Compile Include="FriendshipRepository.cs" />
+    <Compile Include="IAccountRepository.cs" />
+    <Compile Include="IAuthorizationRepository.cs" />
+    <Compile Include="IBillingProcessor.cs" />
+    <Compile Include="IBillingQueue.cs" />
+    <Compile Include="IChallengeBidRepository.cs" />
+    <Compile Include="IChallengeRepository.cs" />
+    <Compile Include="IChallengeStatusRepository.cs" />
+    <Compile Include="IChallengeStatusVoteRepository.cs" />
+    <Compile Include="ICustomerRepository.cs" />
+    <Compile Include="IEvidenceRepository.cs" />
+    <Compile Include="IFriendshipRepository.cs" />
+    <Compile Include="IProcessingQueue.cs" />
+    <Compile Include="IPushServiceTokenRepository.cs" />
+    <Compile Include="ITransactionRepository.cs" />
+    <Compile Include="Login.cs" />
+    <Compile Include="ProcessingQueue.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PushServiceToken.cs" />
+    <Compile Include="PushServiceTokenRepository.cs" />
+    <Compile Include="RepoFactory.cs" />
+    <Compile Include="SQLChallengeBidRepository.cs" />
+    <Compile Include="StripeBillingProcessor.cs" />
+    <Compile Include="TableServiceContextV2.cs" />
+    <Compile Include="Transaction.cs" />
+    <Compile Include="TransactionRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="Database\DbModels.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DbModels.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

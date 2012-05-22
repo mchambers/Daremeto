@@ -94,8 +94,9 @@
         </EntityType>
         <Function Name="AddBidToChallenge" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ChallengeID" Type="bigint" Mode="In" />
-          <Parameter Name="BidAmount" Type="int" Mode="In" />
+          <Parameter Name="BidAmount" Type="decimal" Mode="In" />
           <Parameter Name="CustomerID" Type="bigint" Mode="In" />
+          <Parameter Name="FeesAmount" Type="decimal" Mode="In" />
         </Function>
         <Function Name="AssessFeesAgainstCustomerAccount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DebitCustomerID" Type="bigint" Mode="In" />
@@ -122,11 +123,6 @@
             <End Role="Challenge" EntitySet="Challenge" />
           </AssociationSet>
           <EntitySet Name="Bid" EntityType="DbModels.Bid" />
-          <FunctionImport Name="AddBidToChallenge">
-            <Parameter Name="ChallengeID" Mode="In" Type="Int64" />
-            <Parameter Name="BidAmount" Mode="In" Type="Int32" />
-            <Parameter Name="CustomerID" Mode="In" Type="Int64" />
-          </FunctionImport>
           <EntitySet Name="Transaction" EntityType="DbModels.Transaction" />
           <EntitySet Name="Account" EntityType="DbModels.Account" />
           <FunctionImport Name="ModifyCustomerAccountBalance">
@@ -141,6 +137,12 @@
           <FunctionImport Name="AssessFeesAgainstCustomerAccount">
             <Parameter Name="DebitCustomerID" Mode="In" Type="Int64" />
             <Parameter Name="Amount" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="AddBidToChallenge">
+            <Parameter Name="ChallengeID" Mode="In" Type="Int64" />
+            <Parameter Name="BidAmount" Mode="In" Type="Decimal" />
+            <Parameter Name="CustomerID" Mode="In" Type="Int64" />
+            <Parameter Name="FeesAmount" Mode="In" Type="Decimal" />
           </FunctionImport>
           </EntityContainer>
         <EntityType Name="Challenge">
@@ -291,7 +293,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="AddBidToChallenge" FunctionName="DbModels.Store.AddBidToChallenge" />
           <EntitySetMapping Name="Transaction">
             <EntityTypeMapping TypeName="DbModels.Transaction">
               <MappingFragment StoreEntitySet="Transaction">
@@ -324,6 +325,7 @@
           <FunctionImportMapping FunctionImportName="ModifyCustomerAccountBalance" FunctionName="DbModels.Store.ModifyCustomerAccountBalance" />
           <FunctionImportMapping FunctionImportName="ModifyCustomerAccountsForTransaction" FunctionName="DbModels.Store.ModifyCustomerAccountsForTransaction" />
           <FunctionImportMapping FunctionImportName="AssessFeesAgainstCustomerAccount" FunctionName="DbModels.Store.AssessFeesAgainstCustomerAccount" />
+          <FunctionImportMapping FunctionImportName="AddBidToChallenge" FunctionName="DbModels.Store.AddBidToChallenge" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

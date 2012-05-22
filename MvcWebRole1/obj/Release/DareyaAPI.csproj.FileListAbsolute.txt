@@ -89,7 +89,6 @@ C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\bin\System.Web.WebPages.xml
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\bin\System.Web.WebPages.Deployment.xml
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\bin\System.Web.WebPages.Razor.xml
-C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\obj\Release\DareyaAPI.csprojResolveAssemblyReference.cache
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\obj\Release\DareyaAPI.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\obj\Release\DareyaAPI.pdb
 C:\Users\Marc Chambers\documents\visual studio 2010\Projects\Dareya\MvcWebRole1\bin\Facebook.dll
@@ -102,3 +101,11 @@ C:\Users\Marc Chambers\documents\visual studio 2010\Projects\Dareya\MvcWebRole1\
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\bin\Stripe.net.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\bin\UrbanBlimp.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\bin\UrbanBlimp.pdb
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\bin\AutoMapper.dll
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\bin\Dapper.dll
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\bin\AutoMapper.xml
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\bin\Dapper.pdb
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\bin\DMTDataRepositories.dll
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\bin\DMTDataRepositories.pdb
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\obj\Release\ResolveAssemblyReference.cache
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\bin\disableAppPoolTimeout.cmd

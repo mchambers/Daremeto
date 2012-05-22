@@ -1,0 +1,362 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DbModels.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="DbModelsStoreContainer">
+          <EntitySet Name="Account" EntityType="DbModels.Store.Account" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Bid" EntityType="DbModels.Store.Bid" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Challenge" EntityType="DbModels.Store.Challenge" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Customer" EntityType="DbModels.Store.Customer" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Transaction" EntityType="DbModels.Store.Transaction" store:Type="Tables" Schema="dbo" />
+        </EntityContainer>
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Balance" Type="decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="CustomerID" Type="int" />
+        </EntityType>
+        <EntityType Name="Bid">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerID" Type="bigint" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="ChallengeID" Type="bigint" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="ComputedFees" Type="decimal" Precision="19" Scale="4" />
+          <Property Name="TransactionID" Type="bigint" />
+        </EntityType>
+        <EntityType Name="Challenge">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Title" Type="text" Nullable="false" />
+          <Property Name="Description" Type="text" Nullable="false" />
+          <Property Name="Privacy" Type="tinyint" Nullable="false" />
+          <Property Name="Type" Type="tinyint" Nullable="false" />
+          <Property Name="CustomerID" Type="bigint" Nullable="false" />
+          <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CurrentBid" Type="decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="TargetCustomerID" Type="bigint" />
+          <Property Name="State" Type="int" Nullable="false" />
+          <Property Name="Anonymous" Type="tinyint" Nullable="false" />
+          <Property Name="Visibility" Type="int" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="FirstName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Address1" Type="nvarchar(max)" />
+          <Property Name="Address2" Type="nvarchar(max)" />
+          <Property Name="City" Type="nvarchar(max)" />
+          <Property Name="State" Type="nvarchar" MaxLength="2" />
+          <Property Name="ZIPCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="BillingType" Type="int" />
+          <Property Name="BillingID" Type="nvarchar(max)" />
+          <Property Name="Password" Type="text" />
+          <Property Name="EmailAddress" Type="nvarchar(max)" />
+          <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Verified" Type="int" />
+          <Property Name="FacebookUserID" Type="nvarchar(max)" />
+          <Property Name="FacebookAccessToken" Type="text" />
+          <Property Name="FacebookExpires" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="Type" Type="int" />
+          <Property Name="CurrentBalance" Type="money" />
+          <Property Name="AvatarURL" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Transaction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TransactionBatchID" Type="nvarchar" MaxLength="255" />
+          <Property Name="DebitCustomerID" Type="bigint" Nullable="false" />
+          <Property Name="Type" Type="int" />
+          <Property Name="Amount" Type="decimal" Precision="19" Scale="4" />
+          <Property Name="Reason" Type="int" />
+          <Property Name="Source" Type="int" />
+          <Property Name="AgentID" Type="int" />
+          <Property Name="Comment" Type="text" />
+          <Property Name="State" Type="int" />
+          <Property Name="ForeignTransactionID" Type="nvarchar(max)" />
+          <Property Name="BillingProcessorType" Type="int" />
+          <Property Name="CreditCustomerID" Type="bigint" />
+        </EntityType>
+        <Function Name="AddBidToChallenge" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ChallengeID" Type="bigint" Mode="In" />
+          <Parameter Name="BidAmount" Type="decimal" Mode="In" />
+          <Parameter Name="CustomerID" Type="bigint" Mode="In" />
+          <Parameter Name="FeesAmount" Type="decimal" Mode="In" />
+        </Function>
+        <Function Name="AssessFeesAgainstCustomerAccount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DebitCustomerID" Type="bigint" Mode="In" />
+          <Parameter Name="Amount" Type="decimal" Mode="In" />
+        </Function>
+        <Function Name="ModifyCustomerAccountBalance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CustomerID" Type="bigint" Mode="In" />
+          <Parameter Name="Amount" Type="decimal" Mode="In" />
+        </Function>
+        <Function Name="ModifyCustomerAccountsForTransaction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DebitCustomerID" Type="bigint" Mode="In" />
+          <Parameter Name="CreditCustomerID" Type="bigint" Mode="In" />
+          <Parameter Name="Amount" Type="decimal" Mode="In" />
+        </Function>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DbModels" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="DYDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Challenge" EntityType="DbModels.Challenge" />
+          <EntitySet Name="Customer" EntityType="DbModels.Customer" />
+          <AssociationSet Name="FK_Challenge_0" Association="DbModels.FK_Challenge_0">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Challenge" EntitySet="Challenge" />
+          </AssociationSet>
+          <EntitySet Name="Bid" EntityType="DbModels.Bid" />
+          <EntitySet Name="Transaction" EntityType="DbModels.Transaction" />
+          <EntitySet Name="Account" EntityType="DbModels.Account" />
+          <FunctionImport Name="ModifyCustomerAccountBalance">
+            <Parameter Name="CustomerID" Mode="In" Type="Int64" />
+            <Parameter Name="Amount" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="ModifyCustomerAccountsForTransaction">
+            <Parameter Name="DebitCustomerID" Mode="In" Type="Int64" />
+            <Parameter Name="CreditCustomerID" Mode="In" Type="Int64" />
+            <Parameter Name="Amount" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="AssessFeesAgainstCustomerAccount">
+            <Parameter Name="DebitCustomerID" Mode="In" Type="Int64" />
+            <Parameter Name="Amount" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="AddBidToChallenge">
+            <Parameter Name="ChallengeID" Mode="In" Type="Int64" />
+            <Parameter Name="BidAmount" Mode="In" Type="Decimal" />
+            <Parameter Name="CustomerID" Mode="In" Type="Int64" />
+            <Parameter Name="FeesAmount" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          </EntityContainer>
+        <EntityType Name="Challenge">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="Privacy" Type="Byte" Nullable="false" />
+          <Property Name="Type" Type="Byte" Nullable="false" />
+          <Property Name="CustomerID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="DbModels.FK_Challenge_0" FromRole="Challenge" ToRole="Customer" />
+          <Property Type="Decimal" Name="CurrentBid" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Int64" Name="TargetCustomerID" />
+          <Property Type="Int32" Name="State" Nullable="false" />
+          <Property Type="Byte" Name="Anonymous" Nullable="false" />
+          <Property Type="Int32" Name="Visibility" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Address1" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Address2" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="City" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="State" Type="String" MaxLength="2" Unicode="true" FixedLength="false" />
+          <Property Name="ZIPCode" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+          <Property Name="BillingType" Type="Int32" />
+          <Property Name="BillingID" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Challenge" Relationship="DbModels.FK_Challenge_0" FromRole="Customer" ToRole="Challenge" />
+          <Property Type="String" Name="Password" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="EmailAddress" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Verified" />
+          <Property Type="String" Name="FacebookUserID" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="FacebookAccessToken" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="FacebookExpires" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PhoneNumber" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Type" />
+          <Property Type="Decimal" Name="CurrentBalance" Precision="19" Scale="4" />
+          <Property Type="String" Name="AvatarURL" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Challenge_0">
+          <End Role="Customer" Type="DbModels.Customer" Multiplicity="1" />
+          <End Role="Challenge" Type="DbModels.Challenge" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Challenge">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Bid">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="CustomerID" Nullable="false" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Int64" Name="ChallengeID" Nullable="false" />
+          <Property Type="Int32" Name="Status" Nullable="false" />
+          <Property Type="Decimal" Name="ComputedFees" Precision="19" Scale="4" />
+          <Property Type="Int64" Name="TransactionID" />
+        </EntityType>
+        <EntityType Name="Transaction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="TransactionBatchID" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Type" />
+          <Property Type="Decimal" Name="Amount" Precision="19" Scale="4" />
+          <Property Type="Int32" Name="Reason" />
+          <Property Type="Int32" Name="Source" />
+          <Property Type="Int32" Name="AgentID" />
+          <Property Type="String" Name="Comment" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="Int64" Name="DebitCustomerID" Nullable="false" />
+          <Property Type="Int32" Name="State" />
+          <Property Type="String" Name="ForeignTransactionID" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="BillingProcessorType" />
+          <Property Type="Int64" Name="CreditCustomerID" />
+        </EntityType>
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="Balance" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Int32" Name="CustomerID" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DbModelsStoreContainer" CdmEntityContainer="DYDbEntities">
+          <EntitySetMapping Name="Challenge"><EntityTypeMapping TypeName="DbModels.Challenge"><MappingFragment StoreEntitySet="Challenge">
+            <ScalarProperty Name="Visibility" ColumnName="Visibility" />
+                <ScalarProperty Name="Anonymous" ColumnName="Anonymous" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="TargetCustomerID" ColumnName="TargetCustomerID" />
+                <ScalarProperty Name="CurrentBid" ColumnName="CurrentBid" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+            <ScalarProperty Name="Title" ColumnName="Title" />
+            <ScalarProperty Name="Description" ColumnName="Description" />
+            <ScalarProperty Name="Privacy" ColumnName="Privacy" />
+            <ScalarProperty Name="Type" ColumnName="Type" />
+            <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Customer"><EntityTypeMapping TypeName="DbModels.Customer"><MappingFragment StoreEntitySet="Customer">
+            <ScalarProperty Name="AvatarURL" ColumnName="AvatarURL" />
+                <ScalarProperty Name="CurrentBalance" ColumnName="CurrentBalance" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="FacebookExpires" ColumnName="FacebookExpires" />
+                <ScalarProperty Name="FacebookAccessToken" ColumnName="FacebookAccessToken" />
+                <ScalarProperty Name="FacebookUserID" ColumnName="FacebookUserID" />
+                <ScalarProperty Name="Verified" ColumnName="Verified" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+            <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+            <ScalarProperty Name="LastName" ColumnName="LastName" />
+            <ScalarProperty Name="Address1" ColumnName="Address1" />
+            <ScalarProperty Name="Address2" ColumnName="Address2" />
+            <ScalarProperty Name="City" ColumnName="City" />
+            <ScalarProperty Name="State" ColumnName="State" />
+            <ScalarProperty Name="ZIPCode" ColumnName="ZIPCode" />
+            <ScalarProperty Name="BillingType" ColumnName="BillingType" />
+            <ScalarProperty Name="BillingID" ColumnName="BillingID" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Bid">
+            <EntityTypeMapping TypeName="DbModels.Bid">
+              <MappingFragment StoreEntitySet="Bid">
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+                <ScalarProperty Name="ComputedFees" ColumnName="ComputedFees" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ChallengeID" ColumnName="ChallengeID" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transaction">
+            <EntityTypeMapping TypeName="DbModels.Transaction">
+              <MappingFragment StoreEntitySet="Transaction">
+                <ScalarProperty Name="CreditCustomerID" ColumnName="CreditCustomerID" />
+                <ScalarProperty Name="BillingProcessorType" ColumnName="BillingProcessorType" />
+                <ScalarProperty Name="ForeignTransactionID" ColumnName="ForeignTransactionID" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="DebitCustomerID" ColumnName="DebitCustomerID" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="AgentID" ColumnName="AgentID" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="TransactionBatchID" ColumnName="TransactionBatchID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Account">
+            <EntityTypeMapping TypeName="DbModels.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ModifyCustomerAccountBalance" FunctionName="DbModels.Store.ModifyCustomerAccountBalance" />
+          <FunctionImportMapping FunctionImportName="ModifyCustomerAccountsForTransaction" FunctionName="DbModels.Store.ModifyCustomerAccountsForTransaction" />
+          <FunctionImportMapping FunctionImportName="AssessFeesAgainstCustomerAccount" FunctionName="DbModels.Store.AssessFeesAgainstCustomerAccount" />
+          <FunctionImportMapping FunctionImportName="AddBidToChallenge" FunctionName="DbModels.Store.AddBidToChallenge" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="DbModels" ZoomLevel="85">
+        <EntityTypeShape EntityType="DbModels.Challenge" Width="1.5" PointX="3" PointY="4" Height="2.5783902994791674" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbModels.Customer" Width="1.5" PointX="0.75" PointY="3.625" Height="4.480205078125" IsExpanded="true" />
+        <AssociationConnector Association="DbModels.FK_Challenge_0" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="5.5670475260416659" />
+          <ConnectorPoint PointX="3" PointY="5.5670475260416659" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="DbModels.Bid" Width="1.5" PointX="5.875" PointY="4.25" Height="1.7879850260416665" />
+        <EntityTypeShape EntityType="DbModels.Transaction" Width="1.5" PointX="8.25" PointY="4.5" Height="3.5186979166666656" />
+        <EntityTypeShape EntityType="DbModels.Account" Width="1.5" PointX="10.75" PointY="4.625" Height="1.7879850260416674" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

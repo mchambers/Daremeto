@@ -1,0 +1,86 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace DareyaAPI.Models
+{
+    public class Customer
+    {
+        public enum TypeCodes
+        {
+            Default,
+            Unclaimed,
+            Unverified
+        }
+
+        public long ID { get; set; }
+
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string EmailAddress { get; set; }
+        public string Address { get; set; }
+        public string Address2 { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string ZIPCode { get; set; }
+
+        public string FacebookAccessToken { get; set; }
+        public string FacebookExpires { get; set; }
+        public string FacebookUserID { get; set; }
+
+        public string Password { get; set; }
+
+        public int BillingType { get; set; }
+        public string BillingID { get; set; }
+
+        public int Type { get; set; }
+
+        public string AvatarURL { get; set; }
+
+        public static Customer Filter(Customer c)
+        {
+            Customer filtered = new Customer();
+
+            filtered.Address = null;
+            filtered.Address2 = null;
+            filtered.BillingID = null;
+            filtered.BillingType = 0;
+            filtered.City = null;
+            filtered.State = null;
+            filtered.ZIPCode = null;
+            filtered.Password = null;
+            filtered.EmailAddress = null;
+            filtered.FacebookAccessToken = null;
+            filtered.FacebookExpires = null;
+            filtered.FacebookUserID = null;
+
+            filtered.ID = c.ID;
+            filtered.FirstName = c.FirstName;
+            filtered.LastName = c.LastName;
+            filtered.AvatarURL = c.AvatarURL;
+
+            return filtered;
+        }
+
+        public Customer()
+        {
+            FirstName = "";
+            LastName = "";
+            EmailAddress = "";
+            Address = "";
+            Address2 = "";
+            City = "";
+            State = "";
+            ZIPCode = "";
+            FacebookAccessToken = "";
+            FacebookExpires = "";
+            FacebookUserID = "";
+            Password = "";
+            BillingType = 0;
+            BillingID = "";
+            Type = 0;
+            AvatarURL = "";
+        }
+    }
+}

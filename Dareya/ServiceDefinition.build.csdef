@@ -9,7 +9,7 @@
   **********************************************************************************************
 -->
 <ServiceDefinition name="Dareya" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition">
-  <WebRole name="DareyaAPI" vmsize="ExtraSmall">
+  <WebRole name="DareyaAPI" vmsize="Small">
     <Sites>
       <Site name="Web">
         <Bindings>
@@ -27,14 +27,20 @@
     </Imports>
     <ConfigurationSettings>
       <Setting name="StorageConnectionString" />
+      <Setting name="CloudToolsDiagnosticAgentVersion" />
     </ConfigurationSettings>
+    <Startup>
+      <Task commandLine="disableAppPoolTimeout.cmd" executionContext="elevated" taskType="background" />
+    </Startup>
   </WebRole>
-  <WorkerRole name="DaremetoWorker" vmsize="ExtraSmall">
+  <WorkerRole name="DaremetoWorker" vmsize="Small">
     <Imports>
       <Import moduleName="RemoteAccess" />
+      <Import moduleName="Diagnostics" />
     </Imports>
     <ConfigurationSettings>
       <Setting name="StorageConnectionString" />
+      <Setting name="CloudToolsDiagnosticAgentVersion" />
     </ConfigurationSettings>
   </WorkerRole>
 </ServiceDefinition>

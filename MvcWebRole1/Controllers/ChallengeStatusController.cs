@@ -53,7 +53,7 @@ namespace DareyaAPI.Controllers
                 BidRepo.Update(bid);
 
                 // challenge completed! award the money! DO IT DO IT!
-                CustomerNotifier.NotifyChallengeAwardedToYou(CustRepo.GetWithID(s.CustomerID), ChalRepo.Get(s.ChallengeID));
+                CustomerNotifier.NotifyChallengeAwardedToYou(s.CustomerID, s.ChallengeID);
             }
             else
             {
@@ -88,7 +88,7 @@ namespace DareyaAPI.Controllers
                 BidRepo.Update(bid);
 
                 // you've failed this challenge my friend.
-                CustomerNotifier.NotifyChallengeRejected(CustRepo.GetWithID(s.CustomerID), ChalRepo.Get(s.ChallengeID));
+                CustomerNotifier.NotifyChallengeRejected(s.CustomerID, s.ChallengeID);
             }
             else
             {
@@ -118,7 +118,7 @@ namespace DareyaAPI.Controllers
             // so the bidders can see what they need to vote on
             BidRepo.UpdateStatusForBidsOnChallenge(status.ChallengeID, status.UniqueID, ChallengeBid.BidStatusCodes.VotePending);
 
-            CustomerNotifier.NotifyChallengeClaimed(CustRepo.GetWithID(s.ChallengeOriginatorCustomerID), CustRepo.GetWithID(s.CustomerID), c);
+            CustomerNotifier.NotifyChallengeClaimed(s.ChallengeOriginatorCustomerID, s.CustomerID, c.ID);
         }
 
         [HttpPost]
@@ -140,12 +140,12 @@ namespace DareyaAPI.Controllers
 
             // add a friendship between these folk if one doesn't exist.
             if (!FriendRepo.CustomersAreFriends(s.ChallengeOriginatorCustomerID, ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID))
-                FriendRepo.Add(s.CustomerID, ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID);
+                FriendRepo.Add(s.ChallengeOriginatorCustomerID, ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID);
 
             c.State = (int)Challenge.ChallengeState.Accepted;
             ChalRepo.Update(c);
 
-            CustomerNotifier.NotifyChallengeAccepted(CustRepo.GetWithID(s.ChallengeOriginatorCustomerID), CustRepo.GetWithID(s.CustomerID), c);
+            CustomerNotifier.NotifyChallengeAccepted(s.ChallengeOriginatorCustomerID, s.CustomerID, c.ID);
         }
 
         // Reject is specifically for when a Challenge has been sent directly to you

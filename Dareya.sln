@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DareyaAPI", "MvcWebRole1\Da
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DaremetoWorker", "DaremetoWorker\DaremetoWorker.csproj", "{6829EA11-38D7-4C45-B035-414983871765}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DMTDataRepositories", "DMTDataRepositories\DMTDataRepositories.csproj", "{C97C6DC5-F441-4408-BB4A-B84BA86DD6B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{6829EA11-38D7-4C45-B035-414983871765}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6829EA11-38D7-4C45-B035-414983871765}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6829EA11-38D7-4C45-B035-414983871765}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C97C6DC5-F441-4408-BB4A-B84BA86DD6B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C97C6DC5-F441-4408-BB4A-B84BA86DD6B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C97C6DC5-F441-4408-BB4A-B84BA86DD6B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C97C6DC5-F441-4408-BB4A-B84BA86DD6B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

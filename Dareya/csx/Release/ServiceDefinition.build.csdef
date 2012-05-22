@@ -1,10 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ServiceDefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Dareya" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition">
-  <WebRole name="DareyaAPI" vmsize="ExtraSmall">
+  <WebRole name="DareyaAPI">
     <LocalResources>
       <LocalStorage name="DiagnosticStore" sizeInMB="4096" cleanOnRoleRecycle="false" />
     </LocalResources>
     <ConfigurationSettings>
+      <Setting name="CloudToolsDiagnosticAgentVersion" />
+      <Setting name="IntelliTrace.IntelliTraceConnectionString" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" />
@@ -24,4 +26,27 @@
       <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" storeLocation="LocalMachine" storeName="My" />
     </Certificates>
   </WebRole>
+  <WorkerRole name="DaremetoWorker">
+    <LocalResources>
+      <LocalStorage name="DiagnosticStore" sizeInMB="4096" cleanOnRoleRecycle="false" />
+    </LocalResources>
+    <ConfigurationSettings>
+      <Setting name="CloudToolsDiagnosticAgentVersion" />
+      <Setting name="IntelliTrace.IntelliTraceConnectionString" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" />
+      <Setting name="StorageConnectionString" />
+    </ConfigurationSettings>
+    <Endpoints>
+      <InternalEndpoint name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp">
+        <FixedPortRange min="3389" max="3389" />
+      </InternalEndpoint>
+    </Endpoints>
+    <Certificates>
+      <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" storeLocation="LocalMachine" storeName="My" />
+    </Certificates>
+  </WorkerRole>
 </ServiceDefinition>

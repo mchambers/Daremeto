@@ -9,6 +9,7 @@ using System.Web.Routing;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using DareyaAPI.Formatters;
+using Microsoft.WindowsAzure.Diagnostics;
 
 namespace DareyaAPI
 {

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DareyaAPI.Models;
-using DareyaAPI.Controllers;
 using UrbanBlimp;
 using UrbanBlimp.Apple;
 

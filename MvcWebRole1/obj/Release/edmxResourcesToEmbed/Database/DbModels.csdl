@@ -8,10 +8,26 @@
       <End Role="Challenge" EntitySet="Challenge" />
     </AssociationSet>
     <EntitySet Name="Bid" EntityType="DbModels.Bid" />
+    <EntitySet Name="Transaction" EntityType="DbModels.Transaction" />
+    <EntitySet Name="Account" EntityType="DbModels.Account" />
+    <FunctionImport Name="ModifyCustomerAccountBalance">
+      <Parameter Name="CustomerID" Mode="In" Type="Int64" />
+      <Parameter Name="Amount" Mode="In" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="ModifyCustomerAccountsForTransaction">
+      <Parameter Name="DebitCustomerID" Mode="In" Type="Int64" />
+      <Parameter Name="CreditCustomerID" Mode="In" Type="Int64" />
+      <Parameter Name="Amount" Mode="In" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="AssessFeesAgainstCustomerAccount">
+      <Parameter Name="DebitCustomerID" Mode="In" Type="Int64" />
+      <Parameter Name="Amount" Mode="In" Type="Decimal" />
+    </FunctionImport>
     <FunctionImport Name="AddBidToChallenge">
-      <Parameter Name="ChallengeID" Mode="In" Type="String" />
-      <Parameter Name="BidAmount" Mode="In" Type="String" />
-      <Parameter Name="CustomerID" Mode="In" Type="String" />
+      <Parameter Name="ChallengeID" Mode="In" Type="Int64" />
+      <Parameter Name="BidAmount" Mode="In" Type="Decimal" />
+      <Parameter Name="CustomerID" Mode="In" Type="Int64" />
+      <Parameter Name="FeesAmount" Mode="In" Type="Decimal" />
     </FunctionImport>
   </EntityContainer>
   <EntityType Name="Challenge">
@@ -29,6 +45,7 @@
     <Property Type="Int64" Name="TargetCustomerID" />
     <Property Type="Int32" Name="State" Nullable="false" />
     <Property Type="Byte" Name="Anonymous" Nullable="false" />
+    <Property Type="Int32" Name="Visibility" />
   </EntityType>
   <EntityType Name="Customer">
     <Key>
@@ -74,8 +91,37 @@
     </Key>
     <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Type="Int64" Name="CustomerID" Nullable="false" />
-    <Property Type="Int32" Name="Amount" Nullable="false" />
+    <Property Type="Decimal" Name="Amount" Nullable="false" />
     <Property Type="Int64" Name="ChallengeID" Nullable="false" />
     <Property Type="Int32" Name="Status" Nullable="false" />
+    <Property Type="Decimal" Name="ComputedFees" Precision="19" Scale="4" />
+    <Property Type="Int64" Name="TransactionID" />
+  </EntityType>
+  <EntityType Name="Transaction">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="TransactionBatchID" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="Type" />
+    <Property Type="Decimal" Name="Amount" Precision="19" Scale="4" />
+    <Property Type="Int32" Name="Reason" />
+    <Property Type="Int32" Name="Source" />
+    <Property Type="Int32" Name="AgentID" />
+    <Property Type="String" Name="Comment" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="Int64" Name="DebitCustomerID" Nullable="false" />
+    <Property Type="Int32" Name="State" />
+    <Property Type="String" Name="ForeignTransactionID" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="BillingProcessorType" />
+    <Property Type="Int64" Name="CreditCustomerID" />
+  </EntityType>
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Decimal" Name="Balance" Nullable="false" Precision="19" Scale="4" />
+    <Property Type="Int32" Name="CustomerID" />
   </EntityType>
 </Schema>

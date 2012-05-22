@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
 using DareyaAPI.Models;
+using System.Diagnostics;
 
 using System.Web;
 using System.Web.Http.Controllers;
@@ -75,6 +76,35 @@ namespace DareyaAPI.Controllers
 
         [HttpGet]
         [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
+        public List<Challenge> ActiveOutboundForCustomer(long id)
+        {
+            if (id == 0) id = ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
+
+            Customer c = CustRepo.GetWithID(id);
+            Security.Audience audience = Security.DetermineAudience(c);
+            if ((audience != Security.Audience.Owner) && (audience != Security.Audience.Friends))
+                throw new HttpResponseException(System.Net.HttpStatusCode.Forbidden);
+
+            /*
+             * 
+             * array of challenge objects with a Status object in them
+             * 
+             * */
+            List<ChallengeStatus> statuses = StatusRepo.GetChallengesBySourceCustomer(id);
+            List<Challenge> challenges = new List<Challenge>();
+
+            foreach (ChallengeStatus s in statuses)
+            {
+                Challenge chal = PrepOutboundChallenge(ChalRepo.Get(s.ChallengeID));
+                chal.Status = s;
+                challenges.Add(chal);
+            }
+
+            return challenges;
+        }
+
+        [HttpGet]
+        [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
         public List<Challenge> ActiveForCustomer(long id)
         {
             if (id == 0) id = ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
@@ -138,6 +168,7 @@ namespace DareyaAPI.Controllers
         public void Bid(ChallengeBid value)
         {
             Challenge c = ChalRepo.Get(value.ChallengeID);
+            Customer cust=CustRepo.GetWithID(((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID);
 
             if (c == null)
                 throw new HttpResponseException("The requested Challenge resource doesn't exist.", System.Net.HttpStatusCode.NotFound);
@@ -148,17 +179,12 @@ namespace DareyaAPI.Controllers
                     throw new HttpResponseException("This item is friends-only.", System.Net.HttpStatusCode.Forbidden);
             }
 
-            /*
-            c.CurrentBid += value.Amount;
-            ChalRepo.Update(c);
+            decimal approximateFees;
 
-            value.CustomerID = ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
-            value.Status = (int)ChallengeBid.BidStatusCodes.Default;
-
-            BidRepo.Add(value);*/
-
-            // transactional stored procedure bitches!
-            ChalRepo.AddBidToChallenge(c, ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID, value.Amount);
+            approximateFees=BillingSystem.BillingProcessorFactory.
+                GetBillingProcessor((BillingSystem.BillingProcessorFactory.SupportedBillingProcessor)cust.BillingType).GetProcessingFeesForAmount(value.Amount);
+            
+            ChalRepo.AddBidToChallenge(c, ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID, value.Amount, approximateFees);
         }
 
         // POST /api/challenge
@@ -168,20 +194,46 @@ namespace DareyaAPI.Controllers
         {
             if (value.Description.Equals(""))
             {
+                Trace.WriteLine("EXCEPTION: You must specify a description for a challenge", "ChallengeController::New");
+
                 throw new HttpResponseException("You have to specify a description.", System.Net.HttpStatusCode.InternalServerError);
             }
-            
+
+            Trace.WriteLine("Creating a new challenge for customer " + ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID.ToString(), "ChallengeController::New");
+
             value.CustomerID = ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
-            int firstBid = value.CurrentBid;
-            value.CurrentBid = 0; // IMPORTANT
+            
+            decimal firstBid = (decimal)value.CurrentBid;
+            
             value.ID=ChalRepo.Add(value);
-            ChalRepo.AddBidToChallenge(value, value.CustomerID, firstBid);
+
+            Customer cust=CustRepo.GetWithID(((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID);
+
+            decimal approxFees;
+            try
+            {
+                approxFees = BillingSystem.BillingProcessorFactory.GetBillingProcessor((BillingSystem.BillingProcessorFactory.SupportedBillingProcessor)cust.BillingType).GetProcessingFeesForAmount(firstBid);
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine("NOTE: Caught customer " + ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID.ToString() + " with no billing proc., assuming Stripe", "ChallengeController::New");
+                //throw new HttpResponseException("There was a fatal error generating the bid for this challenge.", System.Net.HttpStatusCode.InternalServerError);
+                approxFees = BillingSystem.BillingProcessorFactory.GetBillingProcessor(BillingSystem.BillingProcessorFactory.SupportedBillingProcessor.Stripe).GetProcessingFeesForAmount(firstBid);
+            }
+            
+            Trace.WriteLine("Adding a bid of " + firstBid.ToString() + " to challenge ID " + value.ID.ToString(), "ChallengeController::New");
+            ChalRepo.AddBidToChallenge(value, value.CustomerID, firstBid, approxFees);
+
+            value.CurrentBid = (firstBid - approxFees);
 
             bool createTargetStatus=false;
+
+            Trace.WriteLine("The target customer type for challenge " + value.ID.ToString() + " is " + ((NewChallenge.TargetCustomerType)value.TargetType).ToString(), "ChallengeController::New");
 
             switch (value.TargetType)
             {
                 case (int)NewChallenge.TargetCustomerType.Default:
+                    
                     if (value.TargetCustomerID > 0)
                     {
                         createTargetStatus = true;
@@ -212,7 +264,8 @@ namespace DareyaAPI.Controllers
                 case (int)NewChallenge.TargetCustomerType.PhoneNumber:
                     if (value.PhoneNumber != null && !value.PhoneNumber.Equals(""))
                     {
-                        createTargetStatus = true;
+                        //createTargetStatus = true;
+                        throw new HttpResponseException("Targeting phone numbers is not yet supported.", System.Net.HttpStatusCode.Forbidden);
                     }
                     break;
                 case (int)NewChallenge.TargetCustomerType.EmailAddress:
@@ -223,10 +276,13 @@ namespace DareyaAPI.Controllers
                         Customer tryEMail = CustRepo.GetWithEmailAddress(value.EmailAddress);
                         if (tryEMail != null && tryEMail.EmailAddress.Equals(value.EmailAddress))
                         {
+                            Trace.WriteLine("Found the email customer "+value.EmailAddress+" for new challenge "+value.ID.ToString(), "ChallengeController::New");
+
                             value.TargetCustomerID = tryEMail.ID;
                         }
                         else
                         {
+                            Trace.WriteLine("Couldn't find the email customer " + value.EmailAddress + " for new challenge " + value.ID.ToString(), "ChallengeController::New");
                             Customer unclaimedEmail = new Customer();
                             unclaimedEmail.EmailAddress = value.EmailAddress;
                             unclaimedEmail.Type = (int)Customer.TypeCodes.Unclaimed;
@@ -250,6 +306,7 @@ namespace DareyaAPI.Controllers
                 StatusRepo.Add(s);
 
                 // notify the receipient of the new challenge.
+                CustomerNotifier.NotifyNewChallenge(s.ChallengeOriginatorCustomerID, s.CustomerID, s.ChallengeID);
             }
 
             return PrepOutboundChallenge(value);
@@ -259,6 +316,8 @@ namespace DareyaAPI.Controllers
         [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
         public ChallengeStatus Take(long id)
         {
+            Trace.WriteLine("Customer " + ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID.ToString() + " wants to take challenge "+id.ToString(), "ChallengeController::Take");
+
             Challenge c = ChalRepo.Get(id);
 
             if (c == null)
@@ -279,7 +338,11 @@ namespace DareyaAPI.Controllers
             s.CustomerID = ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
             s.UniqueID = System.Guid.NewGuid().ToString();
             s.Status = (int)ChallengeStatus.StatusCodes.Accepted;
+
+            Trace.WriteLine("Adding 'taking this dare' status for customer " + ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID.ToString() + " and challenge " + id.ToString(), "ChallengeController::Take");
             StatusRepo.Add(s);
+
+            CustomerNotifier.NotifyChallengeAccepted(s.ChallengeOriginatorCustomerID, s.CustomerID, c.ID);
 
             return s;
         }
