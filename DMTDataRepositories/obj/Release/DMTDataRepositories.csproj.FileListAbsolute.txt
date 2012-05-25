@@ -7,3 +7,5 @@ C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DMTDataRep
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DMTDataRepositories\obj\Release\DMTDataRepositories.pdb
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DMTDataRepositories\bin\Release\DMTDataRepositories.dll.config
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DMTDataRepositories\obj\Release\ResolveAssemblyReference.cache
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DMTDataRepositories\bin\Release\Dapper.dll
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DMTDataRepositories\bin\Release\Dapper.pdb

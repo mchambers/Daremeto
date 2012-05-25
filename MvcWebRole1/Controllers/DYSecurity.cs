@@ -92,7 +92,7 @@ namespace DareyaAPI.Controllers
 
         public Authorization AuthorizeCustomer(Login l)
         {
-            ICustomerRepository repo = new CustomerRepository();
+            ICustomerRepository repo = Models.RepoFactory.GetCustomerRepo();
 
             Customer c=null;
 

@@ -31,9 +31,10 @@ namespace DareyaAPI.ProcessingQueue
         public void PutQueueMessage(MessageType type, Dictionary<string, long> data)
         {
             System.IO.MemoryStream stream = new System.IO.MemoryStream(1024 * 64);
-            _formatter.Serialize(stream, data);
 
             data.Add("Type", (long)type);
+
+            _formatter.Serialize(stream, data);
 
             CloudQueueMessage message = new CloudQueueMessage(stream.ToArray());
             queue.AddMessage(message);
@@ -48,11 +49,22 @@ namespace DareyaAPI.ProcessingQueue
             if (retrievedMessage == null)
                 return null;
 
-            item.Data = (Dictionary<string, long>)_formatter.Deserialize(new System.IO.MemoryStream(retrievedMessage.AsBytes));
-            item.Type = (MessageType)item.Data["Type"];
-
-            queue.DeleteMessage(retrievedMessage);
-
+            try
+            {
+                item.Data = (Dictionary<string, long>)_formatter.Deserialize(new System.IO.MemoryStream(retrievedMessage.AsBytes));
+                item.Type = (MessageType)item.Data["Type"];
+                queue.DeleteMessage(retrievedMessage);
+            }
+            catch (Exception e)
+            {
+                if (retrievedMessage.DequeueCount > 3)
+                {
+                    // delete the 'poison pill'
+                    queue.DeleteMessage(retrievedMessage);
+                }
+                return null;
+            }
+            
             return item;
         }
     }

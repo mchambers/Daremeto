@@ -34,12 +34,16 @@
     <Reference Include="AutoMapper">
       <HintPath>..\packages\AutoMapper.2.1.267\lib\net40\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="Dapper">
+      <HintPath>..\packages\Dapper.1.8\lib\net40\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.WindowsAzure.ServiceRuntime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.WindowsAzure.StorageClient, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files\Windows Azure SDK\v1.6\bin\Microsoft.WindowsAzure.StorageClient.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Services.Client" />
@@ -56,17 +60,19 @@
     <Compile Include="AccountRepository.cs" />
     <Compile Include="Authorization.cs" />
     <Compile Include="AuthorizationRepository.cs" />
+    <Compile Include="BidRepoDapper.cs" />
     <Compile Include="Billing.cs" />
     <Compile Include="BillingProcessorFactory.cs" />
     <Compile Include="ChallengeBid.cs" />
     <Compile Include="ChallengeModel.cs" />
-    <Compile Include="ChallengeRepository.cs" />
+    <Compile Include="ChallengeRepoDapper.cs" />
     <Compile Include="ChallengeStatus.cs" />
     <Compile Include="ChallengeStatusRepository.cs" />
     <Compile Include="ChallengeStatusVote.cs" />
     <Compile Include="ChallengeStatusVoteRepository.cs" />
+    <Compile Include="CustomerForeignNetworkConnection.cs" />
     <Compile Include="CustomerModel.cs" />
-    <Compile Include="CustomerRepository.cs" />
+    <Compile Include="CustomerRepoDapper.cs" />
     <Compile Include="DareyaIdentity.cs" />
     <Compile Include="DareyaPrincipal.cs" />
     <Compile Include="Database\DbModels.Designer.cs">
@@ -90,10 +96,13 @@
     <Compile Include="ICustomerRepository.cs" />
     <Compile Include="IEvidenceRepository.cs" />
     <Compile Include="IFriendshipRepository.cs" />
+    <Compile Include="IOnboardTokenRepository.cs" />
     <Compile Include="IProcessingQueue.cs" />
     <Compile Include="IPushServiceTokenRepository.cs" />
     <Compile Include="ITransactionRepository.cs" />
     <Compile Include="Login.cs" />
+    <Compile Include="OnboardToken.cs" />
+    <Compile Include="OnboardTokenRepository.cs" />
     <Compile Include="ProcessingQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PushServiceToken.cs" />

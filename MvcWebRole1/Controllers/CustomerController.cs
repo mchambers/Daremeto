@@ -10,6 +10,20 @@ namespace DareyaAPI.Controllers
 {
     public class CustomerController : ApiController
     {
+        public class CustomerSignupResult
+        {
+            public enum ResultCode
+            {
+                Success,
+                EmailInUse,
+                NoPasswordSupplied,
+                Failed
+            }
+
+            public Customer Customer { get; set; }
+            public ResultCode Result { get; set; }
+        }
+
         private ICustomerRepository Repo;
         private Security Security;
         private IChallengeStatusRepository StatusRepo;
@@ -80,6 +94,10 @@ namespace DareyaAPI.Controllers
             TokenRepo.Add(t);
         }
 
+        //[HttpPost]
+        //public void Claim(
+
+        /*
         private void CoreHandleFacebookSignup(Customer newCustomer)
         {
             Customer tryFB = Repo.GetWithFacebookID(newCustomer.FacebookUserID);
@@ -99,7 +117,7 @@ namespace DareyaAPI.Controllers
                 Repo.Add(newCustomer);
             }
 
-        }
+        }*/
 
         private void CoreCreateSendVerificationEmail(Customer newCustomer)
         {
@@ -114,18 +132,16 @@ namespace DareyaAPI.Controllers
 
             String authUrl = "http://dareme.to/verify/" + a.Token;
         }
-
-        private void CoreHandleCredentialSignup(Customer newCustomer)
+        
+        public CustomerSignupResult HandleCredentialSignup(Customer newCustomer)
         {
-            newCustomer.EmailAddress = newCustomer.EmailAddress.ToLower();
+            newCustomer.EmailAddress = newCustomer.EmailAddress.ToLower().Trim();
 
             Customer tryEmail = Repo.GetWithEmailAddress(newCustomer.EmailAddress);
             if (tryEmail != null && tryEmail.EmailAddress.Equals(newCustomer.EmailAddress))
             {
                 if (tryEmail.Type != (int)Customer.TypeCodes.Unclaimed)
-                {
-                    throw new HttpResponseException(System.Net.HttpStatusCode.Forbidden);
-                }
+                    return new CustomerSignupResult { Customer = null, Result = CustomerSignupResult.ResultCode.EmailInUse };
             }
 
             newCustomer.Type = (int)Customer.TypeCodes.Unverified;
@@ -134,14 +150,16 @@ namespace DareyaAPI.Controllers
             {
                 CoreCreateSendVerificationEmail(newCustomer);
                 if (tryEmail == null)
-                    Repo.Add(newCustomer);
+                    newCustomer.ID=Repo.Add(newCustomer);
                 else
                     Repo.Update(tryEmail);
             }
             catch (Exception e)
             {
-                throw new HttpResponseException(e.Message, System.Net.HttpStatusCode.InternalServerError);
+                return new CustomerSignupResult { Result = CustomerSignupResult.ResultCode.Failed, Customer=null };
             }
+
+            return new CustomerSignupResult { Result = CustomerSignupResult.ResultCode.Success, Customer = newCustomer };
         }
 
         [HttpPost]
@@ -149,54 +167,32 @@ namespace DareyaAPI.Controllers
         {
             
         }
-
+        
         // POST /api/customer/signup
         [HttpPost]
         public void Signup(Customer newCustomer)
         {
-            SignupType signupType = SignupType.Credentials;
-
             if (newCustomer.AvatarURL == null || newCustomer.AvatarURL.Equals(""))
-            {
                 newCustomer.AvatarURL = "http://images.dareme.to/avatars/default.jpg";
-            }
 
-            if (newCustomer.FacebookUserID == null || newCustomer.FacebookUserID.Equals(""))
-            {
-                if (newCustomer.EmailAddress==null || newCustomer.EmailAddress.Equals(""))
-                {
-                    // invalid
-                    throw new HttpResponseException("No Facebook Connect information was found and no email address specified.", System.Net.HttpStatusCode.InternalServerError);
-                }
-                else
-                    signupType = SignupType.Credentials;
-            }
-            else
-                signupType = SignupType.Facebook;
-
-            if((newCustomer.FacebookAccessToken==null || newCustomer.FacebookAccessToken.Equals("")) && (newCustomer.Password==null || newCustomer.Password.Equals("")))
+            if(newCustomer.Password==null || newCustomer.Password.Equals(""))
             {
                 // no authentication details provided for this customer
-                throw new HttpResponseException("No credentials were supplied -- either a Facebook access token or a password are required.", System.Net.HttpStatusCode.InternalServerError);
+                throw new HttpResponseException("No credentials were supplied -- a password are required.", System.Net.HttpStatusCode.InternalServerError);
             }
 
             // force all customers onto Stripe for now.
             newCustomer.BillingType = (int)BillingSystem.BillingProcessorFactory.SupportedBillingProcessor.Stripe;
 
-            switch (signupType)
-            {
-                case SignupType.Credentials:
-                    CoreHandleCredentialSignup(newCustomer);
-                    break;
-                case SignupType.Facebook:
-                    CoreHandleFacebookSignup(newCustomer);
-                    break;
-            }
+            if (newCustomer.FirstName == null || newCustomer.FirstName.Equals("") || newCustomer.LastName == null || newCustomer.LastName.Equals(""))
+                throw new HttpResponseException("New customers must supply a first and last name.", System.Net.HttpStatusCode.InternalServerError);
 
-            // queue an email to be sent welcoming the user
-
-            // send back a blank 200; the client should now try to authorize
+            CustomerSignupResult c=this.HandleCredentialSignup(newCustomer);
             
+            if (c.Result != CustomerSignupResult.ResultCode.Success)
+                throw new HttpResponseException("Couldn't sign up the new customer: " + c.Result.ToString(), System.Net.HttpStatusCode.Forbidden);
+            
+            // send back a blank 200; the client should now try to authorize
         }
     }
 }

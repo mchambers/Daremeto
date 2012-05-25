@@ -20,6 +20,15 @@ namespace DareyaAPI.Models
         private static IProcessingQueue processingQueue;
         private static IAccountRepository accountRepository;
         private static ITransactionRepository transRepository;
+        private static IOnboardTokenRepository onboardRepo;
+
+        public static IOnboardTokenRepository GetOnboardTokenRepo()
+        {
+            if (onboardRepo == null)
+                onboardRepo = new OnboardTokenRepository();
+
+            return onboardRepo;
+        }
 
         public static ITransactionRepository GetTransactionRepo()
         {
@@ -56,7 +65,7 @@ namespace DareyaAPI.Models
         public static IChallengeBidRepository GetChallengeBidRepo()
         {
             if (bidRepo == null)
-                bidRepo = new ChallengeBidRepository();
+                bidRepo = new BidRepoDapper();
 
             return bidRepo;
         }
@@ -64,7 +73,7 @@ namespace DareyaAPI.Models
         public static IChallengeRepository GetChallengeRepo()
         {
             if (chalRepo == null)
-                chalRepo = new ChallengeRepository();
+                chalRepo = new ChallengeRepoDapper();
 
             return chalRepo;
         }
@@ -104,7 +113,7 @@ namespace DareyaAPI.Models
         public static ICustomerRepository GetCustomerRepo()
         {
             if (customerRepo == null)
-                customerRepo = new CustomerRepository();
+                customerRepo = new CustomerRepoDapper();
 
             return customerRepo;
         }

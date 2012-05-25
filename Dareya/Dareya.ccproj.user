@@ -4,5 +4,7 @@
     <ActivePublishProfile>DaremetoProduction</ActivePublishProfile>
     <DeploymentPromptBeforeUpgrading>False</DeploymentPromptBeforeUpgrading>
     <RemoteDesktopMoreOptions>True</RemoteDesktopMoreOptions>
+    <DeploymentProfilingMode>Instrumentation</DeploymentProfilingMode>
+    <DeploymentEnableTierInteractionProfiling>False</DeploymentEnableTierInteractionProfiling>
   </PropertyGroup>
 </Project>

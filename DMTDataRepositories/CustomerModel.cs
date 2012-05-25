@@ -14,6 +14,15 @@ namespace DareyaAPI.Models
             Unverified
         }
 
+        public enum ForeignUserTypes
+        {
+            Undefined,
+            Facebook,
+            Twitter,
+            PhoneNumber,
+            EmailAddress
+        }
+
         public long ID { get; set; }
 
         public string FirstName { get; set; }
@@ -38,6 +47,9 @@ namespace DareyaAPI.Models
 
         public string AvatarURL { get; set; }
 
+        public string ForeignUserID { get; set; }
+        public int ForeignUserType { get; set; }
+        
         public static Customer Filter(Customer c)
         {
             Customer filtered = new Customer();
@@ -54,6 +66,9 @@ namespace DareyaAPI.Models
             filtered.FacebookAccessToken = null;
             filtered.FacebookExpires = null;
             filtered.FacebookUserID = null;
+
+            filtered.ForeignUserID = "";
+            filtered.ForeignUserType = (int)ForeignUserTypes.Undefined;
 
             filtered.ID = c.ID;
             filtered.FirstName = c.FirstName;
@@ -81,6 +96,8 @@ namespace DareyaAPI.Models
             BillingID = "";
             Type = 0;
             AvatarURL = "";
+            ForeignUserType = 0;
+            ForeignUserID = "";
         }
     }
 }

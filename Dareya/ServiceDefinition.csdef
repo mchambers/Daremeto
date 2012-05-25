@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ServiceDefinition name="Dareya" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition">
-  <WebRole name="DareyaAPI" vmsize="Small">
+  <WebRole name="DareyaAPI" vmsize="Medium">
     <Sites>
       <Site name="Web">
         <Bindings>
@@ -19,11 +19,11 @@
     <ConfigurationSettings>
       <Setting name="StorageConnectionString" />
     </ConfigurationSettings>
-
     <Startup>
       <Task commandLine="disableAppPoolTimeout.cmd" executionContext="elevated" taskType="background" />
     </Startup>
-    
+    <Certificates>
+    </Certificates>
   </WebRole>
   <WorkerRole name="DaremetoWorker" vmsize="Small">
     <Imports>

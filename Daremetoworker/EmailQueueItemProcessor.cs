@@ -14,13 +14,18 @@ namespace DaremetoWorker
         {
             return new RequestBuilder { NetworkCredential=new System.Net.NetworkCredential("g-AoI2jQSGaAfXJZBZT9GQ", "GMNCIs-WSDKDghWcqw6-Ng") };
         }
+
+        private RequestBuilder GetIOSUAProductionCredentials()
+        {
+            return new RequestBuilder { NetworkCredential = new System.Net.NetworkCredential("m-3W3fEkS52DUwrGMhqQ-w", "v9K8jHEMQsecepHtgrLfbg") };
+        }
         
         private void PushToCustomer(long CustomerID, string Text)
         {
             IPushServiceTokenRepository tokenRepo = RepoFactory.GetPushServiceTokenRepo();
             
-            AddRegistrationService reg = new AddRegistrationService { RequestBuilder = GetIOSUASandboxCredentials() };
-            PushService service = new PushService { RequestBuilder = GetIOSUASandboxCredentials() };
+            AddRegistrationService reg = new AddRegistrationService { RequestBuilder = GetIOSUAProductionCredentials() };
+            PushService service = new PushService { RequestBuilder = GetIOSUAProductionCredentials() };
 
             List<string> pushTokens = new List<string>();
 
@@ -30,7 +35,10 @@ namespace DaremetoWorker
                 pushTokens.Add(t.Token);
             }
 
-            PushNotification notification = new PushNotification { DeviceTokens = pushTokens };
+            PushPayload payload = new PushPayload();
+            payload.Alert = Text;
+            
+            PushNotification notification = new PushNotification { DeviceTokens = pushTokens, Payload = payload };
             service.Execute(notification);
         }
 

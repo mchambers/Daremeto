@@ -41,7 +41,7 @@ namespace DareyaAPI.Models
         public int Visibility { get; set; }
         public decimal CurrentBid { get; set; }
         public int State { get; set; }
-        public bool Anonymous { get; set; }
+        public int Anonymous { get; set; }
         public long CustomerID { get; set; }
         public long TargetCustomerID { get; set; }
         public List<ChallengeBid> Bids { get; set; }
@@ -60,7 +60,7 @@ namespace DareyaAPI.Models
             Visibility = 0;
             CurrentBid = 0;
             State = 0;
-            Anonymous = false;
+            Anonymous = 0;
             CustomerID = 0;
             TargetCustomerID = 0;
             NumberOfTakers = 0;
@@ -72,29 +72,23 @@ namespace DareyaAPI.Models
 
     public class NewChallenge : Challenge
     {
-        public enum TargetCustomerType
-        {
-            Default,
-            Facebook,
-            PhoneNumber, 
-            EmailAddress
-        }
-
         // for inbound challenge create requests,
         // add some fields so we can target non-users
         // and create unclaimed customer records for them.
-        public string FacebookUID { get; set; }
-        public string PhoneNumber { get; set; }
         public string EmailAddress { get; set; }
-        public int TargetType { get; set; }
+        public Customer.ForeignUserTypes ForeignNetworkType { get; set; }
+        public string ForeignNetworkUserID { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
 
         public NewChallenge()
             : base()
         {
-            FacebookUID = "";
-            PhoneNumber = "";
             EmailAddress = "";
-            TargetType = 0;
+            ForeignNetworkType = Models.Customer.ForeignUserTypes.Undefined;
+            FirstName = "";
+            LastName = "";
+            ForeignNetworkUserID = "";
         }
     }
 }

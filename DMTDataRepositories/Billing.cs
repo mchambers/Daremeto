@@ -8,32 +8,9 @@ namespace DareyaAPI.BillingSystem
 {
     public class Billing
     {
-        public IBillingProcessor BillingProcessor
+        public static decimal ComputeVigForAmount(decimal Amount)
         {
-            get;
-            set;
-        }
-
-        // We always need to make this.
-        public decimal TheVig()
-        {
-            return 0.05m;
-        }
-
-        public decimal ComputeActualBountyForChallenge(Challenge c)
-        {
-            // break even vig = 
-            decimal contributedBounty;
-
-            /*
-             * 
-             * total up RealizedBidAmount (this is the ActualBid-FeesPaid)
-             * then
-             * TotalRealizedBidAmount=(RealizedBidAmount*TheVig())
-             * 
-             * */
-
-            return 0;
+            return Amount * 0.05m;
         }
     }
 }

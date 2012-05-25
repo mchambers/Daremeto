@@ -63,7 +63,7 @@ namespace DareyaAPI.Controllers
         [HttpGet]
         public List<Challenge> Get(int StartAt=0, int Limit=10)
         {
-            List<Challenge> chals = ChalRepo.GetNewest(0, 10);
+            List<Challenge> chals = ChalRepo.GetNewest(0, 10).ToList<Challenge>();
             List<Challenge> outChals = new List<Challenge>(chals.Count);
 
             foreach (Challenge c in chals)
@@ -220,7 +220,9 @@ namespace DareyaAPI.Controllers
                 //throw new HttpResponseException("There was a fatal error generating the bid for this challenge.", System.Net.HttpStatusCode.InternalServerError);
                 approxFees = BillingSystem.BillingProcessorFactory.GetBillingProcessor(BillingSystem.BillingProcessorFactory.SupportedBillingProcessor.Stripe).GetProcessingFeesForAmount(firstBid);
             }
-            
+
+            approxFees += BillingSystem.Billing.ComputeVigForAmount(firstBid); // we gotta get our taste.
+
             Trace.WriteLine("Adding a bid of " + firstBid.ToString() + " to challenge ID " + value.ID.ToString(), "ChallengeController::New");
             ChalRepo.AddBidToChallenge(value, value.CustomerID, firstBid, approxFees);
 
@@ -228,81 +230,72 @@ namespace DareyaAPI.Controllers
 
             bool createTargetStatus=false;
 
-            Trace.WriteLine("The target customer type for challenge " + value.ID.ToString() + " is " + ((NewChallenge.TargetCustomerType)value.TargetType).ToString(), "ChallengeController::New");
+            Trace.WriteLine("The target customer type for challenge " + value.ID.ToString() + " is " + value.ForeignNetworkType.ToString());
 
-            switch (value.TargetType)
+            // Try using a supplied email address to target the challenge first...
+            if (value.EmailAddress != null && !value.EmailAddress.Equals(""))
             {
-                case (int)NewChallenge.TargetCustomerType.Default:
-                    
-                    if (value.TargetCustomerID > 0)
+                value.EmailAddress = value.EmailAddress.ToLower().Trim();
+
+                Customer tryEMail = CustRepo.GetWithEmailAddress(value.EmailAddress);
+                if (tryEMail != null && tryEMail.EmailAddress.Equals(value.EmailAddress))
+                {
+                    Trace.WriteLine("Found the email customer " + value.EmailAddress + " for new challenge " + value.ID.ToString(), "ChallengeController::New");
+                    value.TargetCustomerID = tryEMail.ID;
+                }
+                else
+                {
+                    Trace.WriteLine("Couldn't find the email customer " + value.EmailAddress + " for new challenge " + value.ID.ToString(), "ChallengeController::New");
+                    Customer unclaimedEmail = new Customer();
+                    unclaimedEmail.EmailAddress = value.EmailAddress;
+                    unclaimedEmail.Type = (int)Customer.TypeCodes.Unclaimed;
+                    value.TargetCustomerID = CustRepo.Add(unclaimedEmail);
+                }
+                createTargetStatus = true;
+            }
+            else // then try using a supplied foreign network connection...
+            {
+                if (value.ForeignNetworkType != Customer.ForeignUserTypes.Undefined)
+                {
+                    Customer tryFN = CustRepo.GetWithForeignUserID(value.ForeignNetworkUserID, value.ForeignNetworkType);
+                    if (tryFN != null && tryFN.ID > 0)
                     {
-                        createTargetStatus = true;
-
-
+                        Trace.WriteLine("Found the foreign network customer " + value.ForeignNetworkUserID + " as customer ID " + tryFN.ID.ToString());
+                        value.TargetCustomerID = tryFN.ID;
                     }
                     else
-                        createTargetStatus = false;
-                    break;
-                case (int)NewChallenge.TargetCustomerType.Facebook:
-                    if (value.FacebookUID != null && !value.FacebookUID.Equals(""))
                     {
-                        Customer tryFB = CustRepo.GetWithFacebookID(value.FacebookUID);
-                        if (tryFB != null && tryFB.ID>0)
+                        Customer unclaimedCust = new Customer
                         {
-                            value.TargetCustomerID = tryFB.ID;
-                        }
-                        else
-                        {
-                            Customer unclaimedFB = new Customer();
-                            unclaimedFB.FacebookUserID = value.FacebookUID;
-                            unclaimedFB.Type = (int)Customer.TypeCodes.Unclaimed;
-                            value.TargetCustomerID=CustRepo.Add(unclaimedFB);
-                        }
-                        createTargetStatus = true;
-                    }
-                    break;
-                case (int)NewChallenge.TargetCustomerType.PhoneNumber:
-                    if (value.PhoneNumber != null && !value.PhoneNumber.Equals(""))
-                    {
-                        //createTargetStatus = true;
-                        throw new HttpResponseException("Targeting phone numbers is not yet supported.", System.Net.HttpStatusCode.Forbidden);
-                    }
-                    break;
-                case (int)NewChallenge.TargetCustomerType.EmailAddress:
-                    if (value.EmailAddress != null && !value.EmailAddress.Equals(""))
-                    {
-                        value.EmailAddress=value.EmailAddress.ToLower();
+                            FirstName = value.FirstName,
+                            LastName = value.LastName,
+                            Type = (int)Customer.TypeCodes.Unclaimed
+                        };
 
-                        Customer tryEMail = CustRepo.GetWithEmailAddress(value.EmailAddress);
-                        if (tryEMail != null && tryEMail.EmailAddress.Equals(value.EmailAddress))
-                        {
-                            Trace.WriteLine("Found the email customer "+value.EmailAddress+" for new challenge "+value.ID.ToString(), "ChallengeController::New");
+                        value.TargetCustomerID = CustRepo.Add(unclaimedCust);
 
-                            value.TargetCustomerID = tryEMail.ID;
-                        }
-                        else
-                        {
-                            Trace.WriteLine("Couldn't find the email customer " + value.EmailAddress + " for new challenge " + value.ID.ToString(), "ChallengeController::New");
-                            Customer unclaimedEmail = new Customer();
-                            unclaimedEmail.EmailAddress = value.EmailAddress;
-                            unclaimedEmail.Type = (int)Customer.TypeCodes.Unclaimed;
-                            value.TargetCustomerID = CustRepo.Add(unclaimedEmail);
-                        }
-                        createTargetStatus = true;
+                        Trace.WriteLine("Created a new foreign network customer " + value.ForeignNetworkUserID + " as customer ID " + value.TargetCustomerID.ToString());
+
+                        CustRepo.AddForeignNetworkForCustomer(value.TargetCustomerID, value.ForeignNetworkUserID, value.ForeignNetworkType);
                     }
-                    break;
+
+                    createTargetStatus = true;
+                }
             }
             
             ChalRepo.Update(value);
 
             if (createTargetStatus)
             {
-                ChallengeStatus s = new ChallengeStatus();
-                s.ChallengeID = value.ID;
-                s.ChallengeOriginatorCustomerID = value.CustomerID;
-                s.CustomerID = value.TargetCustomerID;
-                s.UniqueID = System.Guid.NewGuid().ToString();
-                s.Status = (int)ChallengeStatus.StatusCodes.None;
+                ChallengeStatus s = new ChallengeStatus()
+                {
+                    ChallengeID=value.ID,
+                    ChallengeOriginatorCustomerID=value.CustomerID,
+                    CustomerID=value.TargetCustomerID,
+                    UniqueID=System.Guid.NewGuid().ToString(),
+                    Status=(int)ChallengeStatus.StatusCodes.None
+                };
+
                 StatusRepo.Add(s);
 
                 // notify the receipient of the new challenge.

@@ -13,9 +13,10 @@ namespace DareyaAPI.Models
         bool Update(Challenge item);
 
         void AddBidToChallenge(Challenge item, long CustomerID, decimal BidAmount, decimal ComputedFees);
+        int MoveChallengesToCustomer(long SourceCustomerID, long NewTargetCustomerID);
 
-        List<Challenge> GetNewest(int startAt, int amount);
-        List<Challenge> GetListForUser(long userID);
-        List<Challenge> GetListForUser(long userID, int status);
+        IEnumerable<Challenge> GetNewest(int startAt, int amount);
+        IEnumerable<Challenge> GetListForUser(long userID);
+        IEnumerable<Challenge> GetListForUser(long userID, int status);
     }
 }

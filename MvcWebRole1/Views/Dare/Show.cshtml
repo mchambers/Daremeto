@@ -1,0 +1,92 @@
+﻿@model DareyaAPI.Models.Challenge
+
+@{
+    ViewBag.Title = "Show";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Show</h2>
+
+<fieldset>
+    <legend>Challenge</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Title)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Title)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Description)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Description)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Privacy)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Privacy)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Visibility)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Visibility)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CurrentBid)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CurrentBid)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.State)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.State)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Anonymous)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Anonymous)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CustomerID)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CustomerID)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TargetCustomerID)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TargetCustomerID)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.NumberOfTakers)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.NumberOfTakers)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.NumberOfBidders)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.NumberOfBidders)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

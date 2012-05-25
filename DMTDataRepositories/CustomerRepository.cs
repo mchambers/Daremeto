@@ -120,5 +120,11 @@ namespace DareyaAPI.Models
         {
             return DbCustomerToCustomer(db.Customer.FirstOrDefault(cust => cust.FacebookUserID.Equals(FBID)));
         }
+
+
+        public Customer GetWithForeignUserID(string ID, Customer.ForeignUserTypes type)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
