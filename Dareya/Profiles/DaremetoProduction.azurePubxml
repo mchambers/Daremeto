@@ -5,8 +5,8 @@
     <AzureHostedServiceName>daremeto</AzureHostedServiceName>
     <AzureHostedServiceLabel>Daremeto</AzureHostedServiceLabel>
     <AzureSlot>Production</AzureSlot>
-    <AzureEnableIntelliTrace>True</AzureEnableIntelliTrace>
-    <AzureEnableProfiling>False</AzureEnableProfiling>
+    <AzureEnableIntelliTrace>False</AzureEnableIntelliTrace>
+    <AzureEnableProfiling>True</AzureEnableProfiling>
     <AzureEnableWebDeploy>False</AzureEnableWebDeploy>
     <AzureStorageAccountName>daremeto</AzureStorageAccountName>
     <AzureStorageAccountLabel>daremeto</AzureStorageAccountLabel>

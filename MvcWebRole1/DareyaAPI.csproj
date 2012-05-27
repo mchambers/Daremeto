@@ -305,6 +305,8 @@
     <Content Include="Views\Onboard\_TwitterAuth.cshtml" />
     <Content Include="Views\Onboard\Complete.cshtml" />
     <Content Include="Views\Onboard\CompleteAlreadyExisted.cshtml" />
+    <Content Include="Views\Onboard\CompleteOnboard.cshtml" />
+    <Content Include="Views\Onboard\AlreadyACustomer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

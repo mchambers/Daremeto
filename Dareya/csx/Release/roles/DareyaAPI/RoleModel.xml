@@ -31,15 +31,15 @@
         <Variable name="WaRoleType" value="IISWebRole" />
       </Environment>
     </Task>
-    <Task commandLine="WindowsAzureDiagnosticsStartup.exe" executionContext="elevated" relativePath="plugins\IntelliTrace">
+    <Task commandLine="WindowsAzureDiagnosticsStartup.exe Profiling Memory" executionContext="elevated" relativePath="plugins\Profiling">
       <Environment>
-        <Variable name="RdModuleName" value="IntelliTrace" />
+        <Variable name="RdModuleName" value="Profiling" />
         <Variable name="WaRoleType" value="IISWebRole" />
       </Environment>
     </Task>
-    <Task commandLine="WindowsAzureDiagnosticsAgent.exe" executionContext="elevated" taskType="foreground" relativePath="plugins\IntelliTrace">
+    <Task commandLine="WindowsAzureDiagnosticsAgent.exe Profiling Memory" executionContext="elevated" taskType="foreground" relativePath="plugins\Profiling">
       <Environment>
-        <Variable name="RdModuleName" value="IntelliTrace" />
+        <Variable name="RdModuleName" value="Profiling" />
         <Variable name="WaRoleType" value="IISWebRole" />
       </Environment>
     </Task>
@@ -53,18 +53,17 @@
     <Environment>
       <Variable name="_AZURE_INTELLITRACE_ENABLED_" value="1" />
       <Variable name="COR_ENABLE_PROFILING" value="1" />
-      <Variable name="COR_PROFILER" value="{301EC75B-AD5A-459C-A4C4-911C878FA196}" />
-      <Variable name="VSLOGGER_CPLAN" value="%TMP%\IntelliTrace\collectionplan.xml" />
-      <Variable name="__VSLOGGER_CPLAN" value="%TMP%\IntelliTrace\collectionplan.xml" />
-      <Variable name="COR_PROFILER_PATH" value="%RdRoleRoot%\plugins\IntelliTrace\Runtime\64TraceLogProfiler.dll" />
       <Variable name="VSTS_PROFILER_NOT_CLEAR_ENVVARS" value="1" />
+      <Variable name="COR_PROFILER" value="{F1216318-0905-4fe8-B2E8-105CEB7CD689}" />
+      <Variable name="COR_LINE_PROFILING" value="1" />
+      <Variable name="COR_GC_PROFILING" value="1" />
     </Environment>
     <EntryPoint>
       <NetFxEntryPoint assemblyName="DareyaAPI.dll" />
     </EntryPoint>
   </Runtime>
   <ConfigurationSettings>
-    <Setting name="IntelliTraceConnectionString" nameSpace="IntelliTrace" />
+    <Setting name="ProfilingConnectionString" nameSpace="Profiling" />
     <Setting name="ConnectionString" nameSpace="Microsoft.WindowsAzure.Plugins.Diagnostics" />
     <Setting name="Enabled" nameSpace="Microsoft.WindowsAzure.Plugins.RemoteAccess" />
     <Setting name="AccountUsername" nameSpace="Microsoft.WindowsAzure.Plugins.RemoteAccess" />
@@ -87,7 +86,7 @@
     <Property name="MSBuildSourceProjectFile" value="C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\Dareya.ccproj" />
     <Property name="MSBuildSourceTargetName" value="ResolveSingleWebRoleReference" />
     <Property name="TargetFrameworkVersion" value="v4.0" />
-    <Property name="RolePlugins" value="obj\\Release\IntelliTrace" />
+    <Property name="RolePlugins" value="obj\\Release\Profiling" />
     <Property name="TargetRuntimeVersion" value="v4.0" />
   </Properties>
   <Sites>

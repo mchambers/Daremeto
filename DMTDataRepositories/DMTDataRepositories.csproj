@@ -77,8 +77,8 @@
     <Compile Include="DareyaPrincipal.cs" />
     <Compile Include="Database\DbModels.Designer.cs">
       <DependentUpon>DbModels.edmx</DependentUpon>
-      <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Email.cs" />
     <Compile Include="Evidence.cs" />
@@ -118,14 +118,15 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
     <EntityDeploy Include="Database\DbModels.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DbModels.Designer.cs</LastGenOutput>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.Config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

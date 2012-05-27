@@ -4,7 +4,8 @@
     <ActivePublishProfile>DaremetoProduction</ActivePublishProfile>
     <DeploymentPromptBeforeUpgrading>False</DeploymentPromptBeforeUpgrading>
     <RemoteDesktopMoreOptions>True</RemoteDesktopMoreOptions>
-    <DeploymentProfilingMode>Instrumentation</DeploymentProfilingMode>
+    <DeploymentProfilingMode>Memory</DeploymentProfilingMode>
     <DeploymentEnableTierInteractionProfiling>False</DeploymentEnableTierInteractionProfiling>
+    <DeploymentPromptBeforeDeleting>False</DeploymentPromptBeforeDeleting>
   </PropertyGroup>
 </Project>
