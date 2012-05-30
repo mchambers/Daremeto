@@ -9,9 +9,9 @@ namespace DareyaAPI.Models
     public class ChallengeStatusVote
     {
         public long ChallengeID { get; set; }
-        public string ChallengeStatusUniqueID { get; set; }
+        public long CustomerID { get; set; }
+        public long BidderCustomerID { get; set; }
         public bool Accepted { get; set; }
-        public string UniqueID { get; set; }
     }
 
     public class ChallengeStatusVoteDb : TableServiceEntity
@@ -22,8 +22,8 @@ namespace DareyaAPI.Models
         }
 
         public long ChallengeID { get; set; }
-        public string ChallengeStatusUniqueID { get; set; }
+        public long CustomerID { get; set; }
+        public long BidderCustomerID { get; set; }
         public bool Accepted { get; set; }
-        public string UniqueID { get; set; }
     }
 }

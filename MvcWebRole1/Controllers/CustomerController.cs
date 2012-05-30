@@ -24,6 +24,12 @@ namespace DareyaAPI.Controllers
             public ResultCode Result { get; set; }
         }
 
+        public class BillingDTO
+        {
+            public string BillingID { get; set; }
+            public int BillingType { get; set; }
+        }
+
         private ICustomerRepository Repo;
         private Security Security;
         private IChallengeStatusRepository StatusRepo;
@@ -92,6 +98,18 @@ namespace DareyaAPI.Controllers
         {
             t.CustomerID = ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
             TokenRepo.Add(t);
+        }
+
+        [HttpPost]
+        [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
+        public void Billing(BillingDTO billingInfo)
+        {
+            Customer c = Repo.GetWithID(((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID);
+
+            c.BillingID = billingInfo.BillingID;
+            c.BillingType = billingInfo.BillingType;
+
+            Repo.Update(c);
         }
 
         //[HttpPost]

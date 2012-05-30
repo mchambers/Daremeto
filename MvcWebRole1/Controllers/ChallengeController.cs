@@ -5,7 +5,6 @@ using System.Net.Http;
 using System.Web.Http;
 using DareyaAPI.Models;
 using System.Diagnostics;
-
 using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
@@ -40,7 +39,7 @@ namespace DareyaAPI.Controllers
             if (c.TargetCustomerID > 0)
             {
                 Customer tempTargetCust = CustRepo.GetWithID(c.TargetCustomerID);
-                if (tempTargetCust.FirstName != null && !tempTargetCust.FirstName.Equals(""))
+                if (tempTargetCust!=null && tempTargetCust.FirstName != null && !tempTargetCust.FirstName.Equals(""))
                 {
                     c.TargetCustomer = Customer.Filter(tempTargetCust);
                 }
@@ -78,29 +77,7 @@ namespace DareyaAPI.Controllers
         [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
         public List<Challenge> ActiveOutboundForCustomer(long id)
         {
-            if (id == 0) id = ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
-
-            Customer c = CustRepo.GetWithID(id);
-            Security.Audience audience = Security.DetermineAudience(c);
-            if ((audience != Security.Audience.Owner) && (audience != Security.Audience.Friends))
-                throw new HttpResponseException(System.Net.HttpStatusCode.Forbidden);
-
-            /*
-             * 
-             * array of challenge objects with a Status object in them
-             * 
-             * */
-            List<ChallengeStatus> statuses = StatusRepo.GetChallengesBySourceCustomer(id);
-            List<Challenge> challenges = new List<Challenge>();
-
-            foreach (ChallengeStatus s in statuses)
-            {
-                Challenge chal = PrepOutboundChallenge(ChalRepo.Get(s.ChallengeID));
-                chal.Status = s;
-                challenges.Add(chal);
-            }
-
-            return challenges;
+            throw new NotImplementedException();
         }
 
         [HttpGet]
@@ -126,6 +103,7 @@ namespace DareyaAPI.Controllers
             {
                 Challenge chal = PrepOutboundChallenge(ChalRepo.Get(s.ChallengeID));
                 chal.Status = s;
+                chal.Status.Disposition = (int)Security.DetermineDisposition(chal.Status);
                 challenges.Add(chal);
             }
 
@@ -183,6 +161,8 @@ namespace DareyaAPI.Controllers
 
             approximateFees=BillingSystem.BillingProcessorFactory.
                 GetBillingProcessor((BillingSystem.BillingProcessorFactory.SupportedBillingProcessor)cust.BillingType).GetProcessingFeesForAmount(value.Amount);
+
+            approximateFees += BillingSystem.Billing.ComputeVigForAmount(value.Amount);
             
             ChalRepo.AddBidToChallenge(c, ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID, value.Amount, approximateFees);
         }
@@ -292,7 +272,6 @@ namespace DareyaAPI.Controllers
                     ChallengeID=value.ID,
                     ChallengeOriginatorCustomerID=value.CustomerID,
                     CustomerID=value.TargetCustomerID,
-                    UniqueID=System.Guid.NewGuid().ToString(),
                     Status=(int)ChallengeStatus.StatusCodes.None
                 };
 
@@ -329,7 +308,6 @@ namespace DareyaAPI.Controllers
             s.ChallengeID = c.ID;
             s.ChallengeOriginatorCustomerID = c.CustomerID;
             s.CustomerID = ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
-            s.UniqueID = System.Guid.NewGuid().ToString();
             s.Status = (int)ChallengeStatus.StatusCodes.Accepted;
 
             Trace.WriteLine("Adding 'taking this dare' status for customer " + ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID.ToString() + " and challenge " + id.ToString(), "ChallengeController::Take");

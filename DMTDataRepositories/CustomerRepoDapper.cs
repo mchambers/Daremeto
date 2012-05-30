@@ -119,7 +119,11 @@ namespace DareyaAPI.Models
             var f = (from e in context.CreateQuery<CustomerForeignNetworkConnectionDb>(TableName) where e.PartitionKey == partitionKey select e).FirstOrDefault<CustomerForeignNetworkConnectionDb>();
 
             if (f != null && f.CustomerID > 0)
-                return this.GetWithID(f.CustomerID);
+            {
+                Customer c = this.GetWithID(f.CustomerID);
+                context.Detach(f);
+                return c;
+            }
             else
                 return null;
             

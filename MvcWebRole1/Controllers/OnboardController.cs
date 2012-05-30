@@ -180,7 +180,7 @@ namespace DareyaAPI.Controllers
             service.AuthenticateWith(accessToken.Token, accessToken.TokenSecret);
             TwitterUser user = service.VerifyCredentials();
 
-            string handle = user.ScreenName;
+            string handle = "@"+user.ScreenName;
 
             if (handle == null || handle.Equals(""))
                 return null;

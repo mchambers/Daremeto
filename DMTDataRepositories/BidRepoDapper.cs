@@ -72,17 +72,17 @@ namespace DareyaAPI.Models
             }
         }
 
-        public void UpdateStatusForBidsOnChallenge(long ChallengeID, string UniqueID, ChallengeBid.BidStatusCodes NewStatus)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<ChallengeBid> GetVotePendingBidsForCustomer(long CustomerID)
         {
             throw new NotImplementedException();
         }
 
         public List<ChallengeBid> GetActiveBidsForCustomer(long CustomerID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateStatusForBidsOnChallenge(long ChallengeID, ChallengeBid.BidStatusCodes NewStatus)
         {
             throw new NotImplementedException();
         }

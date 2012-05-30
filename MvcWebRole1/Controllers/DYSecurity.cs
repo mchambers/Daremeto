@@ -16,6 +16,33 @@ namespace DareyaAPI.Controllers
             Owner
         }
 
+        public enum Disposition
+        {
+            None,
+            Originator,
+            Backer,
+            Taker
+        }
+
+        public Disposition DetermineDisposition(ChallengeStatus s)
+        {
+            if (!HttpContext.Current.User.Identity.IsAuthenticated)
+                return Disposition.None;
+
+            long curCustID=((Models.DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
+
+            if (s.CustomerID == curCustID)
+                return Disposition.Taker;
+
+            if (s.ChallengeOriginatorCustomerID == curCustID)
+                return Disposition.Originator;
+
+            if (RepoFactory.GetChallengeBidRepo().CustomerDidBidOnChallenge(curCustID, s.ChallengeID)!=null)
+                return Disposition.Backer;
+
+            return Disposition.None;
+        }
+
         public Audience DetermineVisibility(Customer c)
         {
             return Audience.Users;

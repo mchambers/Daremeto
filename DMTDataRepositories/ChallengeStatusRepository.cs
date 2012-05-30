@@ -28,6 +28,16 @@ namespace DareyaAPI.Models
             context = new TableServiceContextV2(client.BaseUri.ToString(), client.Credentials);
         }
 
+        private string DbCustKey(long CustomerID)
+        {
+            return "Cust" + CustomerID.ToString();
+        }
+
+        private string DbChalKey(long ChallengeID)
+        {
+            return "Chal" + ChallengeID.ToString();
+        }
+
         private List<ChallengeStatus> CoreGetStatuses(long ID, string Prefix)
         {
             CloudTableQuery<ChallengeStatusDb> b = (from e in context.CreateQuery<ChallengeStatusDb>(TableName) where e.PartitionKey == Prefix + ID.ToString() select e).AsTableServiceQuery<ChallengeStatusDb>();
@@ -41,19 +51,44 @@ namespace DareyaAPI.Models
             return items;
         }
 
+        public bool CustomerTookChallenge(long CustomerID, long ChallengeID)
+        {
+            ChallengeStatusDb b = (from e in context.CreateQuery<ChallengeStatusDb>(TableName) where e.PartitionKey == DbCustKey(CustomerID) && e.RowKey == DbChalKey(ChallengeID) select e).FirstOrDefault<ChallengeStatusDb>();
+
+            if (b != null) return true;
+            return false;
+        }
+
         public List<ChallengeStatus> GetChallengesBySourceCustomer(long CustomerID)
         {
-            return CoreGetStatuses(CustomerID, "SourceCust");
+            throw new NotImplementedException();
         }
 
         public List<ChallengeStatus> GetActiveChallengesForCustomer(long CustomerID)
         {
-            return CoreGetStatuses(CustomerID, "Cust");
+            CloudTableQuery<ChallengeStatusDb> c = (from e in context.CreateQuery<ChallengeStatusDb>(TableName) where e.PartitionKey == DbCustKey(CustomerID) select e).AsTableServiceQuery<ChallengeStatusDb>();
+
+            List<ChallengeStatus> l = new List<ChallengeStatus>();
+            //foreach (ChallengeStatusDb d in c.TakeWhile<ChallengeStatusDb>(i => i.Status!=(int)ChallengeStatus.StatusCodes.Paid))
+            foreach (ChallengeStatusDb d in c)
+            {
+                l.Add(new ChallengeStatus(d));
+            }
+
+            return l;
         }
 
         public List<ChallengeStatus> GetActiveStatusesForChallenge(long ChallengeID)
         {
-            return CoreGetStatuses(ChallengeID, "Chal");
+            CloudTableQuery<ChallengeStatusDb> c = (from e in context.CreateQuery<ChallengeStatusDb>(TableName) where e.PartitionKey == DbChalKey(ChallengeID) select e).AsTableServiceQuery<ChallengeStatusDb>();
+
+            List<ChallengeStatus> l = new List<ChallengeStatus>();
+            foreach (ChallengeStatusDb d in c)
+            {
+                l.Add(new ChallengeStatus(d));
+            }
+
+            return l;
         }
 
         public void Add(ChallengeStatus value)
@@ -63,60 +98,46 @@ namespace DareyaAPI.Models
 
         private void CoreAddOrUpdate(ChallengeStatus value, bool Add=false)
         {
-            ChallengeStatusDb sourceCust = new ChallengeStatusDb(value);
             ChallengeStatusDb targetCust = new ChallengeStatusDb(value);
             ChallengeStatusDb chal = new ChallengeStatusDb(value);
 
-            targetCust.PartitionKey = "Cust" + value.CustomerID;
-            sourceCust.PartitionKey = "SourceCust" + value.ChallengeOriginatorCustomerID;
-            chal.PartitionKey = "Chal" + value.ChallengeID;
+            string targetCustKey = DbCustKey(value.CustomerID);
+            string chalKey = DbChalKey(value.ChallengeID);
 
+            targetCust.PartitionKey = targetCustKey;
+            targetCust.RowKey=chalKey;
+
+            chal.PartitionKey = chalKey;
+            chal.RowKey = targetCustKey;
+            
             context.AttachTo(TableName, chal, null);
             context.UpdateObject(chal);
-
-            context.AttachTo(TableName, sourceCust, null);
-            context.UpdateObject(sourceCust);
 
             context.AttachTo(TableName, targetCust, null);
             context.UpdateObject(targetCust);
 
             context.SaveChangesWithRetries();
 
-            context.Detach(sourceCust);
             context.Detach(targetCust);
             context.Detach(chal);
         }
-
+        
         public void Update(ChallengeStatus value)
         {
-            if (value.UniqueID == null || value.UniqueID.Equals(""))
-                throw new InvalidOperationException("UniqueID is a required parameter");
-
             CoreAddOrUpdate(value);
-
-            // update all three partitions using the rowkey
-        }
-
-        public ChallengeStatus Get(long id, string key)
-        {
-            ChallengeStatusDb s = (from e in context.CreateQuery<ChallengeStatusDb>(TableName) where e.PartitionKey == "Chal"+id.ToString() && e.RowKey == key select e).FirstOrDefault();
-            ChallengeStatus outS = new ChallengeStatus(s);
-            context.Detach(s);
-            return outS;
         }
 
         public List<ChallengeStatus> GetActiveChallengesBySourceCustomer(long CustomerID)
         {
-            CloudTableQuery<ChallengeStatusDb> b = (from e in context.CreateQuery<ChallengeStatusDb>(TableName) where e.PartitionKey == "SourceCust" + CustomerID.ToString() select e).AsTableServiceQuery<ChallengeStatusDb>();
-            List<ChallengeStatus> items = new List<ChallengeStatus>();
+            throw new NotImplementedException();
+        }
 
-            foreach (ChallengeStatusDb item in b)
-            {
-                items.Add(new ChallengeStatus(item));
-                context.Detach(item);
-            }
+        public ChallengeStatus Get(long CustomerID, long ChallengeID)
+        {
+            ChallengeStatusDb d = (from e in context.CreateQuery<ChallengeStatusDb>(TableName) where e.PartitionKey == DbCustKey(CustomerID) && e.RowKey == DbChalKey(ChallengeID) select e).FirstOrDefault<ChallengeStatusDb>();
 
-            return items;
+            if (d == null) return null;
+            return new ChallengeStatus(d);
         }
     }
 }

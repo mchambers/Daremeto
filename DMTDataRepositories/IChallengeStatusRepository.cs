@@ -13,7 +13,9 @@ namespace DareyaAPI.Models
         List<ChallengeStatus> GetActiveChallengesBySourceCustomer(long CustomerID);
 
         void Add(ChallengeStatus value);
-        ChallengeStatus Get(long id, string key);
+        ChallengeStatus Get(long CustomerID, long ChallengeID);
         void Update(ChallengeStatus value);
+
+        bool CustomerTookChallenge(long CustomerID, long ChallengeID);
     }
 }

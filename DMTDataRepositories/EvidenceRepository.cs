@@ -13,7 +13,7 @@ namespace DareyaAPI.Models
     {
         CloudStorageAccount storage;
         CloudTableClient client;
-        TableServiceContext context;
+        TableServiceContextV2 context;
 
         private const string TableName = "Evidence";
 
@@ -22,14 +22,21 @@ namespace DareyaAPI.Models
             storage = CloudStorageAccount.Parse(RoleEnvironment.GetConfigurationSettingValue("StorageConnectionString"));
             client = storage.CreateCloudTableClient();
             client.CreateTableIfNotExist(TableName);
-            context = client.GetDataServiceContext();
+            //context = client.GetDataServiceContext();
+            context = new TableServiceContextV2(client.BaseUri.ToString(), client.Credentials);
         }
         
+        private string DbPartKey(long ChallengeID, long CustomerID)
+        {
+            return "Chal" + ChallengeID.ToString() + "Cust" + CustomerID.ToString();
+        }
+
         private Evidence DbEvidenceToEvidence(EvidenceDb item)
         {
             Evidence e = new Evidence();
 
-            e.ChallengeStatusID = item.ChallengeStatusID;
+            e.ChallengeID = item.ChallengeID;
+            e.CustomerID = item.CustomerID;
             e.MediaURL = item.MediaURL;
             e.Type = item.Type;
             e.UniqueID = item.UniqueID;
@@ -42,22 +49,19 @@ namespace DareyaAPI.Models
         {
             EvidenceDb d = new EvidenceDb();
 
-            d.ChallengeStatusID = item.ChallengeStatusID;
+            d.CustomerID = item.CustomerID;
             d.Content = item.Content;
             d.MediaURL = item.MediaURL;
             d.UniqueID = item.UniqueID;
             d.Type = item.Type;
             d.ChallengeID = item.ChallengeID;
 
-            d.PartitionKey = item.ChallengeID + "_" + item.UniqueID;
-            d.RowKey = item.UniqueID;
-
             return d;
         }
 
         public List<Evidence> GetAllForChallengeStatus(ChallengeStatus status)
         {
-            CloudTableQuery<EvidenceDb> b = (from e in context.CreateQuery<EvidenceDb>(TableName) where e.PartitionKey == status.ChallengeID+"_"+status.UniqueID select e).AsTableServiceQuery<EvidenceDb>();
+            CloudTableQuery<EvidenceDb> b = (from e in context.CreateQuery<EvidenceDb>(TableName) where e.PartitionKey == DbPartKey(status.ChallengeID, status.CustomerID) select e).AsTableServiceQuery<EvidenceDb>();
             List<Evidence> items = new List<Evidence>();
 
             foreach (EvidenceDb item in b)
@@ -71,7 +75,10 @@ namespace DareyaAPI.Models
         public void Add(Evidence e)
         {
             EvidenceDb d = EvidenceToDbEvidence(e);
-            context.AttachTo(TableName, d);
+
+            d.PartitionKey = DbPartKey(e.ChallengeID, e.CustomerID);
+
+            context.AttachTo(TableName, d, null);
             context.UpdateObject(d);
             context.SaveChangesWithRetries();
         }

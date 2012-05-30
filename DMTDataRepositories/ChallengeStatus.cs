@@ -28,20 +28,21 @@ namespace DareyaAPI.Models
 
         public ChallengeStatus(ChallengeStatusDb d)
         {
-            this.UniqueID = d.RowKey;
+            // this.UniqueID = d.RowKey;
             this.CustomerID = d.CustomerID;
             this.ChallengeID = d.ChallengeID;
             this.Status = d.Status;
             this.ChallengeOriginatorCustomerID = d.ChallengeOriginatorCustomerID;
-
+            
             this.Customer = null;
         }
 
-        public string UniqueID { get; set; }
+        // public string UniqueID { get; set; }
         public long CustomerID { get; set; }
         public int Status { get; set; }
         public long ChallengeID { get; set; }
         public long ChallengeOriginatorCustomerID { get; set; }
+        public int Disposition { get; set; }
 
         public Customer Customer;
     }
@@ -56,10 +57,10 @@ namespace DareyaAPI.Models
         {
             //this.PartitionKey = "Chal" + s.ChallengeID;
              
-            if (s.UniqueID == null || s.UniqueID.Equals(""))
-                s.UniqueID = System.Guid.NewGuid().ToString();
+           // if (s.UniqueID == null || s.UniqueID.Equals(""))
+           //     s.UniqueID = System.Guid.NewGuid().ToString();
 
-            this.RowKey = s.UniqueID;
+           // this.RowKey = s.UniqueID;
             this.ChallengeID = s.ChallengeID;
             this.ChallengeOriginatorCustomerID = s.ChallengeOriginatorCustomerID;
             this.Status = s.Status;

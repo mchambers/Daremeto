@@ -47,12 +47,12 @@ namespace DaremetoWorker
          *              set the Challenge State to PartialPaid
          * */
 
-        private void PerformBillingForCompletedChallenge(long ChallengeID, string ChallengeStatusUniqueID)
+        private void PerformBillingForCompletedChallenge(long ChallengeID, long CustomerID)
         {
             List<ChallengeBid> bids = RepoFactory.GetChallengeBidRepo().Get(ChallengeID);
             IAccountRepository accountRepo=RepoFactory.GetAccountRepo();
             ITransactionRepository transRepo=RepoFactory.GetTransactionRepo();
-            ChallengeStatus chalStatus=RepoFactory.GetChallengeStatusRepo().Get(ChallengeID, ChallengeStatusUniqueID);
+            ChallengeStatus chalStatus=RepoFactory.GetChallengeStatusRepo().Get(CustomerID, ChallengeID);
 
             foreach (ChallengeBid b in bids)
             {
@@ -134,7 +134,7 @@ namespace DaremetoWorker
                     transBatch.Add(feesTransaction);
 
                     // TODO: This transaction ID might not be unique if we have to keep retrying this batch.
-                    transRepo.RecordTransactionBatch(transBatch, "Chal"+chalStatus.ChallengeID+"+"+chalStatus.UniqueID+"+"+System.DateTime.Now.Ticks.ToString());
+                    transRepo.RecordTransactionBatch(transBatch, "Chal"+chalStatus.ChallengeID+"+Cust"+chalStatus.CustomerID+"+"+System.DateTime.Now.Ticks.ToString());
                 }
             }
         }

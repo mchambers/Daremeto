@@ -14,21 +14,20 @@ namespace DareyaAPI.Models
 
         public EvidenceDb(Evidence e)
         {
-            this.PartitionKey = e.ChallengeStatusID;
-            this.RowKey = e.UniqueID;
-
+            this.CustomerID = e.CustomerID;
+            this.ChallengeID = e.ChallengeID;
             this.Type = e.Type;
             this.MediaURL = e.MediaURL;
             this.UniqueID = e.UniqueID;
             this.Content = e.Content;
         }
 
+        public long CustomerID { get; set; }
+        public long ChallengeID { get; set; }
+        public string UniqueID { get; set; }
         public long Type { get; set; }
         public string MediaURL { get; set; }
-        public string UniqueID { get; set; }
-        public string ChallengeStatusID { get; set; }
         public string Content { get; set; }
-        public long ChallengeID { get; set; }
     }
 
     public class Evidence
@@ -40,12 +39,11 @@ namespace DareyaAPI.Models
             Video
         }
 
-        public string ChallengeStatusID { get; set; }
+        public long CustomerID { get; set; }
+        public long ChallengeID { get; set; }
         public string UniqueID { get; set; }
         public long Type { get; set; }
         public string MediaURL { get; set; }
         public string Content { get; set; }
-        public long ChallengeID { get; set; }
-
     }
 }

@@ -33,7 +33,7 @@ namespace DareyaAPI.Controllers
         [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
         public void AcceptClaim(ChallengeStatus status)
         {
-            ChallengeStatus s = StatusRepo.Get(status.ChallengeID, status.UniqueID);
+            ChallengeStatus s = StatusRepo.Get(status.CustomerID, status.ChallengeID);
 
             ChallengeBid bid = BidRepo.CustomerDidBidOnChallenge(((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID, s.ChallengeID);
             if (bid==null)
@@ -41,7 +41,8 @@ namespace DareyaAPI.Controllers
 
             ChallengeStatusVote vote = new ChallengeStatusVote();
             vote.ChallengeID = s.ChallengeID;
-            vote.ChallengeStatusUniqueID = s.UniqueID;
+            vote.CustomerID = s.CustomerID;
+            vote.BidderCustomerID = ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
             vote.Accepted = true;
 
             VoteRepo.Add(vote);
@@ -49,8 +50,10 @@ namespace DareyaAPI.Controllers
             int yesVotes = VoteRepo.GetYesVotes(s);
             if (yesVotes > (BidRepo.GetBidCountForChallenge(status.ChallengeID) * 0.33))
             {
-                bid.Status = (int)ChallengeBid.BidStatusCodes.BidderAccepts;
-                BidRepo.Update(bid);
+                //bid.Status = (int)ChallengeBid.BidStatusCodes.BidderAccepts;
+                //BidRepo.Update(bid);
+                s.Status = (int)ChallengeStatus.StatusCodes.Accepted;
+                StatusRepo.Update(s);
 
                 // challenge completed! award the money! DO IT DO IT!
                 CustomerNotifier.NotifyChallengeAwardedToYou(s.CustomerID, s.ChallengeID);
@@ -67,7 +70,7 @@ namespace DareyaAPI.Controllers
         [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
         public void RejectClaim(ChallengeStatus status)
         {
-            ChallengeStatus s = StatusRepo.Get(status.ChallengeID, status.UniqueID);
+            ChallengeStatus s = StatusRepo.Get(status.CustomerID, status.ChallengeID);
             
             ChallengeBid bid=BidRepo.CustomerDidBidOnChallenge(((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID, s.ChallengeID);
             if (bid==null)
@@ -76,7 +79,8 @@ namespace DareyaAPI.Controllers
             // add the "no" vote
             ChallengeStatusVote vote = new ChallengeStatusVote();
             vote.ChallengeID = s.ChallengeID;
-            vote.ChallengeStatusUniqueID = s.UniqueID;
+            vote.CustomerID = s.CustomerID;
+            vote.BidderCustomerID = ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
             vote.Accepted = false;
 
             VoteRepo.Add(vote);
@@ -84,8 +88,10 @@ namespace DareyaAPI.Controllers
             int noVotes=VoteRepo.GetNoVotes(s);
             if(noVotes > (BidRepo.GetBidCountForChallenge(status.ChallengeID)*0.66))
             {
-                bid.Status=(int)ChallengeBid.BidStatusCodes.BidderRejects;
-                BidRepo.Update(bid);
+                //bid.Status=(int)ChallengeBid.BidStatusCodes.BidderRejects;
+                //BidRepo.Update(bid);
+                s.Status = (int)ChallengeStatus.StatusCodes.SourceRejected;
+                StatusRepo.Update(s);
 
                 // you've failed this challenge my friend.
                 CustomerNotifier.NotifyChallengeRejected(s.CustomerID, s.ChallengeID);
@@ -101,7 +107,7 @@ namespace DareyaAPI.Controllers
         [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
         public void Claim(ChallengeStatus status)
         {
-            ChallengeStatus s = StatusRepo.Get(status.ChallengeID, status.UniqueID);
+            ChallengeStatus s = StatusRepo.Get(status.CustomerID, status.ChallengeID);
             Challenge c = ChalRepo.Get(status.ChallengeID);
 
             if (s.CustomerID != ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID)
@@ -116,7 +122,7 @@ namespace DareyaAPI.Controllers
             
             // set all of the bids for this challenge to "VotePending"
             // so the bidders can see what they need to vote on
-            BidRepo.UpdateStatusForBidsOnChallenge(status.ChallengeID, status.UniqueID, ChallengeBid.BidStatusCodes.VotePending);
+            BidRepo.UpdateStatusForBidsOnChallenge(status.ChallengeID, ChallengeBid.BidStatusCodes.VotePending);
 
             CustomerNotifier.NotifyChallengeClaimed(s.ChallengeOriginatorCustomerID, s.CustomerID, c.ID);
         }
@@ -126,15 +132,15 @@ namespace DareyaAPI.Controllers
         public void Accept(ChallengeStatus status)
         {
             Challenge c = ChalRepo.Get(status.ChallengeID);
-            ChallengeStatus s = StatusRepo.Get(status.ChallengeID, status.UniqueID);
+            ChallengeStatus s = StatusRepo.Get(((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID, status.ChallengeID);
+
+            if (s == null)
+                throw new HttpResponseException(System.Net.HttpStatusCode.NotFound);
 
             if (!Security.CanManipulateContent(c))
                 throw new HttpResponseException(System.Net.HttpStatusCode.Forbidden);
 
-            s.ChallengeID = c.ID;
-            s.CustomerID = ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
             s.Status = (int)ChallengeStatus.StatusCodes.Accepted;
-            s.UniqueID = status.UniqueID;
 
             StatusRepo.Update(s);
 
@@ -158,15 +164,15 @@ namespace DareyaAPI.Controllers
             if (c.Privacy != (int)Challenge.ChallengePrivacy.SinglePerson || c.TargetCustomerID != ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID)
                 throw new HttpResponseException(System.Net.HttpStatusCode.NotImplemented);
 
-            ChallengeStatus s = StatusRepo.Get(status.ChallengeID, status.UniqueID);
+            ChallengeStatus s = StatusRepo.Get(status.CustomerID, status.ChallengeID);
+
+            if (s == null)
+                throw new HttpResponseException(System.Net.HttpStatusCode.NotFound);
 
             if (!Security.CanManipulateContent(c))
                 throw new HttpResponseException(System.Net.HttpStatusCode.Forbidden);
 
-            s.ChallengeID = c.ID;
-            s.CustomerID = ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
             s.Status = (int)ChallengeStatus.StatusCodes.TargetRejected;
-            s.UniqueID = status.UniqueID;
 
             StatusRepo.Update(s);
 

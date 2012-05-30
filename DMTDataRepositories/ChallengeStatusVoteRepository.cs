@@ -13,7 +13,7 @@ namespace DareyaAPI.Models
     {
         CloudStorageAccount storage;
         CloudTableClient client;
-        TableServiceContext context;
+        TableServiceContextV2 context;
 
         private const string TableName = "ChalStatusVotes";
 
@@ -24,7 +24,17 @@ namespace DareyaAPI.Models
 
             client.CreateTableIfNotExist(TableName);
 
-            context = client.GetDataServiceContext();
+            context = new TableServiceContextV2(client.BaseUri.ToString(), client.Credentials);
+        }
+
+        private string DbPartitionForTaker(long ChallengeID, long CustomerID)
+        {
+            return "Chal" + ChallengeID.ToString() + "Cust" + CustomerID.ToString();
+        }
+
+        private string DbRowForBidder(long CustomerID)
+        {
+            return "BidderCust" + CustomerID.ToString();
         }
 
         private ChallengeStatusVoteDb VoteToDbVote(ChallengeStatusVote v)
@@ -33,11 +43,11 @@ namespace DareyaAPI.Models
 
             d.Accepted = v.Accepted;
             d.ChallengeID = v.ChallengeID;
-            d.ChallengeStatusUniqueID = v.ChallengeStatusUniqueID;
-            d.UniqueID = v.UniqueID;
+            d.CustomerID = v.CustomerID;
+            d.BidderCustomerID = v.BidderCustomerID;
 
-            d.PartitionKey = v.ChallengeID + "_" + v.ChallengeStatusUniqueID;
-            d.RowKey = v.UniqueID;
+            d.PartitionKey = DbPartitionForTaker(d.ChallengeID, d.CustomerID);
+            d.RowKey = DbRowForBidder(d.BidderCustomerID);
 
             return d;
         }
@@ -48,34 +58,34 @@ namespace DareyaAPI.Models
 
             v.Accepted = d.Accepted;
             v.ChallengeID = d.ChallengeID;
-            v.ChallengeStatusUniqueID = d.ChallengeStatusUniqueID;
-            v.UniqueID = d.UniqueID;
-
+            v.CustomerID = d.CustomerID;
+            v.BidderCustomerID = d.BidderCustomerID;
+            
             return v;
         }
 
         public void Add(ChallengeStatusVote vote)
         {
             ChallengeStatusVoteDb d = VoteToDbVote(vote);
-            context.AttachTo(TableName, d);
+            context.AttachTo(TableName, d, null);
             context.SaveChangesWithRetries();
         }
 
         public int GetCount(ChallengeStatus status)
         {
-            int count=(from e in context.CreateQuery<ChallengeStatusVoteDb>(TableName) where e.PartitionKey==status.ChallengeID+"_"+status.UniqueID select e).Count();
+            int count=(from e in context.CreateQuery<ChallengeStatusVoteDb>(TableName) where e.PartitionKey==DbPartitionForTaker(status.ChallengeID, status.CustomerID) select e).Count();
             return count;
         }
 
         public int GetYesVotes(ChallengeStatus status)
         {
-            IEnumerable<ChallengeStatusVoteDb> votes = (from e in context.CreateQuery<ChallengeStatusVoteDb>(TableName) where e.PartitionKey == status.ChallengeID + "_" + status.UniqueID select e).AsEnumerable<ChallengeStatusVoteDb>();
+            IEnumerable<ChallengeStatusVoteDb> votes = (from e in context.CreateQuery<ChallengeStatusVoteDb>(TableName) where e.PartitionKey == DbPartitionForTaker(status.ChallengeID, status.CustomerID) select e).AsEnumerable<ChallengeStatusVoteDb>();
             return votes.Count(v => v.Accepted == true);
         }
 
         public int GetNoVotes(ChallengeStatus status)
         {
-            IEnumerable<ChallengeStatusVoteDb> votes = (from e in context.CreateQuery<ChallengeStatusVoteDb>(TableName) where e.PartitionKey == status.ChallengeID + "_" + status.UniqueID select e).AsEnumerable<ChallengeStatusVoteDb>();
+            IEnumerable<ChallengeStatusVoteDb> votes = (from e in context.CreateQuery<ChallengeStatusVoteDb>(TableName) where e.PartitionKey == DbPartitionForTaker(status.ChallengeID, status.CustomerID) select e).AsEnumerable<ChallengeStatusVoteDb>();
             return votes.Count(v => v.Accepted == false);
         }
     }
