@@ -1,0 +1,61 @@
+﻿@model DareyaAPI.Models.Challenge
+
+@{
+    ViewBag.Title = "dareme.to - "+Model.Description;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+		<div class="sectionHeader">Someone's been dared!</div>
+		
+		<div id="bountyHeader">
+			<div id="avatar"></div>
+            @{
+                if(Model.Bids.Count>1)
+                {
+                    <p>@Model.Customer.FirstName and @(Model.Bids.Count - 1) others have a bounty of</p>
+                }
+                else
+                {
+                    <p>@Model.Customer.FirstName has placed a bounty of</p>
+                }
+            }
+			
+			<div id="amount">$@Model.CurrentBid</div>
+		</div>
+		
+		<div class="contentSection">
+			<div id="dareDesc">@Model.Description</div>
+		</div>
+
+		<div class="sectionHeader">
+			Want to up the ante?
+		</div>
+		<div class="contentSection">
+			<p>Connect with dareme.to and add your support.</p>
+		</div>
+		
+		<div class="sectionHeader">
+			Ready to take this dare?
+			</div>
+		<div class="contentSection">
+            @{
+                if (Model.TargetCustomer != null)
+                {
+                    <p>This dare is only for @(Model.TargetCustomer.FirstName). Is that you? Get connected.</p>
+                    
+                    switch (Model.TargetCustomer.ForeignUserType)
+                    {
+                        case (int)DareyaAPI.Models.Customer.ForeignUserTypes.Facebook:
+                            <p>@Html.ActionLink("Authenticate with Facebook", "AuthorizeFacebook", "Onboard")</p>
+                            break;
+                        case (int)DareyaAPI.Models.Customer.ForeignUserTypes.Twitter:
+                            <p>@Html.ActionLink("Authenticate with Twitter", "AuthorizeTwitter", "Onboard")</p>
+                            break;
+                    }
+                }
+                else
+                {
+                    <p>This dare is up for grabs. Create a dareme.to account now and make your attempt!</p>
+                }
+            }
+		</div>

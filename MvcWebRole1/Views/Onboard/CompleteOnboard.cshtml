@@ -1,11 +1,11 @@
 ﻿@model DareyaAPI.Models.OnboardToken
 
 @{
-    ViewBag.Title = "CompleteTwitter";
+    ViewBag.Title = "dareme.to - Complete Signup";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>CompleteTwitter</h2>
+<h2>Complete Signup</h2>
 
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")"></script>
@@ -15,8 +15,7 @@
     @Html.HiddenFor(model=>model.VerificationString)
 
     <fieldset>
-        <legend>OnboardToken</legend>
-
+        
         <div class="editor-label">
             @Html.LabelFor(model => model.EmailAddress)
         </div>

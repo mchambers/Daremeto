@@ -67,6 +67,7 @@ namespace DareyaAPI.Models
             foreach (EvidenceDb item in b)
             {
                 items.Add(DbEvidenceToEvidence(item));
+                context.Detach(item);
             }
 
             return items;
@@ -77,10 +78,12 @@ namespace DareyaAPI.Models
             EvidenceDb d = EvidenceToDbEvidence(e);
 
             d.PartitionKey = DbPartKey(e.ChallengeID, e.CustomerID);
+            d.RowKey = e.UniqueID;
 
             context.AttachTo(TableName, d, null);
             context.UpdateObject(d);
             context.SaveChangesWithRetries();
+            context.Detach(d);
         }
     }
 }

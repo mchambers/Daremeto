@@ -5,14 +5,12 @@
       <LocalStorage name="DiagnosticStore" sizeInMB="4096" cleanOnRoleRecycle="false" />
     </LocalResources>
     <ConfigurationSettings>
-      <Setting name="CloudToolsDiagnosticAgentVersion" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" />
-      <Setting name="Profiling.ProfilingConnectionString" />
       <Setting name="StorageConnectionString" />
     </ConfigurationSettings>
     <Endpoints>
@@ -31,13 +29,11 @@
       <LocalStorage name="DiagnosticStore" sizeInMB="4096" cleanOnRoleRecycle="false" />
     </LocalResources>
     <ConfigurationSettings>
-      <Setting name="CloudToolsDiagnosticAgentVersion" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" />
       <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" />
-      <Setting name="Profiling.ProfilingConnectionString" />
       <Setting name="StorageConnectionString" />
     </ConfigurationSettings>
     <Endpoints>

@@ -46,6 +46,7 @@ namespace DareyaAPI.Models
             foreach (ChallengeStatusDb item in b)
             {
                 items.Add(new ChallengeStatus(item));
+                context.Detach(item);
             }
 
             return items;
@@ -54,7 +55,7 @@ namespace DareyaAPI.Models
         public bool CustomerTookChallenge(long CustomerID, long ChallengeID)
         {
             ChallengeStatusDb b = (from e in context.CreateQuery<ChallengeStatusDb>(TableName) where e.PartitionKey == DbCustKey(CustomerID) && e.RowKey == DbChalKey(ChallengeID) select e).FirstOrDefault<ChallengeStatusDb>();
-
+            context.Detach(b);
             if (b != null) return true;
             return false;
         }
@@ -73,6 +74,7 @@ namespace DareyaAPI.Models
             foreach (ChallengeStatusDb d in c)
             {
                 l.Add(new ChallengeStatus(d));
+                context.Detach(d);
             }
 
             return l;
@@ -86,6 +88,7 @@ namespace DareyaAPI.Models
             foreach (ChallengeStatusDb d in c)
             {
                 l.Add(new ChallengeStatus(d));
+                context.Detach(d);
             }
 
             return l;
@@ -137,7 +140,9 @@ namespace DareyaAPI.Models
             ChallengeStatusDb d = (from e in context.CreateQuery<ChallengeStatusDb>(TableName) where e.PartitionKey == DbCustKey(CustomerID) && e.RowKey == DbChalKey(ChallengeID) select e).FirstOrDefault<ChallengeStatusDb>();
 
             if (d == null) return null;
-            return new ChallengeStatus(d);
+            ChallengeStatus s = new ChallengeStatus(d);
+            context.Detach(d);
+            return s;
         }
     }
 }

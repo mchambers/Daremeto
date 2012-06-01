@@ -20,6 +20,14 @@ namespace DareyaAPI.Controllers
         public ActionResult Show(long id)
         {
             Challenge c = RepoFactory.GetChallengeRepo().Get(id);
+
+            c.Customer = RepoFactory.GetCustomerRepo().GetWithID(c.CustomerID);
+            
+            if(c.TargetCustomerID!=0)
+                c.TargetCustomer = RepoFactory.GetCustomerRepo().GetWithID(c.TargetCustomerID);
+            
+            c.Bids = RepoFactory.GetChallengeBidRepo().Get(c.ID);
+
             return View(c);
         }
 

@@ -36,7 +36,7 @@ namespace DareyaAPI.Models
         private DynamicParameters CustToDynParm(Customer c, bool inclID=false)
         {
             var p = new DynamicParameters();
-
+            
             p.Add("@FirstName", c.FirstName, dbType: DbType.String, direction: ParameterDirection.Input);
             p.Add("@LastName", c.LastName, dbType: DbType.String, direction: ParameterDirection.Input);
             p.Add("@EmailAddress", c.EmailAddress, dbType: DbType.String, direction: ParameterDirection.Input);
@@ -53,6 +53,7 @@ namespace DareyaAPI.Models
             p.Add("@BillingID", c.BillingID, dbType: DbType.String, direction: ParameterDirection.Input);
             p.Add("@Type", c.Type, dbType: DbType.Int32, direction: ParameterDirection.Input);
             p.Add("@AvatarURL", c.AvatarURL, dbType: DbType.String, direction: ParameterDirection.Input);
+            p.Add("@ForeignUserType", c.ForeignUserType, dbType: DbType.Int32, direction: ParameterDirection.Input);
             if (inclID)
                 p.Add("@ID", c.ID, dbType: DbType.Int64, direction: ParameterDirection.Input);
 
@@ -163,7 +164,8 @@ namespace DareyaAPI.Models
             using (SqlConnection db = new SqlConnection(connStr))
             {
                 db.Open();
-                db.Execute("DELETE FROM Customer WHERE CustomerID=@CustomerID", new { CustomerID = ID });
+                db.Execute("DELETE FROM Customer WHERE ID=@CustomerID", new { CustomerID = ID });
+                db.Close();
             }
         }
     }

@@ -31,6 +31,8 @@ namespace DareyaAPI.Controllers
 
         private Challenge PrepOutboundChallenge(Challenge c)
         {
+            if (c == null) return null;
+
             Customer tempCust = CustRepo.GetWithID(c.CustomerID);
             c.Customer = Customer.Filter(tempCust);
 
@@ -46,7 +48,7 @@ namespace DareyaAPI.Controllers
                 tempTargetCust = null;
             }
 
-            c.NumberOfBidders = BidRepo.Get(c.ID).Count;
+            c.NumberOfBidders = BidRepo.GetBidCountForChallenge(c.ID);//BidRepo.Get(c.ID).Count;
             c.NumberOfTakers = StatusRepo.GetActiveStatusesForChallenge(c.ID).Count;
 
             return c;
@@ -128,12 +130,19 @@ namespace DareyaAPI.Controllers
         }
 
         [HttpGet]
+        [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
         public List<ChallengeBid> ActiveBids()
         {
             List<ChallengeBid> bids=BidRepo.GetForCustomer(((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID);
 
             foreach (ChallengeBid b in bids)
             {
+                if (b.ChallengeID > 0)
+                {
+                    Challenge chal = ChalRepo.Get(b.ChallengeID);
+                    if (chal != null)
+                        b.Challenge = chal;
+                }
                 b.Challenge = PrepOutboundChallenge(ChalRepo.Get(b.ChallengeID));
             }
 
@@ -249,7 +258,8 @@ namespace DareyaAPI.Controllers
                         {
                             FirstName = value.FirstName,
                             LastName = value.LastName,
-                            Type = (int)Customer.TypeCodes.Unclaimed
+                            Type = (int)Customer.TypeCodes.Unclaimed,
+                            ForeignUserType = (int)value.ForeignNetworkType
                         };
 
                         value.TargetCustomerID = CustRepo.Add(unclaimedCust);

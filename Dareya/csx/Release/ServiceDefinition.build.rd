@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Dareya" generation="1" functional="0" release="0" Id="be9b0cc4-8670-44eb-97cd-2857641a5b39" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
+<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Dareya" generation="1" functional="0" release="0" Id="e36d06a5-19c9-458b-852d-02294f27181e" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
   <groups>
     <group name="DareyaGroup" generation="1" functional="0" release="0">
       <componentports>
@@ -23,11 +23,6 @@
         <aCS name="Certificate|DareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" defaultValue="">
           <maps>
             <mapMoniker name="/Dareya/DareyaGroup/MapCertificate|DareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" />
-          </maps>
-        </aCS>
-        <aCS name="DaremetoWorker:CloudToolsDiagnosticAgentVersion" defaultValue="">
-          <maps>
-            <mapMoniker name="/Dareya/DareyaGroup/MapDaremetoWorker:CloudToolsDiagnosticAgentVersion" />
           </maps>
         </aCS>
         <aCS name="DaremetoWorker:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="">
@@ -55,11 +50,6 @@
             <mapMoniker name="/Dareya/DareyaGroup/MapDaremetoWorker:Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" />
           </maps>
         </aCS>
-        <aCS name="DaremetoWorker:Profiling.ProfilingConnectionString" defaultValue="">
-          <maps>
-            <mapMoniker name="/Dareya/DareyaGroup/MapDaremetoWorker:Profiling.ProfilingConnectionString" />
-          </maps>
-        </aCS>
         <aCS name="DaremetoWorker:StorageConnectionString" defaultValue="">
           <maps>
             <mapMoniker name="/Dareya/DareyaGroup/MapDaremetoWorker:StorageConnectionString" />
@@ -68,11 +58,6 @@
         <aCS name="DaremetoWorkerInstances" defaultValue="[1,1,1]">
           <maps>
             <mapMoniker name="/Dareya/DareyaGroup/MapDaremetoWorkerInstances" />
-          </maps>
-        </aCS>
-        <aCS name="DareyaAPI:CloudToolsDiagnosticAgentVersion" defaultValue="">
-          <maps>
-            <mapMoniker name="/Dareya/DareyaGroup/MapDareyaAPI:CloudToolsDiagnosticAgentVersion" />
           </maps>
         </aCS>
         <aCS name="DareyaAPI:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="">
@@ -103,11 +88,6 @@
         <aCS name="DareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" defaultValue="">
           <maps>
             <mapMoniker name="/Dareya/DareyaGroup/MapDareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" />
-          </maps>
-        </aCS>
-        <aCS name="DareyaAPI:Profiling.ProfilingConnectionString" defaultValue="">
-          <maps>
-            <mapMoniker name="/Dareya/DareyaGroup/MapDareyaAPI:Profiling.ProfilingConnectionString" />
           </maps>
         </aCS>
         <aCS name="DareyaAPI:StorageConnectionString" defaultValue="">
@@ -154,11 +134,6 @@
             <certificateMoniker name="/Dareya/DareyaGroup/DareyaAPI/Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" />
           </certificate>
         </map>
-        <map name="MapDaremetoWorker:CloudToolsDiagnosticAgentVersion" kind="Identity">
-          <setting>
-            <aCSMoniker name="/Dareya/DareyaGroup/DaremetoWorker/CloudToolsDiagnosticAgentVersion" />
-          </setting>
-        </map>
         <map name="MapDaremetoWorker:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" kind="Identity">
           <setting>
             <aCSMoniker name="/Dareya/DareyaGroup/DaremetoWorker/Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
@@ -184,11 +159,6 @@
             <aCSMoniker name="/Dareya/DareyaGroup/DaremetoWorker/Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" />
           </setting>
         </map>
-        <map name="MapDaremetoWorker:Profiling.ProfilingConnectionString" kind="Identity">
-          <setting>
-            <aCSMoniker name="/Dareya/DareyaGroup/DaremetoWorker/Profiling.ProfilingConnectionString" />
-          </setting>
-        </map>
         <map name="MapDaremetoWorker:StorageConnectionString" kind="Identity">
           <setting>
             <aCSMoniker name="/Dareya/DareyaGroup/DaremetoWorker/StorageConnectionString" />
@@ -197,11 +167,6 @@
         <map name="MapDaremetoWorkerInstances" kind="Identity">
           <setting>
             <sCSPolicyIDMoniker name="/Dareya/DareyaGroup/DaremetoWorkerInstances" />
-          </setting>
-        </map>
-        <map name="MapDareyaAPI:CloudToolsDiagnosticAgentVersion" kind="Identity">
-          <setting>
-            <aCSMoniker name="/Dareya/DareyaGroup/DareyaAPI/CloudToolsDiagnosticAgentVersion" />
           </setting>
         </map>
         <map name="MapDareyaAPI:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" kind="Identity">
@@ -234,11 +199,6 @@
             <aCSMoniker name="/Dareya/DareyaGroup/DareyaAPI/Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" />
           </setting>
         </map>
-        <map name="MapDareyaAPI:Profiling.ProfilingConnectionString" kind="Identity">
-          <setting>
-            <aCSMoniker name="/Dareya/DareyaGroup/DareyaAPI/Profiling.ProfilingConnectionString" />
-          </setting>
-        </map>
         <map name="MapDareyaAPI:StorageConnectionString" kind="Identity">
           <setting>
             <aCSMoniker name="/Dareya/DareyaGroup/DareyaAPI/StorageConnectionString" />
@@ -267,13 +227,11 @@
               </outPort>
             </componentports>
             <settings>
-              <aCS name="CloudToolsDiagnosticAgentVersion" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" defaultValue="" />
-              <aCS name="Profiling.ProfilingConnectionString" defaultValue="" />
               <aCS name="StorageConnectionString" defaultValue="" />
               <aCS name="__ModelData" defaultValue="&lt;m role=&quot;DaremetoWorker&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;DaremetoWorker&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;DareyaAPI&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput&quot; /&gt;&lt;/r&gt;&lt;/m&gt;" />
             </settings>
@@ -315,14 +273,12 @@
               </outPort>
             </componentports>
             <settings>
-              <aCS name="CloudToolsDiagnosticAgentVersion" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" defaultValue="" />
               <aCS name="Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" defaultValue="" />
-              <aCS name="Profiling.ProfilingConnectionString" defaultValue="" />
               <aCS name="StorageConnectionString" defaultValue="" />
               <aCS name="__ModelData" defaultValue="&lt;m role=&quot;DareyaAPI&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;DaremetoWorker&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;DareyaAPI&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput&quot; /&gt;&lt;/r&gt;&lt;/m&gt;" />
             </settings>
@@ -356,14 +312,14 @@
     </group>
   </groups>
   <implements>
-    <implementation Id="d84f79f6-627d-4e68-b8b5-2de2eed6af81" ref="Microsoft.RedDog.Contract\ServiceContract\DareyaContract@ServiceDefinition.build">
+    <implementation Id="b7bef5e8-c14a-40b3-9d32-e0ec61ac01f1" ref="Microsoft.RedDog.Contract\ServiceContract\DareyaContract@ServiceDefinition.build">
       <interfacereferences>
-        <interfaceReference Id="9159b611-2645-4f47-85ce-a6bdf72464f7" ref="Microsoft.RedDog.Contract\Interface\DareyaAPI:Endpoint1@ServiceDefinition.build">
+        <interfaceReference Id="5fdaf88d-f1e3-485c-b5e7-7cb11cb03165" ref="Microsoft.RedDog.Contract\Interface\DareyaAPI:Endpoint1@ServiceDefinition.build">
           <inPort>
             <inPortMoniker name="/Dareya/DareyaGroup/DareyaAPI:Endpoint1" />
           </inPort>
         </interfaceReference>
-        <interfaceReference Id="33ff1e4b-a665-41bd-a83a-6fa6774df4cc" ref="Microsoft.RedDog.Contract\Interface\DareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput@ServiceDefinition.build">
+        <interfaceReference Id="986f0764-7b75-4737-a058-305c3fcfa0e6" ref="Microsoft.RedDog.Contract\Interface\DareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput@ServiceDefinition.build">
           <inPort>
             <inPortMoniker name="/Dareya/DareyaGroup/DareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput" />
           </inPort>

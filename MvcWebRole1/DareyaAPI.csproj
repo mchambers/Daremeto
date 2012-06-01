@@ -189,7 +189,70 @@
     <Compile Include="WebRole.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-responsive.css" />
+    <Content Include="Content\bootstrap-responsive.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\86-camera%402x.png" />
+    <Content Include="Content\images\86-camera.png" />
+    <Content Include="Content\images\ajax-loader.gif" />
+    <Content Include="Content\images\ajax-loader.png" />
+    <Content Include="Content\images\background.jpg" />
+    <Content Include="Content\images\bg%402x.png" />
+    <Content Include="Content\images\bg.png" />
+    <Content Include="Content\images\bigCenterBox%402x.png" />
+    <Content Include="Content\images\bigCenterBox.png" />
+    <Content Include="Content\images\bottomPiece.png" />
+    <Content Include="Content\images\box_bounty%402x.png" />
+    <Content Include="Content\images\box_bounty.png" />
+    <Content Include="Content\images\bpLogo.png" />
+    <Content Include="Content\images\ccLogos%402x.png" />
+    <Content Include="Content\images\ccLogos.png" />
+    <Content Include="Content\images\connectFacebook%402x.png" />
+    <Content Include="Content\images\connectFacebookPressed%402x.png" />
+    <Content Include="Content\images\connectTwitter%402x.png" />
+    <Content Include="Content\images\connectTwitterPressed%402x.png" />
+    <Content Include="Content\images\emailSmallIcon%402x.png" />
+    <Content Include="Content\images\facebookSmallIcon%402x.png" />
+    <Content Include="Content\images\feedItemBg%402x.png" />
+    <Content Include="Content\images\feedItemBg.png" />
+    <Content Include="Content\images\glyphicons-halflings-white.png" />
+    <Content Include="Content\images\glyphicons-halflings.png" />
+    <Content Include="Content\images\icons-18-black.png" />
+    <Content Include="Content\images\icons-18-white.png" />
+    <Content Include="Content\images\icons-36-black.png" />
+    <Content Include="Content\images\icons-36-white.png" />
+    <Content Include="Content\images\icon_114.png" />
+    <Content Include="Content\images\littleBarPlaceholder.jpg" />
+    <Content Include="Content\images\logo-40c9cd7e18f8736108ee31af1a281e6d.png" />
+    <Content Include="Content\images\middlePiece.png" />
+    <Content Include="Content\images\navHeader%402x.png" />
+    <Content Include="Content\images\navHeader.png" />
+    <Content Include="Content\images\newChallenge%402x.png" />
+    <Content Include="Content\images\newChallenge.png" />
+    <Content Include="Content\images\orangeButton%402x.png" />
+    <Content Include="Content\images\orangeButton.png" />
+    <Content Include="Content\images\photomat%402x.png" />
+    <Content Include="Content\images\photomat.png" />
+    <Content Include="Content\images\priceTag%402x.png" />
+    <Content Include="Content\images\priceTag.png" />
+    <Content Include="Content\images\sectionHeader%402x.png" />
+    <Content Include="Content\images\sectionHeader.png" />
+    <Content Include="Content\images\socialToolbarBG%402x.png" />
+    <Content Include="Content\images\statusBar%402x.png" />
+    <Content Include="Content\images\statusBar.png" />
+    <Content Include="Content\images\tabBarBg%402x.png" />
+    <Content Include="Content\images\tabBarBg.png" />
+    <Content Include="Content\images\topPiece.png" />
+    <Content Include="Content\images\twitterSmallIcon%402x.png" />
+    <Content Include="Content\jquery.mobile-1.1.0.css" />
+    <Content Include="Content\jquery.mobile-1.1.0.min.css" />
+    <Content Include="Content\jquery.mobile.structure-1.1.0.css" />
+    <Content Include="Content\jquery.mobile.structure-1.1.0.min.css" />
+    <Content Include="Content\jquery.mobile.theme-1.1.0.css" />
+    <Content Include="Content\jquery.mobile.theme-1.1.0.min.css" />
     <Content Include="Content\Spa.css" />
+    <Content Include="Content\style.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -221,6 +284,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="lib\CodeScales.Http.dll" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.6.2.js" />
     <Content Include="Scripts\jquery-1.6.2.min.js" />
     <Content Include="Scripts\jquery-1.6.4-vsdoc.js" />
@@ -228,6 +293,8 @@
     <Content Include="Scripts\jquery-1.6.4.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.11.js" />
     <Content Include="Scripts\jquery-ui-1.8.11.min.js" />
+    <Content Include="Scripts\jquery.mobile-1.1.0.js" />
+    <Content Include="Scripts\jquery.mobile-1.1.0.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate-vsdoc.js" />
@@ -239,6 +306,7 @@
     <Content Include="Scripts\knockout.debug.js" />
     <Content Include="Scripts\knockout.js" />
     <Content Include="Scripts\modernizr-2.0.6-development-only.js" />
+    <Content Include="Scripts\modernizr-2.0.6.min.js" />
     <Content Include="Scripts\native.history.js" />
     <Content Include="Scripts\nav.js" />
     <Content Include="Scripts\nav.min.js" />
@@ -307,6 +375,8 @@
     <Content Include="Views\Onboard\CompleteAlreadyExisted.cshtml" />
     <Content Include="Views\Onboard\CompleteOnboard.cshtml" />
     <Content Include="Views\Onboard\AlreadyACustomer.cshtml" />
+    <Content Include="Views\Shared\_Layout.Mobile.cshtml" />
+    <Content Include="Views\Dare\Show.Mobile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

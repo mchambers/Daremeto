@@ -6,7 +6,7 @@
     <AzureHostedServiceLabel>Daremeto</AzureHostedServiceLabel>
     <AzureSlot>Production</AzureSlot>
     <AzureEnableIntelliTrace>False</AzureEnableIntelliTrace>
-    <AzureEnableProfiling>True</AzureEnableProfiling>
+    <AzureEnableProfiling>False</AzureEnableProfiling>
     <AzureEnableWebDeploy>False</AzureEnableWebDeploy>
     <AzureStorageAccountName>daremeto</AzureStorageAccountName>
     <AzureStorageAccountLabel>daremeto</AzureStorageAccountLabel>
