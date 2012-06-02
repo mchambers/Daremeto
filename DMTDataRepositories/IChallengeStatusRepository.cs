@@ -15,6 +15,7 @@ namespace DareyaAPI.Models
         void Add(ChallengeStatus value);
         ChallengeStatus Get(long CustomerID, long ChallengeID);
         void Update(ChallengeStatus value);
+        ChallengeStatus GetNextVotePendingStatusForChallenge(long ChallengeID);
 
         bool CustomerTookChallenge(long CustomerID, long ChallengeID);
     }

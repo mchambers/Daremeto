@@ -50,9 +50,9 @@ namespace DareyaAPI.Controllers
             int yesVotes = VoteRepo.GetYesVotes(s);
             if (yesVotes > (BidRepo.GetBidCountForChallenge(status.ChallengeID) * 0.33))
             {
-                //bid.Status = (int)ChallengeBid.BidStatusCodes.BidderAccepts;
-                //BidRepo.Update(bid);
-                s.Status = (int)ChallengeStatus.StatusCodes.Accepted;
+                BidRepo.UpdateStatusForBidsOnChallenge(s.ChallengeID, ChallengeBid.BidStatusCodes.Accepted);
+
+                s.Status = (int)ChallengeStatus.StatusCodes.Completed;
                 StatusRepo.Update(s);
 
                 // challenge completed! award the money! DO IT DO IT!
@@ -88,10 +88,22 @@ namespace DareyaAPI.Controllers
             int noVotes=VoteRepo.GetNoVotes(s);
             if(noVotes > (BidRepo.GetBidCountForChallenge(status.ChallengeID)*0.66))
             {
-                //bid.Status=(int)ChallengeBid.BidStatusCodes.BidderRejects;
-                //BidRepo.Update(bid);
                 s.Status = (int)ChallengeStatus.StatusCodes.SourceRejected;
                 StatusRepo.Update(s);
+
+                // get the next homey who's working on this, if any.
+                ChallengeStatus nextStatus = StatusRepo.GetNextVotePendingStatusForChallenge(s.ChallengeID);
+                if (nextStatus != null)
+                {
+                    bid.PendingVoteCustomerID = nextStatus.CustomerID;
+                    BidRepo.Update(bid);
+                }
+                else
+                {
+                    // reopen the bidding! NO WINNER NO WINNER
+                    
+                    
+                }
 
                 // you've failed this challenge my friend.
                 CustomerNotifier.NotifyChallengeRejected(s.CustomerID, s.ChallengeID);
@@ -108,7 +120,7 @@ namespace DareyaAPI.Controllers
         public void Claim(ChallengeStatus status)
         {
             ChallengeStatus s = StatusRepo.Get(status.CustomerID, status.ChallengeID);
-            Challenge c = ChalRepo.Get(status.ChallengeID);
+            //Challenge c = ChalRepo.Get(status.ChallengeID);
 
             if (s.CustomerID != ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID)
                 throw new HttpResponseException("This challenge status doesn't belong to the current user.", System.Net.HttpStatusCode.Forbidden);
@@ -117,14 +129,14 @@ namespace DareyaAPI.Controllers
             StatusRepo.Update(s);
 
             // close the bidding on this challenge until the claim can be verified.
-            c.State = (int)Challenge.ChallengeState.BidsClosed;
-            ChalRepo.Update(c);
+            //c.State = (int)Challenge.ChallengeState.BidsClosed;
+            //ChalRepo.Update(c);
             
             // set all of the bids for this challenge to "VotePending"
             // so the bidders can see what they need to vote on
             BidRepo.UpdateStatusForBidsOnChallenge(status.ChallengeID, ChallengeBid.BidStatusCodes.VotePending);
 
-            CustomerNotifier.NotifyChallengeClaimed(s.ChallengeOriginatorCustomerID, s.CustomerID, c.ID);
+            CustomerNotifier.NotifyChallengeClaimed(s.ChallengeOriginatorCustomerID, s.CustomerID, s.ChallengeID);
         }
 
         [HttpPost]

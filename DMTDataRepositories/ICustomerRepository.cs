@@ -13,6 +13,7 @@ namespace DareyaAPI.Models
         Customer GetWithEmailAddress(string EmailAddress);
         Customer GetWithFacebookID(string FBID);
         Customer GetWithForeignUserID(string ID, Customer.ForeignUserTypes type);
+        long GetIDForForeignUserID(string ID, Customer.ForeignUserTypes type);
         void AddForeignNetworkForCustomer(long ID, string ForeignID, Customer.ForeignUserTypes type);
         void Remove(long CustomerID);
     }

@@ -143,7 +143,11 @@ namespace DareyaAPI.Controllers
                     if (chal != null)
                         b.Challenge = chal;
                 }
+
                 b.Challenge = PrepOutboundChallenge(ChalRepo.Get(b.ChallengeID));
+
+                if(b.Status==(int)ChallengeBid.BidStatusCodes.VotePending)
+                    b.VotePendingStatus = StatusRepo.Get(b.PendingVoteCustomerID, b.ChallengeID);
             }
 
             return bids;
@@ -246,11 +250,11 @@ namespace DareyaAPI.Controllers
             {
                 if (value.ForeignNetworkType != Customer.ForeignUserTypes.Undefined)
                 {
-                    Customer tryFN = CustRepo.GetWithForeignUserID(value.ForeignNetworkUserID, value.ForeignNetworkType);
-                    if (tryFN != null && tryFN.ID > 0)
+                    long fnCustID = CustRepo.GetIDForForeignUserID(value.ForeignNetworkUserID, value.ForeignNetworkType);
+                    if (fnCustID > 0)
                     {
-                        Trace.WriteLine("Found the foreign network customer " + value.ForeignNetworkUserID + " as customer ID " + tryFN.ID.ToString());
-                        value.TargetCustomerID = tryFN.ID;
+                        Trace.WriteLine("Found the foreign network customer " + value.ForeignNetworkUserID + " as customer ID " + fnCustID.ToString());
+                        value.TargetCustomerID = fnCustID;
                     }
                     else
                     {

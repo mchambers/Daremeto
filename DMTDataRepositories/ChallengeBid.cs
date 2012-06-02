@@ -10,10 +10,12 @@ namespace DareyaAPI.Models
     {
         public enum BidStatusCodes
         {
-            Default,
-            BidderAccepts,
+            Open,
+            Accepted,
             BidderRejects,
-            VotePending
+            VotePending,
+            Paid,
+            Archived
         }
 
         public ChallengeBid()
@@ -39,8 +41,10 @@ namespace DareyaAPI.Models
         public long ID { get; set; }
         public int Status { get; set; }
         public decimal ComputedFees { get; set; }
-
+        public long PendingVoteCustomerID { get; set; }
         public Challenge Challenge { get; set; }
+
+        public ChallengeStatus VotePendingStatus { get; set; }
     }
     /*
     public class ChallengeBidDb : TableServiceEntity

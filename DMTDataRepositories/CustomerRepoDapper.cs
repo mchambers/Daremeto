@@ -115,25 +115,7 @@ namespace DareyaAPI.Models
 
         public Customer GetWithForeignUserID(string ID, Customer.ForeignUserTypes type)
         {
-            string partitionKey=((int)type).ToString()+"+"+ID;
-
-            var f = (from e in context.CreateQuery<CustomerForeignNetworkConnectionDb>(TableName) where e.PartitionKey == partitionKey select e).FirstOrDefault<CustomerForeignNetworkConnectionDb>();
-
-            if (f != null && f.CustomerID > 0)
-            {
-                Customer c = this.GetWithID(f.CustomerID);
-                context.Detach(f);
-                return c;
-            }
-            else
-                return null;
-            
-            /*using (SqlConnection db = new SqlConnection(connStr))
-            {
-                db.Open();
-                var c = db.Query<Customer>("spCustomerGetWithForeignID", new { ForeignUserID = ID, ForeignUserType = type }, commandType: CommandType.StoredProcedure).FirstOrDefault();
-                return c;
-            }*/
+            return this.GetWithID(this.GetIDForForeignUserID(ID, type));
         }
 
         public void AddForeignNetworkForCustomer(long ID, string ForeignID, Customer.ForeignUserTypes type)
@@ -166,6 +148,26 @@ namespace DareyaAPI.Models
                 db.Open();
                 db.Execute("DELETE FROM Customer WHERE ID=@CustomerID", new { CustomerID = ID });
                 db.Close();
+            }
+        }
+
+        public long GetIDForForeignUserID(string ID, Customer.ForeignUserTypes type)
+        {
+            string partitionKey = ((int)type).ToString() + "+" + ID;
+
+            System.Diagnostics.Trace.WriteLine("Trying to find foreign user " + partitionKey);
+
+            var f = (from e in context.CreateQuery<CustomerForeignNetworkConnectionDb>(TableName) where e.PartitionKey == partitionKey select e).FirstOrDefault<CustomerForeignNetworkConnectionDb>();
+
+            if (f != null && f.CustomerID > 0)
+            {
+                System.Diagnostics.Trace.WriteLine("Found foreign user " + partitionKey + " with customer ID " + f.CustomerID.ToString());
+                return f.CustomerID;
+            }
+            else
+            {
+                System.Diagnostics.Trace.WriteLine("Couldn't find foreign user " + partitionKey);
+                return 0;
             }
         }
     }

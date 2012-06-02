@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Dareya" generation="1" functional="0" release="0" Id="e36d06a5-19c9-458b-852d-02294f27181e" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
+<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Dareya" generation="1" functional="0" release="0" Id="8539ae4a-64d3-44b2-9a31-5d02b6ca62fa" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
   <groups>
     <group name="DareyaGroup" generation="1" functional="0" release="0">
       <componentports>
@@ -312,14 +312,14 @@
     </group>
   </groups>
   <implements>
-    <implementation Id="b7bef5e8-c14a-40b3-9d32-e0ec61ac01f1" ref="Microsoft.RedDog.Contract\ServiceContract\DareyaContract@ServiceDefinition.build">
+    <implementation Id="314db5cb-1aa0-4d35-bc85-39171765e681" ref="Microsoft.RedDog.Contract\ServiceContract\DareyaContract@ServiceDefinition.build">
       <interfacereferences>
-        <interfaceReference Id="5fdaf88d-f1e3-485c-b5e7-7cb11cb03165" ref="Microsoft.RedDog.Contract\Interface\DareyaAPI:Endpoint1@ServiceDefinition.build">
+        <interfaceReference Id="1dcfb328-438e-4414-b3f7-ff9f5c793456" ref="Microsoft.RedDog.Contract\Interface\DareyaAPI:Endpoint1@ServiceDefinition.build">
           <inPort>
             <inPortMoniker name="/Dareya/DareyaGroup/DareyaAPI:Endpoint1" />
           </inPort>
         </interfaceReference>
-        <interfaceReference Id="986f0764-7b75-4737-a058-305c3fcfa0e6" ref="Microsoft.RedDog.Contract\Interface\DareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput@ServiceDefinition.build">
+        <interfaceReference Id="56d8699b-0b1b-477b-b1b2-3fae43a11c55" ref="Microsoft.RedDog.Contract\Interface\DareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput@ServiceDefinition.build">
           <inPort>
             <inPortMoniker name="/Dareya/DareyaGroup/DareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput" />
           </inPort>

@@ -169,7 +169,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\BidController.cs" />
     <Compile Include="Controllers\ChallengeController.cs" />
     <Compile Include="Controllers\ChallengeStatusController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />

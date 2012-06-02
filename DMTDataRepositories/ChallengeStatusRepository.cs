@@ -144,5 +144,16 @@ namespace DareyaAPI.Models
             context.Detach(d);
             return s;
         }
+
+        // TODO: We should just start a partition ClaimedChalXXXX instead of doing this search,
+        //       it could get costly.
+        public ChallengeStatus GetNextVotePendingStatusForChallenge(long ChallengeID)
+        {
+            ChallengeStatusDb d = (from e in context.CreateQuery<ChallengeStatusDb>(TableName) where e.PartitionKey == DbChalKey(ChallengeID) && e.Status == (int)ChallengeStatus.StatusCodes.ClaimSubmitted select e).FirstOrDefault<ChallengeStatusDb>();
+            if (d == null) return null;
+            ChallengeStatus s = new ChallengeStatus(d);
+            context.Detach(d);
+            return s;
+        }
     }
 }
