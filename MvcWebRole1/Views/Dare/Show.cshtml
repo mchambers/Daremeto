@@ -1,92 +1,113 @@
 ﻿@model DareyaAPI.Models.Challenge
 
 @{
-    ViewBag.Title = "dareme.to - "+Model.Description;
+    ViewBag.Title = "dareme.to - " + Model.Description;
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string targetFirstName;
+
+    if (Model.TargetCustomer != null && Model.TargetCustomer.FirstName!=null && !Model.TargetCustomer.FirstName.Equals(""))
+    {
+        targetFirstName = Model.TargetCustomer.FirstName;
+    }
+    else
+    {
+        targetFirstName = "Someone";
+    }
+
+    string bidderDescString;
+    bool plural;
+    
+    if(Model.NumberOfBidders>2)
+    {
+        bidderDescString="<strong>"+Model.Customer.FirstName+"</strong> and "+(Model.NumberOfBidders - 1).ToString()+" others";
+        plural = false;
+    }
+    else if(Model.NumberOfBidders==2)
+    {
+        bidderDescString = Model.Customer.FirstName + " and 1 other";
+        plural = false;
+    }
+    else
+    {
+        bidderDescString = Model.Customer.FirstName;
+        plural = true;
+    }
 }
 
+<div class="row">
+<div class="span8">
+	
+	<div class="alert alert-info">
+		<h3>@(targetFirstName) was dared through <em>dareme.to</em>, an iPhone app that lets you motivate your friends to do things with cash. Check out dareme.to on the iTunes App Store!</h3>
+	</div>
+	
+    @{
+        if(plural)
+        {
+            <h2>@(bidderDescString) dares <strong>@(targetFirstName)</strong> to @(Model.Description.Trim()).</h2>
+        }
+        else
+        {
+            <h2>@(bidderDescString) dare <strong>@(targetFirstName)</strong> to @(Model.Description.Trim()).</h2>
+        }
+    }
 
-<p><em>Is this you? </em></p>
-<fieldset>
-    <legend>Challenge</legend>
+</div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Title)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Title)
-    </div>
+<div class="span4">
+	
+	<div class="bounty"> 
+		
+		<h4>There's a bounty of</h4> <div class="amount">$@(Model.CurrentBid)</div> <p>from @bidderDescString</p>
+	
+	</div>
+	
+	<div class="sectionHeader">Ready to take this dare?</div>
+	
+             <div class="section">
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Description)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Description)
-    </div>
+    @{
+        if (Model.TargetCustomer != null)
+        {
+	        <h4>This dare is only for @(Model.TargetCustomer.FirstName).</h4>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Privacy)
+            switch (Model.TargetCustomer.ForeignUserType)
+            {
+                case (int)DareyaAPI.Models.Customer.ForeignUserTypes.Facebook:
+                    <p>Is that you? Authenticate with Facebook and get started.</p>
+                    <p>@Html.ActionLink("Authenticate with Facebook", "AuthorizeFacebook", "Onboard")</p>
+                  break;
+                case (int)DareyaAPI.Models.Customer.ForeignUserTypes.Twitter:
+                    <p>Is that you? Authenticate with Twitter and get started.</p>
+                    <p>@Html.ActionLink("Authenticate with Twitter", "AuthorizeTwitter", "Onboard")</p>
+                  break;
+            }
+            
+            <p>Already connected with <em>dareme.to</em>? Accept this dare in the <em>dareme.to</em> app on your iPhone.</p>
+        }
+        else
+        {
+            <p>Create a <em>dareme.to</em> account in seconds and take your shot at earning $@(Model.CurrentBid).</p>
+            using (Html.BeginForm("Signup", "Onboard"))
+            {
+                <input type="hidden" name="ChallengeID" value="@(Model.ID)" />
+                
+                <label for="FirstName">First Name:</label>
+			    <input type="text" name="FirstName" />
+			    <label for="LastName">Last Name:</label>
+			    <input type="text" name="LastName" />
+			    <label for="EmailAddress">Email Address:</label>
+			    <input type="text" name="EmailAddress" />
+			    <label for="Password">Desired Password:</label>
+			    <input type="password" name="Password" />
+			    
+			    <input class="btn btn-success" type="submit" value="Sign Up" />
+            }
+        }
+        }
     </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Privacy)
-    </div>
+</div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Visibility)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Visibility)
-    </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.CurrentBid)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.CurrentBid)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.State)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.State)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Anonymous)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Anonymous)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.CustomerID)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.CustomerID)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.TargetCustomerID)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.TargetCustomerID)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.NumberOfTakers)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.NumberOfTakers)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.NumberOfBidders)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.NumberOfBidders)
-    </div>
-</fieldset>
-<p>
-    @Html.ActionLink("Back to List", "Index")
-</p>
+</div>

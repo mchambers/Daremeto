@@ -122,3 +122,5 @@ C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\bin\System.Web.Http.Data.EntityFramework.xml
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\bin\System.Web.Http.Data.Helpers.xml
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\bin\TweetSharp.pdb
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\bin\Stripe.dll
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\bin\RestSharp.dll

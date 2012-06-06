@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using System.Security.Principal;
+using DareyaAPI.BillingSystem;
 
 namespace DareyaAPI.Controllers
 {
@@ -170,13 +171,17 @@ namespace DareyaAPI.Controllers
                     throw new HttpResponseException("This item is friends-only.", System.Net.HttpStatusCode.Forbidden);
             }
 
-            decimal approximateFees;
+            if (BidRepo.CustomerDidBidOnChallenge(cust.ID, c.ID) != null)
+                throw new HttpResponseException("You already bid on this challenge.", System.Net.HttpStatusCode.Conflict);
 
-            approximateFees=BillingSystem.BillingProcessorFactory.
-                GetBillingProcessor((BillingSystem.BillingProcessorFactory.SupportedBillingProcessor)cust.BillingType).GetProcessingFeesForAmount(value.Amount);
+            IBillingProcessor processor = BillingSystem.BillingProcessorFactory.
+                GetBillingProcessor((BillingSystem.BillingProcessorFactory.SupportedBillingProcessor)cust.BillingType);
 
-            approximateFees += BillingSystem.Billing.ComputeVigForAmount(value.Amount);
-            
+            if (processor == null)
+                processor = BillingProcessorFactory.GetBillingProcessor(BillingProcessorFactory.SupportedBillingProcessor.Stripe);
+
+            decimal approximateFees = Billing.GetFeesForBounty(processor, value.Amount);
+
             ChalRepo.AddBidToChallenge(c, ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID, value.Amount, approximateFees);
         }
 
@@ -202,19 +207,11 @@ namespace DareyaAPI.Controllers
 
             Customer cust=CustRepo.GetWithID(((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID);
 
-            decimal approxFees;
-            try
-            {
-                approxFees = BillingSystem.BillingProcessorFactory.GetBillingProcessor((BillingSystem.BillingProcessorFactory.SupportedBillingProcessor)cust.BillingType).GetProcessingFeesForAmount(firstBid);
-            }
-            catch (Exception e)
-            {
-                Trace.WriteLine("NOTE: Caught customer " + ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID.ToString() + " with no billing proc., assuming Stripe", "ChallengeController::New");
-                //throw new HttpResponseException("There was a fatal error generating the bid for this challenge.", System.Net.HttpStatusCode.InternalServerError);
-                approxFees = BillingSystem.BillingProcessorFactory.GetBillingProcessor(BillingSystem.BillingProcessorFactory.SupportedBillingProcessor.Stripe).GetProcessingFeesForAmount(firstBid);
-            }
+            IBillingProcessor processor = BillingSystem.BillingProcessorFactory.GetBillingProcessor((BillingSystem.BillingProcessorFactory.SupportedBillingProcessor)cust.BillingType);
+            if (processor == null)
+                processor = BillingSystem.BillingProcessorFactory.GetBillingProcessor(BillingSystem.BillingProcessorFactory.SupportedBillingProcessor.Stripe);
 
-            approxFees += BillingSystem.Billing.ComputeVigForAmount(firstBid); // we gotta get our taste.
+            decimal approxFees = Billing.GetFeesForBounty(processor, value.CurrentBid);
 
             Trace.WriteLine("Adding a bid of " + firstBid.ToString() + " to challenge ID " + value.ID.ToString(), "ChallengeController::New");
             ChalRepo.AddBidToChallenge(value, value.CustomerID, firstBid, approxFees);

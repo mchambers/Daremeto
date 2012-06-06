@@ -1,0 +1,26 @@
+﻿@model DaremetoWorker.EmailNotifyModel
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+<title>New Challenge</title>
+</head>
+
+<body>
+
+<h1>You've been dared!</h1>
+
+<p>Suit up. @(Model.SourceCustomer.FirstName) just threw down the gauntlet. They've got cold, hard cash waiting for you if you:</p>
+
+<h2>@(Model.Challenge.Description)</h2>
+
+<p>If you <a href="http://dareme.to/dare/show/@(Model.Challenge.ID)">take the dare</a> and show proof you did it, <big>you'll get $@(Model.Challenge.CurrentBid)</big>. Yep, money. Not credits or tokens or anything like that. Cash cash money. And if you want more, share the link and get your friends to ante up.</p>
+
+<p>To take the dare, head over to dareme.to and sign up. If you've already got dareme.to, just open it on your iPhone and Accept the dare.</p>
+
+<em>If you do not wish to receive future communications from dareme.to, please click here. 1436 S. La Cienega Blvd., Suite 210, Los Angeles, CA 90035.</em>
+</body>
+
+</html>

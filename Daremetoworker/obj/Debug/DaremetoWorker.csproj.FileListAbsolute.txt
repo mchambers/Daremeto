@@ -24,3 +24,13 @@ C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWo
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\obj\Debug\DaremetoWorker.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\obj\Debug\DaremetoWorker.pdb
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\bin\Debug\RazorEngine.dll
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\bin\Debug\System.Web.Razor.dll
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\bin\Debug\Stripe.dll
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\bin\Debug\RestSharp.dll
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\bin\Debug\Newtonsoft.Json.pdb
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\bin\Debug\NewChallenge.email
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\bin\Debug\SendGridMail.dll
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\bin\Debug\CodeScales.Http.dll

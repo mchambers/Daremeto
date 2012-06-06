@@ -207,6 +207,20 @@ namespace DareyaAPI.Controllers
         }
 
         [HttpPost]
+        public ActionResult Signup(SignupCustomer newCustomer)
+        {
+            CustomerController custCtl = new CustomerController();
+
+            CustomerController.CustomerSignupResult result = custCtl.HandleCredentialSignup(newCustomer);
+
+            if (result.Result != CustomerController.CustomerSignupResult.ResultCode.Success)
+                return View("SignupFailed");
+
+            
+            return View("SignupComplete", result);
+        }
+
+        [HttpPost]
         public ActionResult Complete(OnboardToken t)
         {
             ICustomerRepository custRepo = RepoFactory.GetCustomerRepo();

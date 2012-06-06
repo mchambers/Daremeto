@@ -44,7 +44,7 @@ namespace DareyaAPI.Filters
 
         public override void OnAuthorization(HttpActionContext actionContext)
         {
-            Models.AuthorizationRepository ar = new Models.AuthorizationRepository();
+            IAuthorizationRepository ar = RepoFactory.GetAuthorizationRepo();
 
             if (!HttpContext.Current.Request.Headers.AllKeys.Contains("DYAuthToken"))
             {

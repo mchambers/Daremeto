@@ -5,9 +5,20 @@ using System.Text;
 using DareyaAPI.Models;
 using UrbanBlimp;
 using UrbanBlimp.Apple;
+using System.Diagnostics;
+using SendGridMail;
+using System.IO;
+using RazorEngine;
 
 namespace DaremetoWorker
 {
+    class EmailNotifyModel
+    {
+        public Challenge Challenge { get; set; }
+        public Customer SourceCustomer { get; set; }
+        public Customer TargetCustomer { get; set; }
+    }
+
     class NotifyQueueItemProcessor : IQueueItemProcessor
     {
         private RequestBuilder GetIOSUASandboxCredentials()
@@ -17,7 +28,7 @@ namespace DaremetoWorker
 
         private RequestBuilder GetIOSUAProductionCredentials()
         {
-            return new RequestBuilder { NetworkCredential = new System.Net.NetworkCredential("m-3W3fEkS52DUwrGMhqQ-w", "v9K8jHEMQsecepHtgrLfbg") };
+            return new RequestBuilder { NetworkCredential = new System.Net.NetworkCredential("m-3W3fEkS52DUwrGMhqQ-w", "-hOx6911T06Kt9G5Ff7BrA") };
         }
         
         private void PushToCustomer(long CustomerID, string Text)
@@ -33,13 +44,24 @@ namespace DaremetoWorker
             {
                 reg.Execute(t.Token, new Registration());
                 pushTokens.Add(t.Token);
+                Trace.WriteLine("PUSH: Registering device token "+t.Token+" for customer "+CustomerID);
             }
 
             PushPayload payload = new PushPayload();
             payload.Alert = Text;
-            
-            PushNotification notification = new PushNotification { DeviceTokens = pushTokens, Payload = payload };
-            service.Execute(notification);
+            payload.Badge = "0";
+
+            Trace.WriteLine("PUSH: Pushing \"" + Text + "\" to " + pushTokens.Count.ToString()+" clients - "+pushTokens.ToString());
+
+            try
+            {
+                PushNotification notification = new PushNotification { DeviceTokens = pushTokens, Payload = payload };
+                service.Execute(notification);
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine("PUSH: Exception encountered, " + e.ToString());
+            }
         }
 
         private void HandlePushServiceNotifications(long SourceCustomerID, long TargetCustomerID, long ChallengeID, CustomerNotifier.NotifyType Type)
@@ -78,9 +100,58 @@ namespace DaremetoWorker
                     break;
             }
         }
-
+        
         private void HandleEmailNotifications(long SourceCustomerID, long TargetCustomerID, long ChallengeID, CustomerNotifier.NotifyType Type)
         {
+            Customer sourceCust;
+            Customer targetCust;
+            Challenge chal;
+
+            targetCust = RepoFactory.GetCustomerRepo().GetWithID(TargetCustomerID);
+            sourceCust = RepoFactory.GetCustomerRepo().GetWithID(SourceCustomerID);
+            chal = RepoFactory.GetChallengeRepo().Get(ChallengeID);
+
+            EmailNotifyModel m = new EmailNotifyModel { Challenge = chal, SourceCustomer = sourceCust, TargetCustomer = targetCust };
+
+            string template = null;
+            string output = null;
+            string email = null;
+            string subject = null;
+
+            switch (Type)
+            {
+                case CustomerNotifier.NotifyType.ChallengeAccepted:
+                    break;
+                case CustomerNotifier.NotifyType.ChallengeAwardedToYou:
+                    break;
+                case CustomerNotifier.NotifyType.ChallengeBacked:
+                    break;
+                case CustomerNotifier.NotifyType.ChallengeClaimed:
+                    break;
+                case CustomerNotifier.NotifyType.ChallengeRejected:
+                    break;
+                case CustomerNotifier.NotifyType.ChallengeYouBackedAwardedAssented:
+                    break;
+                case CustomerNotifier.NotifyType.ChallengeYouBackedAwardedDissented:
+                    break;
+                case CustomerNotifier.NotifyType.NewChallenge:
+                    template = File.OpenText("NewChallenge.email").ReadToEnd();
+                    output = Razor.Parse(template, m);
+                    email = targetCust.EmailAddress;
+                    subject = "You've been dared by " + sourceCust.FirstName;
+                    break;
+            }
+
+            if (output != null && !output.Equals(""))
+            {
+                var message = SendGrid.GenerateInstance();
+                message.AddTo(email);
+                message.From = new System.Net.Mail.MailAddress("support@dareme.to");
+                message.Html = output;
+                message.Subject = subject;
+                var transport = SendGridMail.Transport.SMTP.GenerateInstance(new System.Net.NetworkCredential("daremeto", "3f!margarita"));
+                transport.Deliver(message);
+            }
 
         }
 

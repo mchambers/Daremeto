@@ -24,11 +24,11 @@ namespace DareyaAPI.BillingSystem
 
     public interface IBillingProcessor
     {
-        decimal GetProcessingFeesForAmount(decimal Amount);                      // ONLY what the billing processor will charge us.
-                                                                                 // should not include "profit" or "vig" of any kind.
+        decimal GetProcessingFeesForAmount(decimal Amount);                                        // ONLY what the billing processor will charge us.
+                                                                                                   // should not include "profit" or "vig" of any kind.
 
-        BillingProcessorResult Charge(string ForeignCustomerID, decimal Amount); // process the transaction w/ the 3rd party.
-                                                                                 // a transaction of Amount will approx. cost us the fees
-                                                                                 // returned by GetProcessingFeesForAmount().
+        BillingProcessorResult Charge(string ForeignCustomerID, decimal Amount, string Reason=null); // process the transaction w/ the 3rd party.
+                                                                                                   // a transaction of Amount will approx. cost us the fees
+                                                                                                   // returned by GetProcessingFeesForAmount().
     }
 }

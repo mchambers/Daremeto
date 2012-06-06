@@ -5,6 +5,11 @@ using System.Web;
 
 namespace DareyaAPI.Models
 {
+    public class SignupCustomer : Customer
+    {
+        public long ChallengeID { get; set; }
+    }
+
     public class Customer
     {
         public enum TypeCodes

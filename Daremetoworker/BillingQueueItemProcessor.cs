@@ -54,6 +54,14 @@ namespace DaremetoWorker
             ITransactionRepository transRepo=RepoFactory.GetTransactionRepo();
             ChallengeStatus chalStatus=RepoFactory.GetChallengeStatusRepo().Get(CustomerID, ChallengeID);
 
+            int bidsPaid = 0;
+
+            if (chalStatus.Status != (int)ChallengeStatus.StatusCodes.Accepted)
+            {
+                System.Diagnostics.Trace.WriteLine("BILLING: Cust" + CustomerID.ToString() + "_Chal" + ChallengeID.ToString() + " - Caught a non-accepted challenge status attempting to be billed");
+                return;
+            }
+
             foreach (ChallengeBid b in bids)
             {
                 Customer cust=RepoFactory.GetCustomerRepo().GetWithID(b.CustomerID);
@@ -70,7 +78,10 @@ namespace DaremetoWorker
                                                       };
 
                     if (accountRepo.TransferFundsForTransaction(t))
+                    {
                         t.State = TransactionState.Successful;
+                        bidsPaid++;
+                    }
 
                     transRepo.RecordTransaction(t);
                 }
@@ -119,6 +130,9 @@ namespace DaremetoWorker
 
                         if (accountRepo.TransferFundsForTransaction(feesTransaction))
                             feesTransaction.State = TransactionState.Successful;
+
+                        if(netBountyTransaction.State==TransactionState.Successful && feesTransaction.State==TransactionState.Successful)
+                            bidsPaid++; //only if the entire thing was successful
                     }
                     else
                     {
@@ -137,11 +151,21 @@ namespace DaremetoWorker
                     transRepo.RecordTransactionBatch(transBatch, "Chal"+chalStatus.ChallengeID+"+Cust"+chalStatus.CustomerID+"+"+System.DateTime.Now.Ticks.ToString());
                 }
             }
+
+            if (bidsPaid >= bids.Count)
+                chalStatus.Status = (int)ChallengeStatus.StatusCodes.Paid;
+            else if (bidsPaid < bids.Count)
+                chalStatus.Status = (int)ChallengeStatus.StatusCodes.PartialPaid;
+
+            RepoFactory.GetChallengeStatusRepo().Update(chalStatus); // plz work
         }
 
         public void HandleQueueItem(DareyaAPI.ProcessingQueue.ProcessingQueueItem item)
         {
-            throw new NotImplementedException();
+            long chalID = item.Data["ChalID"];
+            long custID = item.Data["CustID"];
+
+            PerformBillingForCompletedChallenge(chalID, custID);
         }
     }
 }

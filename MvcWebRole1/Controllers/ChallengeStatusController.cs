@@ -56,6 +56,14 @@ namespace DareyaAPI.Controllers
                 StatusRepo.Update(s);
 
                 // challenge completed! award the money! DO IT DO IT!
+
+                // queue the billing system to process this challenge status
+                Dictionary<string, long> billingQueueItemData=new Dictionary<string,long>();
+                billingQueueItemData.Add("ChalID", s.ChallengeID);
+                billingQueueItemData.Add("CustID", s.CustomerID);
+                RepoFactory.GetProcessingQueue().PutQueueMessage(ProcessingQueue.MessageType.Billing, billingQueueItemData);
+
+                // notify the customer
                 CustomerNotifier.NotifyChallengeAwardedToYou(s.CustomerID, s.ChallengeID);
             }
             else

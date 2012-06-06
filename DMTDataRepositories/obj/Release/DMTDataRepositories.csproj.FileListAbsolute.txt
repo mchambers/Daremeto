@@ -9,3 +9,8 @@ C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DMTDataRep
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DMTDataRepositories\obj\Release\ResolveAssemblyReference.cache
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DMTDataRepositories\bin\Release\Dapper.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DMTDataRepositories\bin\Release\Dapper.pdb
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DMTDataRepositories\bin\Release\Newtonsoft.Json.dll
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DMTDataRepositories\bin\Release\RestSharp.dll
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DMTDataRepositories\bin\Release\Stripe.dll
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DMTDataRepositories\bin\Release\Newtonsoft.Json.pdb
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DMTDataRepositories\bin\Release\Newtonsoft.Json.xml

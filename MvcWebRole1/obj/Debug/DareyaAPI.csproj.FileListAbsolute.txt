@@ -122,3 +122,5 @@ C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\bin\Hammock.pdb
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\bin\Hammock.ClientProfile.pdb
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\bin\TweetSharp.pdb
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\bin\Stripe.dll
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\MvcWebRole1\bin\RestSharp.dll
