@@ -47,6 +47,9 @@ namespace DaremetoWorker
                 Trace.WriteLine("PUSH: Registering device token "+t.Token+" for customer "+CustomerID);
             }
 
+            if (pushTokens.Count == 0)
+                return;
+
             PushPayload payload = new PushPayload();
             payload.Alert = Text;
             payload.Badge = "0";

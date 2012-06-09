@@ -24,6 +24,25 @@ namespace DareyaAPI.Controllers
             Taker
         }
 
+        public Disposition DetermineDisposition(Challenge c)
+        {
+            if (!HttpContext.Current.User.Identity.IsAuthenticated)
+                return Disposition.None;
+
+            long curCustID=((Models.DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
+
+            if(c.CustomerID==curCustID)
+                return Disposition.Originator;
+
+            if(c.TargetCustomerID==curCustID)
+                return Disposition.Taker;
+
+            if(RepoFactory.GetChallengeBidRepo().CustomerDidBidOnChallenge(curCustID, c.ID)!=null)
+                return Disposition.Backer;
+
+            return Disposition.None;
+        }
+
         public Disposition DetermineDisposition(ChallengeStatus s)
         {
             if (!HttpContext.Current.User.Identity.IsAuthenticated)

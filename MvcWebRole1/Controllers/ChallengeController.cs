@@ -35,7 +35,7 @@ namespace DareyaAPI.Controllers
             if (c == null) return null;
 
             Customer tempCust = CustRepo.GetWithID(c.CustomerID);
-            c.Customer = Customer.Filter(tempCust);
+            c.Customer = (Customer)Customer.Filter(tempCust);
 
             tempCust = null;
 
@@ -44,11 +44,12 @@ namespace DareyaAPI.Controllers
                 Customer tempTargetCust = CustRepo.GetWithID(c.TargetCustomerID);
                 if (tempTargetCust!=null && tempTargetCust.FirstName != null && !tempTargetCust.FirstName.Equals(""))
                 {
-                    c.TargetCustomer = Customer.Filter(tempTargetCust);
+                    c.TargetCustomer = (Customer)Customer.Filter(tempTargetCust);
                 }
                 tempTargetCust = null;
             }
 
+            c.Disposition = (int)Security.DetermineDisposition(c);
             c.NumberOfBidders = BidRepo.GetBidCountForChallenge(c.ID);//BidRepo.Get(c.ID).Count;
             c.NumberOfTakers = StatusRepo.GetActiveStatusesForChallenge(c.ID).Count;
 
@@ -65,7 +66,7 @@ namespace DareyaAPI.Controllers
         [HttpGet]
         public List<Challenge> Get(int StartAt=0, int Limit=10)
         {
-            List<Challenge> chals = ChalRepo.GetNewest(0, 10).ToList<Challenge>();
+            List<Challenge> chals = ChalRepo.GetNewest(StartAt, Limit).ToList<Challenge>();
             List<Challenge> outChals = new List<Challenge>(chals.Count);
 
             foreach (Challenge c in chals)

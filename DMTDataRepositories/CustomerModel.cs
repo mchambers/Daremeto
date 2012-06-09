@@ -10,7 +10,15 @@ namespace DareyaAPI.Models
         public long ChallengeID { get; set; }
     }
 
-    public class Customer
+    public class MiniCustomer
+    {
+        public long ID { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string AvatarURL { get; set; }
+    }
+
+    public class Customer : MiniCustomer
     {
         public enum TypeCodes
         {
@@ -28,10 +36,6 @@ namespace DareyaAPI.Models
             EmailAddress
         }
 
-        public long ID { get; set; }
-
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
         public string EmailAddress { get; set; }
         public string Address { get; set; }
         public string Address2 { get; set; }
@@ -50,30 +54,12 @@ namespace DareyaAPI.Models
 
         public int Type { get; set; }
 
-        public string AvatarURL { get; set; }
-
         public string ForeignUserID { get; set; }
         public int ForeignUserType { get; set; }
         
-        public static Customer Filter(Customer c)
+        public static MiniCustomer Filter(Customer c)
         {
-            Customer filtered = new Customer();
-
-            filtered.Address = null;
-            filtered.Address2 = null;
-            filtered.BillingID = null;
-            filtered.BillingType = 0;
-            filtered.City = null;
-            filtered.State = null;
-            filtered.ZIPCode = null;
-            filtered.Password = null;
-            filtered.EmailAddress = null;
-            filtered.FacebookAccessToken = null;
-            filtered.FacebookExpires = null;
-            filtered.FacebookUserID = null;
-
-            filtered.ForeignUserID = "";
-            filtered.ForeignUserType = (int)ForeignUserTypes.Undefined;
+            MiniCustomer filtered = new MiniCustomer();
 
             filtered.ID = c.ID;
             filtered.FirstName = c.FirstName;

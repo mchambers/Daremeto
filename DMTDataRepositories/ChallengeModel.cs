@@ -50,6 +50,7 @@ namespace DareyaAPI.Models
         public Customer TargetCustomer { get; set; }
         public int NumberOfTakers { get; set; }
         public int NumberOfBidders { get; set; }
+        public int Disposition { get; set; }
 
         public Challenge()
         {
