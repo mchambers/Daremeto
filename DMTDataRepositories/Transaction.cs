@@ -61,8 +61,8 @@ namespace DareyaAPI.Models
     {
         public long ID { get; set; }
         public string TransactionBatchID { get; set; }
-        public long DebitAccountID { get; set; }        // who are we getting the money from?
-        public long CreditAccountID { get; set; }      // who are we giving the money to?
+        public long DebitCustomerID { get; set; }        // who are we getting the money from?
+        public long CreditCustomerID { get; set; }      // who are we giving the money to?
         public TransactionType Type { get; set; }
         public decimal Amount { get; set; }
         public TransactionReason Reason { get; set; }

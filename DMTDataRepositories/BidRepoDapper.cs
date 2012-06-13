@@ -84,7 +84,20 @@ namespace DareyaAPI.Models
 
         public void UpdateStatusForBidsOnChallenge(long ChallengeID, ChallengeBid.BidStatusCodes NewStatus)
         {
-            throw new NotImplementedException();
+            using (SqlConnection db = new SqlConnection(connStr))
+            {
+                db.Open();
+                db.Execute("UpdateStatusForBidsOnChallenge", new { ChallengeID = ChallengeID, NewStatus = (int)NewStatus }, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public void UpdateVotePendingCustomerIDForChallenge(long ChallengeID, long CustomerID)
+        {
+            using (SqlConnection db = new SqlConnection(connStr))
+            {
+                db.Open();
+                db.Execute("spBidUpdateVotePendingCustomer", new { ChallengeID = ChallengeID, CustomerID = CustomerID }, commandType: CommandType.StoredProcedure);
+            }
         }
     }
 }

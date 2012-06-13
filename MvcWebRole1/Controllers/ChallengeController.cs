@@ -148,8 +148,13 @@ namespace DareyaAPI.Controllers
 
                 b.Challenge = PrepOutboundChallenge(ChalRepo.Get(b.ChallengeID));
 
-                if(b.Status==(int)ChallengeBid.BidStatusCodes.VotePending)
-                    b.VotePendingStatus = StatusRepo.Get(b.PendingVoteCustomerID, b.ChallengeID);
+                if (b.Status == (int)ChallengeBid.BidStatusCodes.VotePending)
+                {
+                    if (b.PendingVoteCustomerID == 0)
+                        b.VotePendingStatus = StatusRepo.GetNextVotePendingStatusForChallenge(b.ChallengeID);
+                    else
+                        b.VotePendingStatus = StatusRepo.Get(b.PendingVoteCustomerID, b.ChallengeID);
+                }
             }
 
             return bids;

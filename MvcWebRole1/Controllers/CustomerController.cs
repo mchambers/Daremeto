@@ -51,12 +51,6 @@ namespace DareyaAPI.Controllers
             TokenRepo = RepoFactory.GetPushServiceTokenRepo();
         }
 
-        // GET /api/customer
-        /*public Database.Customer Get()
-        {
-            //return Database.Customer.CreateCustomer(0, "Shouldbe", "You");
-        }*/
-
         private Customer FilterForAudience(Customer c, Security.Audience Audience)
         {
             Customer filtered = new Customer();
@@ -81,6 +75,67 @@ namespace DareyaAPI.Controllers
             }
 
             return filtered;
+        }
+
+        [HttpGet]
+        [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
+        public Account Balance(long id)
+        {
+            Account a = new Account();
+
+            if (id != ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID)
+                throw new HttpResponseException(System.Net.HttpStatusCode.Forbidden);
+
+            a.Balance = RepoFactory.GetAccountRepo().BalanceForCustomerAccount(id);
+            a.CustomerID = id;
+
+            return a;
+        }
+
+        [HttpPost]
+        [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
+        public void RequestWithdraw(long id)
+        {
+            if (id != ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID)
+                throw new HttpResponseException(System.Net.HttpStatusCode.Forbidden);
+
+
+        }
+
+        [HttpPost]
+        [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
+        public void Update(Customer profile)
+        {
+            Customer c = Repo.GetWithID(profile.ID);
+
+            if (Security.DetermineAudience(c) != Security.Audience.Owner)
+                throw new HttpResponseException(System.Net.HttpStatusCode.Forbidden);
+
+            if(profile.FirstName!=null && !profile.FirstName.Equals(""))
+                c.FirstName = profile.FirstName;
+
+            if (profile.LastName != null && !profile.LastName.Equals(""))
+                c.LastName = profile.LastName;
+
+            if (profile.AvatarURL != null && !profile.AvatarURL.Equals(""))
+                c.AvatarURL = profile.AvatarURL;
+
+            if (profile.Address != null && !profile.Address.Equals(""))
+                c.Address = profile.Address;
+
+            if (profile.Address2 != null && !profile.Address2.Equals(""))
+                c.Address2 = profile.Address2;
+
+            if (profile.City != null && !profile.City.Equals(""))
+                c.City = profile.City;
+
+            if (profile.State != null && !profile.State.Equals(""))
+                c.State = profile.State;
+
+            if (profile.ZIPCode != null && !profile.ZIPCode.Equals(""))
+                c.ZIPCode = profile.ZIPCode;
+
+            Repo.Update(c);
         }
 
         // GET /api/customer/5

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ServiceConfiguration serviceName="Dareya" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="1" osVersion="*">
   <Role name="DareyaAPI">
-    <Instances count="2" />
+    <Instances count="1" />
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=daremeto;AccountKey=Zd6EEZ9lRvPELkVjk70rASP1H8OCFcaaZPhlF+p3bYYtWzc0ZZOalsAM7Ldyx22wQt3OTKpz7YbuWsIN0/AyVw==" />
       <Setting name="StorageConnectionString" value="DefaultEndpointsProtocol=https;AccountName=daremeto;AccountKey=Zd6EEZ9lRvPELkVjk70rASP1H8OCFcaaZPhlF+p3bYYtWzc0ZZOalsAM7Ldyx22wQt3OTKpz7YbuWsIN0/AyVw==" />

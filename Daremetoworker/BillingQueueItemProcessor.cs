@@ -54,6 +54,8 @@ namespace DaremetoWorker
             ITransactionRepository transRepo=RepoFactory.GetTransactionRepo();
             ChallengeStatus chalStatus=RepoFactory.GetChallengeStatusRepo().Get(CustomerID, ChallengeID);
 
+            long feesAccountID = 0;
+
             int bidsPaid = 0;
 
             if (chalStatus.Status != (int)ChallengeStatus.StatusCodes.Accepted)
@@ -70,8 +72,8 @@ namespace DaremetoWorker
                 if (custBalance >= b.Amount)
                 {
                     Transaction t = new Transaction() { Amount=(b.Amount - b.ComputedFees), 
-                                                        DebitAccountID=b.CustomerID,
-                                                        CreditAccountID=chalStatus.CustomerID, 
+                                                        DebitCustomerID=b.CustomerID,
+                                                        CreditCustomerID=chalStatus.CustomerID, 
                                                         State=TransactionState.PendingInternalTransfer, 
                                                         Source=TransactionSource.FundedFromBalance,
                                                         Reason=TransactionReason.CustomerAwardedBounty
@@ -90,8 +92,8 @@ namespace DaremetoWorker
                     Transaction netBountyTransaction = new Transaction()
                     {
                         Amount=(b.Amount-b.ComputedFees),
-                        DebitAccountID=b.CustomerID,
-                        CreditAccountID=chalStatus.CustomerID,
+                        DebitCustomerID=b.CustomerID,
+                        CreditCustomerID=chalStatus.CustomerID,
                         State=TransactionState.PendingFunds,
                         Source=TransactionSource.FundedFromBillingProcessor,
                         Reason=TransactionReason.CustomerAwardedBounty
@@ -100,8 +102,8 @@ namespace DaremetoWorker
                     Transaction feesTransaction = new Transaction()
                     {
                         Amount=b.ComputedFees,
-                        DebitAccountID=b.CustomerID,
-                        CreditAccountID=chalStatus.CustomerID,
+                        DebitCustomerID=b.CustomerID,
+                        CreditCustomerID=feesAccountID,
                         State=TransactionState.PendingFunds,
                         Source=TransactionSource.FundedFromBillingProcessor,
                         Reason=TransactionReason.CustomerAddedFunds

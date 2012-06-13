@@ -16,5 +16,6 @@ namespace DareyaAPI.Models
         void UpdateStatusForBidsOnChallenge(long ChallengeID, ChallengeBid.BidStatusCodes NewStatus);
         List<ChallengeBid> GetVotePendingBidsForCustomer(long CustomerID);
         List<ChallengeBid> GetActiveBidsForCustomer(long CustomerID);
+        void UpdateVotePendingCustomerIDForChallenge(long ChallengeID, long CustomerID);
     }
 }

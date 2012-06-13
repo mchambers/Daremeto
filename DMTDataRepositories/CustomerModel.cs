@@ -18,7 +18,7 @@ namespace DareyaAPI.Models
         public string AvatarURL { get; set; }
     }
 
-    public class Customer : MiniCustomer
+    public class Customer
     {
         public enum TypeCodes
         {
@@ -35,6 +35,11 @@ namespace DareyaAPI.Models
             PhoneNumber,
             EmailAddress
         }
+
+        public long ID { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string AvatarURL { get; set; }
 
         public string EmailAddress { get; set; }
         public string Address { get; set; }
@@ -57,9 +62,9 @@ namespace DareyaAPI.Models
         public string ForeignUserID { get; set; }
         public int ForeignUserType { get; set; }
         
-        public static MiniCustomer Filter(Customer c)
+        public static Customer Filter(Customer c)
         {
-            MiniCustomer filtered = new MiniCustomer();
+            Customer filtered = new Customer();
 
             filtered.ID = c.ID;
             filtered.FirstName = c.FirstName;

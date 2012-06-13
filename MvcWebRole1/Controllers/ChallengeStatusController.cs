@@ -103,8 +103,7 @@ namespace DareyaAPI.Controllers
                 ChallengeStatus nextStatus = StatusRepo.GetNextVotePendingStatusForChallenge(s.ChallengeID);
                 if (nextStatus != null)
                 {
-                    bid.PendingVoteCustomerID = nextStatus.CustomerID;
-                    BidRepo.Update(bid);
+                    BidRepo.UpdateVotePendingCustomerIDForChallenge(s.ChallengeID, nextStatus.CustomerID);
                 }
                 else
                 {
@@ -143,7 +142,7 @@ namespace DareyaAPI.Controllers
             // set all of the bids for this challenge to "VotePending"
             // so the bidders can see what they need to vote on
             BidRepo.UpdateStatusForBidsOnChallenge(status.ChallengeID, ChallengeBid.BidStatusCodes.VotePending);
-
+            
             CustomerNotifier.NotifyChallengeClaimed(s.ChallengeOriginatorCustomerID, s.CustomerID, s.ChallengeID);
         }
 

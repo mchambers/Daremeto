@@ -85,11 +85,6 @@
     <Compile Include="CustomerRepoDapper.cs" />
     <Compile Include="DareyaIdentity.cs" />
     <Compile Include="DareyaPrincipal.cs" />
-    <Compile Include="Database\DbModels.Designer.cs">
-      <DependentUpon>DbModels.edmx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
     <Compile Include="Email.cs" />
     <Compile Include="Evidence.cs" />
     <Compile Include="EvidenceRepository.cs" />
@@ -118,7 +113,6 @@
     <Compile Include="PushServiceToken.cs" />
     <Compile Include="PushServiceTokenRepository.cs" />
     <Compile Include="RepoFactory.cs" />
-    <Compile Include="SQLChallengeBidRepository.cs" />
     <Compile Include="StripeBillingProcessor.cs" />
     <Compile Include="StripeExample.cs" />
     <Compile Include="TableServiceContextV2.cs" />
@@ -132,12 +126,8 @@
     <None Include="App.Config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <EntityDeploy Include="Database\DbModels.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DbModels.Designer.cs</LastGenOutput>
-    </EntityDeploy>
+    <Folder Include="Database\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
