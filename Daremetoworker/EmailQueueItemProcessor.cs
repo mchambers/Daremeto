@@ -12,14 +12,14 @@ using RazorEngine;
 
 namespace DaremetoWorker
 {
-    class EmailNotifyModel
+    public class EmailNotifyModel
     {
         public Challenge Challenge { get; set; }
         public Customer SourceCustomer { get; set; }
         public Customer TargetCustomer { get; set; }
     }
 
-    class NotifyQueueItemProcessor : IQueueItemProcessor
+    public class NotifyQueueItemProcessor : IQueueItemProcessor
     {
         private RequestBuilder GetIOSUASandboxCredentials()
         {
@@ -121,41 +121,74 @@ namespace DaremetoWorker
             string email = null;
             string subject = null;
 
-            switch (Type)
+            try
             {
-                case CustomerNotifier.NotifyType.ChallengeAccepted:
-                    break;
-                case CustomerNotifier.NotifyType.ChallengeAwardedToYou:
-                    break;
-                case CustomerNotifier.NotifyType.ChallengeBacked:
-                    break;
-                case CustomerNotifier.NotifyType.ChallengeClaimed:
-                    break;
-                case CustomerNotifier.NotifyType.ChallengeRejected:
-                    break;
-                case CustomerNotifier.NotifyType.ChallengeYouBackedAwardedAssented:
-                    break;
-                case CustomerNotifier.NotifyType.ChallengeYouBackedAwardedDissented:
-                    break;
-                case CustomerNotifier.NotifyType.NewChallenge:
-                    template = File.OpenText("NewChallenge.email").ReadToEnd();
-                    output = Razor.Parse(template, m);
-                    email = targetCust.EmailAddress;
-                    subject = "You've been dared by " + sourceCust.FirstName;
-                    break;
+                switch (Type)
+                {
+                    case CustomerNotifier.NotifyType.ChallengeAccepted:
+                        template = File.OpenText("ChallengeAccepted.email").ReadToEnd();
+                        output = Razor.Parse(template, m);
+                        email = sourceCust.EmailAddress;
+                        subject = targetCust.FirstName+" has taken your dare";
+                        break;
+                    case CustomerNotifier.NotifyType.ChallengeAwardedToYou:
+                        template = File.OpenText("ChallengeAwardedToYou.email").ReadToEnd();
+                        output = Razor.Parse(template, m);
+                        email = sourceCust.EmailAddress;
+                        subject = "You've been awarded a bounty!";
+                        break;
+                    case CustomerNotifier.NotifyType.ChallengeBacked:
+                        template = File.OpenText("ChallengeBacked.email").ReadToEnd();
+                        output = Razor.Parse(template, m);
+                        email = targetCust.EmailAddress;
+                        subject = sourceCust.FirstName + " has backed one of your dares";
+                        break;
+                    case CustomerNotifier.NotifyType.ChallengeClaimed:
+                        template = File.OpenText("ChallengeClaimed.email").ReadToEnd();
+                        output = Razor.Parse(template, m);
+                        email = sourceCust.EmailAddress;
+                        subject = targetCust.FirstName + " thinks he's completed your dare";
+                        break;
+                    case CustomerNotifier.NotifyType.ChallengeRejected:
+                        template = File.OpenText("ChallengeRejected.email").ReadToEnd();
+                        output = Razor.Parse(template, m);
+                        email = sourceCust.EmailAddress;
+                        subject = targetCust.FirstName + " has rejected your dare";
+                        break;
+                    case CustomerNotifier.NotifyType.ChallengeYouBackedAwardedAssented:
+                        break;
+                    case CustomerNotifier.NotifyType.ChallengeYouBackedAwardedDissented:
+                        break;
+                    case CustomerNotifier.NotifyType.NewChallenge:
+                        template = File.OpenText("NewChallenge.email").ReadToEnd();
+                        output = Razor.Parse(template, m);
+                        email = targetCust.EmailAddress;
+                        subject = "You've been dared by " + sourceCust.FirstName;
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine("EMAIL PARSE EXCEPTION: " + e.ToString());
             }
 
-            if (output != null && !output.Equals(""))
+            try
             {
-                var message = SendGrid.GenerateInstance();
-                message.AddTo(email);
-                message.From = new System.Net.Mail.MailAddress("support@dareme.to");
-                message.Html = output;
-                message.Subject = subject;
-                var transport = SendGridMail.Transport.SMTP.GenerateInstance(new System.Net.NetworkCredential("daremeto", "3f!margarita"));
-                transport.Deliver(message);
+                if (output != null && !output.Equals(""))
+                {
+                    var message = SendGrid.GenerateInstance();
+                    message.AddTo(email);
+                    message.From = new System.Net.Mail.MailAddress("support@dareme.to");
+                    message.Html = output;
+                    message.Subject = subject;
+                    var transport = SendGridMail.Transport.SMTP.GenerateInstance(new System.Net.NetworkCredential("daremeto", "3f!margarita"));
+                    transport.Deliver(message);
+                }
             }
-
+            catch (Exception e)
+            {
+                Trace.WriteLine("EMAIL SEND EXCEPTION: " + e.ToString());
+            }
         }
 
         public void HandleQueueItem(DareyaAPI.ProcessingQueue.ProcessingQueueItem item)

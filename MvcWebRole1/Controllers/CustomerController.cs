@@ -157,6 +157,28 @@ namespace DareyaAPI.Controllers
 
         [HttpPost]
         [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
+        public void ForeignNetwork(CustomerForeignNetworkConnection d)
+        {
+            long curCustID = ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
+            if (d.CustomerID != curCustID)
+                throw new HttpResponseException(System.Net.HttpStatusCode.Forbidden);
+
+            OnboardManager mgr=new OnboardManager();
+
+            try
+            {
+                bool res = mgr.LinkForeignUserToCustomer(Repo.GetWithID(curCustID), d.UserID, (Customer.ForeignUserTypes)d.Type);
+                if (!res)
+                    throw new HttpResponseException(System.Net.HttpStatusCode.Forbidden);
+            }
+            catch (Exception e)
+            {
+                throw new HttpResponseException(System.Net.HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpPost]
+        [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
         public void Billing(BillingDTO billingInfo)
         {
             Customer c = Repo.GetWithID(((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID);

@@ -24,7 +24,8 @@ namespace DareyaAPI.Models
         {
             Default,
             Unclaimed,
-            Unverified
+            Unverified,
+            IncompleteOnboard
         }
 
         public enum ForeignUserTypes

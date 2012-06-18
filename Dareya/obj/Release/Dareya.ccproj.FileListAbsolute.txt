@@ -349,6 +349,11 @@ C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Views\Web.config
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Views\_ViewStart.cshtml
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Web.config
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DaremetoWorker\ChallengeAccepted.email
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DaremetoWorker\ChallengeAwardedToYou.email
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DaremetoWorker\ChallengeBacked.email
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DaremetoWorker\ChallengeClaimed.email
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DaremetoWorker\ChallengeRejected.email
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DaremetoWorker\CodeScales.Http.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DaremetoWorker\Dapper.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DaremetoWorker\Dapper.pdb

@@ -32,3 +32,6 @@ C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWo
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\bin\Debug\NewChallenge.email
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\bin\Debug\SendGridMail.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\bin\Debug\CodeScales.Http.dll
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\bin\Debug\ChallengeAccepted.email
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\bin\Debug\ChallengeAwardedToYou.email
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\bin\Debug\ChallengeClaimed.email

@@ -40,5 +40,6 @@ namespace DareyaAPI.Models
         public long CustomerID { get; set; }
         public bool Valid { get; set; }
         public string EmailAddress { get; set; }
+        public int Type { get; set; }
     }
 }

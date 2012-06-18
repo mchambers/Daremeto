@@ -50,6 +50,16 @@ namespace DareyaAPI.Controllers
             }
 
             c.Disposition = (int)Security.DetermineDisposition(c);
+
+            try
+            {
+                if (c.Disposition == (int)Security.Disposition.Taker)
+                    c.Status = StatusRepo.Get(((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID, c.ID);
+            }
+            catch (Exception e)
+            {
+            }
+
             c.NumberOfBidders = BidRepo.GetBidCountForChallenge(c.ID);//BidRepo.Get(c.ID).Count;
             c.NumberOfTakers = StatusRepo.GetActiveStatusesForChallenge(c.ID).Count;
 
@@ -64,6 +74,7 @@ namespace DareyaAPI.Controllers
 
         // GET /api/challenge
         [HttpGet]
+        [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Public)]
         public List<Challenge> Get(int StartAt=0, int Limit=10)
         {
             List<Challenge> chals = ChalRepo.GetNewest(StartAt, Limit).ToList<Challenge>();

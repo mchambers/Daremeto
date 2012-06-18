@@ -113,7 +113,7 @@ namespace DareyaAPI.Controllers
                 }
 
                 // you've failed this challenge my friend.
-                CustomerNotifier.NotifyChallengeRejected(s.CustomerID, s.ChallengeID);
+                //CustomerNotifier.NotifyChallengeRejected(s.CustomerID, s.ChallengeID);
             }
             else
             {
@@ -199,6 +199,8 @@ namespace DareyaAPI.Controllers
             // the creator will have to make a new one to re-issue it.
             c.State = (int)Challenge.ChallengeState.Rejected;
             ChalRepo.Update(c);
+
+            CustomerNotifier.NotifyChallengeRejected(s.ChallengeOriginatorCustomerID, s.CustomerID, s.ChallengeID);
         }
     }
 }

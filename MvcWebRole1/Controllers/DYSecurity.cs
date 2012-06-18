@@ -40,6 +40,9 @@ namespace DareyaAPI.Controllers
             if(RepoFactory.GetChallengeBidRepo().CustomerDidBidOnChallenge(curCustID, c.ID)!=null)
                 return Disposition.Backer;
 
+            if (RepoFactory.GetChallengeStatusRepo().CustomerTookChallenge(curCustID, c.ID))
+                return Disposition.Taker;
+
             return Disposition.None;
         }
 
@@ -180,10 +183,11 @@ namespace DareyaAPI.Controllers
             Authorization a = new Authorization("test" + System.DateTime.Now.Ticks.ToString());
             a.CustomerID = c.ID;
             a.EmailAddress = c.EmailAddress;
+            a.Type = c.Type;
 
             IAuthorizationRepository authRepo = new AuthorizationRepository();
             authRepo.Add(a); // store the auth token in the repo
-
+            
             return a;
         }
     }

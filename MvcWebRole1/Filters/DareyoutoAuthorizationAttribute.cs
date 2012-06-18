@@ -57,7 +57,8 @@ namespace DareyaAPI.Filters
 
                 if (a == null)
                 {
-                    HandleUnauthorizedRequest(actionContext);
+                    if(AuthLevel!=DYAuthorizationRoles.Public)
+                        HandleUnauthorizedRequest(actionContext);
                 }
                 else
                 {

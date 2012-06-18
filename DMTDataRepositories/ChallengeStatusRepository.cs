@@ -155,5 +155,15 @@ namespace DareyaAPI.Models
             context.Detach(d);
             return s;
         }
+
+        public void MoveStatusesToNewCustomer(long OriginalCustomerID, long NewCustomerID)
+        {
+            List<ChallengeStatus> statuses = GetActiveChallengesForCustomer(OriginalCustomerID);
+            foreach (ChallengeStatus s in statuses)
+            {
+                s.CustomerID = NewCustomerID;
+                Add(s);
+            }
+        }
     }
 }

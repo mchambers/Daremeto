@@ -12,16 +12,14 @@ namespace DareyaAPI.Controllers
     public class OnboardController : Controller
     {
         FacebookClient _fb;
-        
+        OnboardManager _obm;
+        DareManager _dmgr;
+
         public OnboardController()
         {
             _fb = new FacebookClient();
-        }
-
-        public class OnboardResult
-        {
-            public OnboardToken OnboardToken { get; set; }
-            public Customer Customer { get; set; }
+            _obm = new OnboardManager();
+            _dmgr = new DareManager();
         }
 
         //
@@ -102,7 +100,7 @@ namespace DareyaAPI.Controllers
             dynamic meResponse=_fb.Get("me");
             string fbID = meResponse.id;
 
-            OnboardResult r = CoreCompleteFirstStepForeignUserOnboard(fbID, Customer.ForeignUserTypes.Facebook, _fb.AccessToken);
+            OnboardResult r = _obm.CompleteFirstStepForeignUserOnboard(fbID, Customer.ForeignUserTypes.Facebook, _fb.AccessToken);
 
             if (r == null)
                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.Forbidden);
@@ -121,6 +119,7 @@ namespace DareyaAPI.Controllers
             }
         }
 
+        /*
         private OnboardResult CoreCompleteFirstStepForeignUserOnboard(string handle, Customer.ForeignUserTypes type, string token=null, string tokenSecret=null)
         {
             OnboardResult r = new OnboardResult();
@@ -167,6 +166,7 @@ namespace DareyaAPI.Controllers
 
             return r;
         }
+        */
 
         private OnboardResult CoreCompleteTwitter(string oauth_token, string oauth_verifier)
         {
@@ -185,7 +185,7 @@ namespace DareyaAPI.Controllers
             if (handle == null || handle.Equals(""))
                 return null;
 
-            return CoreCompleteFirstStepForeignUserOnboard(handle, Customer.ForeignUserTypes.Twitter, accessToken.Token, accessToken.TokenSecret);
+            return _obm.CompleteFirstStepForeignUserOnboard(handle, Customer.ForeignUserTypes.Twitter, accessToken.Token, accessToken.TokenSecret);
         }
 
         public ActionResult CompleteTwitter(string oauth_token, string oauth_verifier)
@@ -215,7 +215,6 @@ namespace DareyaAPI.Controllers
 
             if (result.Result != CustomerController.CustomerSignupResult.ResultCode.Success)
                 return View("SignupFailed");
-
             
             return View("SignupComplete", result);
         }
@@ -223,55 +222,21 @@ namespace DareyaAPI.Controllers
         [HttpPost]
         public ActionResult Complete(OnboardToken t)
         {
-            ICustomerRepository custRepo = RepoFactory.GetCustomerRepo();
-
             OnboardToken origToken = RepoFactory.GetOnboardTokenRepo().Get(t.VerificationString);
             if (origToken == null)
-                return new HttpStatusCodeResult(System.Net.HttpStatusCode.NotFound);
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.Forbidden);
 
-            Customer c = custRepo.GetWithID(origToken.CustomerID);
-            
-            Customer custCheck = custRepo.GetWithEmailAddress(t.EmailAddress.ToLower().Trim());
+            origToken.EmailAddress = t.EmailAddress;
+            origToken.Password = t.Password;
+            origToken.FirstName = t.FirstName;
+            origToken.LastName = t.LastName;
 
-            c.Type = (int)Customer.TypeCodes.Default;
-
-            // check for email address in use
-            if (custCheck != null && custCheck.Type != (int)Customer.TypeCodes.Unclaimed)
+            if (_obm.Complete(origToken))
             {
-                Security s=new Security();
-
-                Authorization a = s.AuthorizeCustomer(new Login { EmailAddress = t.EmailAddress, Password = t.Password });
-                if (a != null && a.Valid)
-                {
-                    // zomg u're real
-                    custRepo.AddForeignNetworkForCustomer(a.CustomerID, origToken.ForeignUserID, (Customer.ForeignUserTypes)origToken.AccountType);
-
-                    // we need to collapse the unclaimed account into the one we just found.
-                    RepoFactory.GetChallengeRepo().MoveChallengesToCustomer(c.ID, a.CustomerID);
-
-                    // now that we've moved the challenges, delete the original customer
-                    custRepo.Remove(c.ID);
-
-                    return View();
-                }
-                else
-                    return new HttpStatusCodeResult(System.Net.HttpStatusCode.Forbidden);
+                return View();
             }
-            else if (custCheck != null && custCheck.Type == (int)Customer.TypeCodes.Unclaimed)
-            {
-                c = custCheck;
-                c.Type = (int)Customer.TypeCodes.Unverified;
-            }
-            
-            c.EmailAddress = t.EmailAddress.ToLower().Trim();
-            c.FirstName = t.FirstName;
-            c.LastName = t.LastName;
-            c.Password = t.Password;
-
-            custRepo.Update(c);
-            custRepo.AddForeignNetworkForCustomer(c.ID, origToken.ForeignUserID, (Customer.ForeignUserTypes)origToken.AccountType);
-
-            return View();
+            else
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.Forbidden);
         }
     }
 }

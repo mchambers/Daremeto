@@ -52,6 +52,7 @@ namespace DareyaAPI.Models
         public Authorization GetWithToken(string Token)
         {
             AuthorizationDb a = (from e in context.CreateQuery<AuthorizationDb>("Authorization") where e.PartitionKey == Token select e).FirstOrDefault();
+            context.Detach(a);
             return DbAuthorizationToAuthorization(a);
         }
 
@@ -60,6 +61,7 @@ namespace DareyaAPI.Models
             a.Valid = true;
             context.AddObject("Authorization", AuthorizationToDbAuthorization(a));
             context.SaveChangesWithRetries();
+            context.Detach(a);
         }
 
         public void Remove(string Token)

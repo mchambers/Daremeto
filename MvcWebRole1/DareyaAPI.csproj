@@ -173,11 +173,13 @@
     <Compile Include="Controllers\ChallengeStatusController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DareController.cs" />
+    <Compile Include="Controllers\DareManager.cs" />
     <Compile Include="Controllers\DYSecurity.cs" />
     <Compile Include="Controllers\EvidenceController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\OnboardController.cs" />
+    <Compile Include="Controllers\OnboardManager.cs" />
     <Compile Include="Filters\DareyoutoAuthorizationAttribute.cs" />
     <Compile Include="Formatters\JsonNetFormatter.cs" />
     <Compile Include="Global.asax.cs">

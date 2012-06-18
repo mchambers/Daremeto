@@ -46,10 +46,10 @@ namespace DareyaAPI.Models
                 GetNotifyQueueMessageData(NotifyType.ChallengeAccepted, Source, Target, Challenge));
         }
 
-        public static void NotifyChallengeRejected(long Target, long Challenge)
+        public static void NotifyChallengeRejected(long Source, long Target, long Challenge)
         {
             RepoFactory.GetProcessingQueue().PutQueueMessage(ProcessingQueue.MessageType.Notify, 
-                GetNotifyQueueMessageData(NotifyType.ChallengeRejected, null, Target, Challenge));
+                GetNotifyQueueMessageData(NotifyType.ChallengeRejected, Source, Target, Challenge));
         }
 
         public static void NotifyChallengeClaimed(long Source, long Target, long Challenge)
