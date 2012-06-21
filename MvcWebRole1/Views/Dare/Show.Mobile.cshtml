@@ -20,7 +20,7 @@
                 }
             }
 			
-			<div id="amount">$@Model.CurrentBid</div>
+			<div id="amount">$@Model.CurrentBid.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)</div>
 		</div>
 		
 		<div class="contentSection">

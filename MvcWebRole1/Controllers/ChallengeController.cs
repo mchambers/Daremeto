@@ -67,9 +67,25 @@ namespace DareyaAPI.Controllers
         }
 
         [HttpGet]
+        [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Public)]
         public List<Challenge> Featured(int StartAt = 0, int Limit = 10)
         {
             throw new NotImplementedException();
+        }
+
+        [HttpGet]
+        [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Public)]
+        public List<Challenge> Open(int StartAt = 0, int Limit = 10)
+        {
+            List<Challenge> chals = ChalRepo.GetOpen(StartAt, Limit).ToList<Challenge>();
+            List<Challenge> outChals = new List<Challenge>(chals.Count);
+
+            foreach (Challenge c in chals)
+            {
+                outChals.Add(PrepOutboundChallenge(c));
+            }
+
+            return outChals;
         }
 
         // GET /api/challenge
@@ -195,8 +211,11 @@ namespace DareyaAPI.Controllers
                 GetBillingProcessor((BillingSystem.BillingProcessorFactory.SupportedBillingProcessor)cust.BillingType);
 
             if (processor == null)
-                processor = BillingProcessorFactory.GetBillingProcessor(BillingProcessorFactory.SupportedBillingProcessor.Stripe);
-
+            {
+                // the customer doesn't have a valid billing provider. don't accept the bid.
+                throw new HttpResponseException(System.Net.HttpStatusCode.PaymentRequired);
+            }
+            
             decimal approximateFees = Billing.GetFeesForBounty(processor, value.Amount);
 
             ChalRepo.AddBidToChallenge(c, ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID, value.Amount, approximateFees);
@@ -214,6 +233,18 @@ namespace DareyaAPI.Controllers
                 throw new HttpResponseException("You have to specify a description.", System.Net.HttpStatusCode.InternalServerError);
             }
 
+            Customer cust = CustRepo.GetWithID(((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID);
+
+            IBillingProcessor processor = BillingSystem.BillingProcessorFactory.GetBillingProcessor((BillingSystem.BillingProcessorFactory.SupportedBillingProcessor)cust.BillingType);
+            if (processor == null)
+            {
+                // No billing processor exists to service this request. All challenges must originate from customers
+                // that have set up their billing. Therefore we must reject this request outright.
+
+                // let's be naughty and throw a "reserved for future use" HTTP status code.
+                throw new HttpResponseException(System.Net.HttpStatusCode.PaymentRequired);
+            }
+
             Trace.WriteLine("Creating a new challenge for customer " + ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID.ToString(), "ChallengeController::New");
 
             value.CustomerID = ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
@@ -221,13 +252,7 @@ namespace DareyaAPI.Controllers
             decimal firstBid = (decimal)value.CurrentBid;
             
             value.ID=ChalRepo.Add(value);
-
-            Customer cust=CustRepo.GetWithID(((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID);
-
-            IBillingProcessor processor = BillingSystem.BillingProcessorFactory.GetBillingProcessor((BillingSystem.BillingProcessorFactory.SupportedBillingProcessor)cust.BillingType);
-            if (processor == null)
-                processor = BillingSystem.BillingProcessorFactory.GetBillingProcessor(BillingSystem.BillingProcessorFactory.SupportedBillingProcessor.Stripe);
-
+                        
             decimal approxFees = Billing.GetFeesForBounty(processor, value.CurrentBid);
 
             Trace.WriteLine("Adding a bid of " + firstBid.ToString() + " to challenge ID " + value.ID.ToString(), "ChallengeController::New");

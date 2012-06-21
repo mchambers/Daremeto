@@ -38,6 +38,7 @@ namespace DareyaAPI.Filters
 
         public DYAuthorizationAttribute(DYAuthorizationRoles level, DYAuthorizationResourceType type, long ID)
         {
+            AuthLevel = level;
             AuthResource = type;
             AuthResourceID = ID;
         }
@@ -48,7 +49,8 @@ namespace DareyaAPI.Filters
 
             if (!HttpContext.Current.Request.Headers.AllKeys.Contains("DYAuthToken"))
             {
-                HandleUnauthorizedRequest(actionContext);
+                if(AuthLevel!=DYAuthorizationRoles.Public)
+                    HandleUnauthorizedRequest(actionContext);
             }
             else
             {

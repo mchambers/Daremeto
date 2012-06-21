@@ -11,7 +11,7 @@ namespace DareyaAPI.BillingSystem
 
         public enum SupportedBillingProcessor
         {
-            InHouse,
+            None,
             Stripe,
             Amazon,
             PayPalMerchant

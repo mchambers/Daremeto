@@ -26,6 +26,7 @@ namespace DareyaAPI.Models
 
             //context = client.GetDataServiceContext();
             context = new TableServiceContextV2(client.BaseUri.ToString(), client.Credentials);
+            context.IgnoreResourceNotFoundException = true;
         }
 
         private string DbCustKey(long CustomerID)
@@ -55,8 +56,11 @@ namespace DareyaAPI.Models
         public bool CustomerTookChallenge(long CustomerID, long ChallengeID)
         {
             ChallengeStatusDb b = (from e in context.CreateQuery<ChallengeStatusDb>(TableName) where e.PartitionKey == DbCustKey(CustomerID) && e.RowKey == DbChalKey(ChallengeID) select e).FirstOrDefault<ChallengeStatusDb>();
-            context.Detach(b);
-            if (b != null) return true;
+            if (b != null)
+            {
+                context.Detach(b);
+                return true;
+            }
             return false;
         }
 

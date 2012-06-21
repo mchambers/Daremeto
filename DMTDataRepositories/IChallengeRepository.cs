@@ -16,6 +16,8 @@ namespace DareyaAPI.Models
         int MoveChallengesToCustomer(long SourceCustomerID, long NewTargetCustomerID);
 
         IEnumerable<Challenge> GetNewest(int startAt, int amount);
+        IEnumerable<Challenge> GetOpen(int startAt, int amount);
+
         IEnumerable<Challenge> GetListForUser(long userID);
         IEnumerable<Challenge> GetListForUser(long userID, int status);
     }

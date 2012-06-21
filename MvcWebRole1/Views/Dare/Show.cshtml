@@ -59,7 +59,7 @@
 	
 	<div class="bounty"> 
 		
-		<h4>There's a bounty of</h4> <div class="amount">$@(Model.CurrentBid)</div> <p>from @bidderDescString</p>
+		<h4>There's a bounty of</h4> <div class="amount">$@(Model.CurrentBid.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture))</div> <p>from @bidderDescString</p>
 	
 	</div>
 	
@@ -88,7 +88,7 @@
         }
         else
         {
-            <p>Create a <em>dareme.to</em> account in seconds and take your shot at earning $@(Model.CurrentBid).</p>
+            <p>Create a <em>dareme.to</em> account in seconds and take your shot at earning $@(Model.CurrentBid.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)).</p>
             using (Html.BeginForm("Signup", "Onboard"))
             {
                 <input type="hidden" name="ChallengeID" value="@(Model.ID)" />

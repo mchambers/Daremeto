@@ -276,8 +276,8 @@ namespace DareyaAPI.Controllers
                 throw new HttpResponseException("No credentials were supplied -- a password are required.", System.Net.HttpStatusCode.InternalServerError);
             }
 
-            // force all customers onto Stripe for now.
-            newCustomer.BillingType = (int)BillingSystem.BillingProcessorFactory.SupportedBillingProcessor.Stripe;
+            //newCustomer.BillingType = (int)BillingSystem.BillingProcessorFactory.SupportedBillingProcessor.Stripe;
+            newCustomer.BillingType = (int)BillingSystem.BillingProcessorFactory.SupportedBillingProcessor.None;
 
             if (newCustomer.FirstName == null || newCustomer.FirstName.Equals("") || newCustomer.LastName == null || newCustomer.LastName.Equals(""))
                 throw new HttpResponseException("New customers must supply a first and last name.", System.Net.HttpStatusCode.InternalServerError);

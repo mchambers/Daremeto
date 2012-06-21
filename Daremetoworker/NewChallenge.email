@@ -6,6 +6,6 @@
 
 <h2>@(Model.Challenge.Description)</h2>
 
-<p>If you <a href="http://dareme.to/dare/show/@(Model.Challenge.ID)">take the dare</a> and show proof you did it, <big>you'll get $@(Model.Challenge.CurrentBid)</big>. Yep, money. Not credits or tokens or anything like that. Cash cash money. And if you want more, share the link and get your friends to ante up.</p>
+<p>If you <a href="http://dareme.to/dare/show/@(Model.Challenge.ID)">take the dare</a> and show proof you did it, <big>you'll get $@(Model.Challenge.CurrentBid.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture))</big>. Yep, money. Not credits or tokens or anything like that. Cash cash money. And if you want more, share the link and get your friends to ante up.</p>
 
 <p>To take the dare, head over to dareme.to and sign up. If you've already got dareme.to, just open it on your iPhone and Accept the dare.</p>

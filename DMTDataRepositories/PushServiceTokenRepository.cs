@@ -31,6 +31,7 @@ namespace DareyaAPI.Models
             context.AttachTo(TableName, d, null);
             context.UpdateObject(d);
             context.SaveChangesWithRetries();
+            context.Detach(d);
         }
 
         public List<PushServiceToken> TokensForCustomer(long CustomerID)
@@ -44,7 +45,7 @@ namespace DareyaAPI.Models
                 t.CustomerID = item.CustomerID;
                 t.Provider = item.Provider;
                 t.Token = item.Token;
-
+                context.Detach(item);
                 items.Add(t);
             }
 

@@ -110,5 +110,15 @@ namespace DareyaAPI.Models
                 return numAffected;
             }
         }
+        
+        public IEnumerable<Challenge> GetOpen(int startAt, int amount)
+        {
+            using (SqlConnection db = new SqlConnection(connStr))
+            {
+                db.Open();
+                var chals = db.Query<Challenge>("spChallengeGetOpen", new { StartAt = startAt, Amount = amount }, commandType: CommandType.StoredProcedure).AsEnumerable();
+                return chals;
+            }
+        }
     }
 }
