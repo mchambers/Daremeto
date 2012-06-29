@@ -25,6 +25,7 @@ namespace DareyaAPI.Models
             client.CreateTableIfNotExist(TableName);
 
             context = new TableServiceContextV2(client.BaseUri.ToString(), client.Credentials);
+            context.MergeOption = MergeOption.NoTracking;
         }
 
         private string DbPartitionForTaker(long ChallengeID, long CustomerID)
@@ -67,8 +68,15 @@ namespace DareyaAPI.Models
         public void Add(ChallengeStatusVote vote)
         {
             ChallengeStatusVoteDb d = VoteToDbVote(vote);
-            context.AttachTo(TableName, d, null);
-            context.SaveChangesWithRetries();
+            context.AddObject(TableName, d);
+            try
+            {
+                context.SaveChangesWithRetries();
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Trace.WriteLine("Status repo vote exception: Couldn't add vote " + e.ToString());
+            }
         }
 
         public int GetCount(ChallengeStatus status)

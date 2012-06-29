@@ -1,0 +1,9 @@
+﻿@model DaremetoWorker.EmailNotifyModel
+
+<h1>@(Model.TargetCustomer.FirstName) thinks they've completed your dare.</h1>
+
+<p>Supposedly, they've collected enough photos and other evidence to prove they've:</p>
+
+<h2>@(Model.Challenge.Description)</h2>
+
+<p>Call us skeptics if you want, but we think you should take a look for yourself. Find this dare in your Dash and look through the evidence. From there you can either Agree or Disagree.</p>

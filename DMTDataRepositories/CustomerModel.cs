@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace DareyaAPI.Models
 {
@@ -49,10 +51,13 @@ namespace DareyaAPI.Models
         public string State { get; set; }
         public string ZIPCode { get; set; }
 
+        [JsonIgnoreAttribute]
         public string FacebookAccessToken { get; set; }
+        [JsonIgnoreAttribute]
         public string FacebookExpires { get; set; }
+        [JsonIgnoreAttribute]
         public string FacebookUserID { get; set; }
-
+        [JsonIgnoreAttribute]
         public string Password { get; set; }
 
         public int BillingType { get; set; }
@@ -77,24 +82,6 @@ namespace DareyaAPI.Models
 
         public Customer()
         {
-            FirstName = "";
-            LastName = "";
-            EmailAddress = "";
-            Address = "";
-            Address2 = "";
-            City = "";
-            State = "";
-            ZIPCode = "";
-            FacebookAccessToken = "";
-            FacebookExpires = "";
-            FacebookUserID = "";
-            Password = "";
-            BillingType = 0;
-            BillingID = "";
-            Type = 0;
-            AvatarURL = "";
-            ForeignUserType = 0;
-            ForeignUserID = "";
         }
     }
 }

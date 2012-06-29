@@ -42,8 +42,6 @@ namespace DareyaAPI.Models
         public int Status { get; set; }
         public decimal ComputedFees { get; set; }
         public long PendingVoteCustomerID { get; set; }
-        public Challenge Challenge { get; set; }
-
         public ChallengeStatus VotePendingStatus { get; set; }
     }
     /*

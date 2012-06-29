@@ -36,7 +36,36 @@ namespace DareyaAPI.Models
         private DynamicParameters CustToDynParm(Customer c, bool inclID=false)
         {
             var p = new DynamicParameters();
-            
+
+            if (c.FirstName == null)
+                c.FirstName = "";
+            if (c.LastName == null)
+                c.LastName = "";
+            if (c.EmailAddress == null)
+                c.EmailAddress = "";
+            if (c.Address == null)
+                c.Address = "";
+            if (c.Address2 == null)
+                c.Address2 = "";
+            if (c.City == null)
+                c.City = "";
+            if (c.State == null)
+                c.State = "";
+            if (c.ZIPCode == null)
+                c.ZIPCode = "";
+            if (c.FacebookAccessToken == null)
+                c.FacebookAccessToken = "";
+            if (c.FacebookExpires == null)
+                c.FacebookExpires = "";
+            if (c.FacebookUserID == null)
+                c.FacebookUserID = "";
+            if (c.Password == null)
+                c.Password = "";
+            if (c.BillingID == null)
+                c.BillingID = "";
+            if (c.AvatarURL == null)
+                c.AvatarURL = "";
+
             p.Add("@FirstName", c.FirstName, dbType: DbType.String, direction: ParameterDirection.Input);
             p.Add("@LastName", c.LastName, dbType: DbType.String, direction: ParameterDirection.Input);
             p.Add("@EmailAddress", c.EmailAddress, dbType: DbType.String, direction: ParameterDirection.Input);

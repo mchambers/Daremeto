@@ -27,11 +27,11 @@ C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWo
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\bin\Debug\Stripe.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\bin\Debug\RestSharp.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\bin\Debug\Newtonsoft.Json.dll
-C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\bin\Debug\Newtonsoft.Json.pdb
-C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\bin\Debug\Newtonsoft.Json.xml
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\bin\Debug\NewChallenge.email
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\bin\Debug\SendGridMail.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\bin\Debug\CodeScales.Http.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\bin\Debug\ChallengeAccepted.email
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\bin\Debug\ChallengeAwardedToYou.email
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\bin\Debug\ChallengeClaimed.email
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\bin\Debug\ChallengeBacked.email
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\bin\Debug\ChallengeRejected.email

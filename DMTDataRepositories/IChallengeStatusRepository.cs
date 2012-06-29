@@ -18,6 +18,9 @@ namespace DareyaAPI.Models
         ChallengeStatus GetNextVotePendingStatusForChallenge(long ChallengeID);
         void MoveStatusesToNewCustomer(long OriginalCustomerID, long NewCustomerID);
 
+        void ClearAll(long ChallengeID);
+        void MoveToLocker(long CustomerID, long ChallengeID);
+
         bool CustomerTookChallenge(long CustomerID, long ChallengeID);
     }
 }

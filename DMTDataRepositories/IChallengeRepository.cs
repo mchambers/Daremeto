@@ -20,5 +20,7 @@ namespace DareyaAPI.Models
 
         IEnumerable<Challenge> GetListForUser(long userID);
         IEnumerable<Challenge> GetListForUser(long userID, int status);
+
+        IEnumerable<Challenge> GetOpenForCustomer(long CustomerID);
     }
 }

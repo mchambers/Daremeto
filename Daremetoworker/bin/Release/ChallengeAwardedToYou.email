@@ -1,0 +1,13 @@
+﻿@model DaremetoWorker.EmailNotifyModel
+
+<h1>Look at you, @(Model.TargetCustomer.FirstName). You did it.</h1>
+
+<p><strong>Welcome to the Hall of Champions, my friend.</strong> Consensus has been reached and it's agreed that you've successfully completed the dare:</p>
+
+<h2>@(Model.Challenge.Description)</h2>
+
+<p>Your reward? Civilizations in the far-flung future will sing songs of this moment. Marble statues will be erected, and your face will be carved into them. Suburban middle schools will bear your name.</p>
+
+<p>Also, <big><big>you've made $@(Model.Challenge.CurrentBid.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)).</big></big></p>
+
+<p>The money will be placed into your account shortly, after which you can most likely withdraw it. You can also use your account balance to make or back other dares. But hey, it's your money. Do what you want.</p>

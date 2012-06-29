@@ -10,7 +10,7 @@ namespace DareyaAPI.BillingSystem
     {
         public static decimal ComputeVigForAmount(decimal Amount)
         {
-            return Amount * 0.05m;
+            return Amount * 0.10m;
         }
 
         public static decimal GetFeesForBounty(IBillingProcessor processor, decimal Bounty)

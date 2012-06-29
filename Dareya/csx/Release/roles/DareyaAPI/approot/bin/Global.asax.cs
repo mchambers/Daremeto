@@ -21,6 +21,7 @@ namespace DareyaAPI
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            //filters.Add(new Filters.DaremetoResponseError());
         }
 
         public static void RegisterRoutes(RouteCollection routes)

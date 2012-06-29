@@ -1,0 +1,10 @@
+﻿@model DaremetoWorker.EmailNotifyModel
+
+<h1>Hey @(Model.SourceCustomer.FirstName), @(Model.TargetCustomer.FirstName) just took your dare.</h1>
+
+<p>Now it's on them to prove they've actually done it. Keep an eye on the dare in your Dash and you'll see when they think they've completed it.</p>
+
+<p>As a reminder, this is what they've gotta do:</p>
+
+<h2>@(Model.Challenge.Description)</h2>
+

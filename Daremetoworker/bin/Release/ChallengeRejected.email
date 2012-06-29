@@ -1,0 +1,13 @@
+﻿@model DaremetoWorker.EmailNotifyModel
+
+<h1>@(Model.TargetCustomer.FirstName) just rejected your dare.</h1>
+
+<p>It brings shame upon their house. Upon their ancestors before them. If we had a locker, we'd most likely stuff @(Model.TargetCustomer.FirstName) inside of it.</p>
+
+<p><em>(But that's us. We over-react to stuff sometimes.)</em></p>
+
+<p>Maybe the cash wasn't right. Everybody has their price. Feel free to dare them again and up the bounty. Maybe get some others to kick in a few bucks. With this economy, @(Model.TargetCustomer.FirstName) could probably use a few bucks anyway.</p>
+
+<p>As a reminder, this is what they've so shamelessly wussed out of doing:</p>
+
+<h2>@(Model.Challenge.Description)</h2>

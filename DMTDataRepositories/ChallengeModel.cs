@@ -44,13 +44,14 @@ namespace DareyaAPI.Models
         public int Anonymous { get; set; }
         public long CustomerID { get; set; }
         public long TargetCustomerID { get; set; }
-        public List<ChallengeBid> Bids { get; set; }
         public ChallengeStatus Status { get; set; }
         public Customer Customer { get; set; }
         public Customer TargetCustomer { get; set; }
         public int NumberOfTakers { get; set; }
         public int NumberOfBidders { get; set; }
         public int Disposition { get; set; }
+        public ChallengeBid Bid { get; set; }
+        public List<ChallengeBid> Bids { get; set; }
 
         public Challenge()
         {
@@ -65,7 +66,6 @@ namespace DareyaAPI.Models
             CustomerID = 0;
             TargetCustomerID = 0;
             NumberOfTakers = 0;
-            Bids = null;
             Status = null;
             Customer = null;
         }

@@ -49,7 +49,7 @@ namespace DareyaAPI.Controllers
 
             int yesVotes = VoteRepo.GetYesVotes(s);
             if (yesVotes > (BidRepo.GetBidCountForChallenge(status.ChallengeID) * 0.33))
-            {
+            { 
                 BidRepo.UpdateStatusForBidsOnChallenge(s.ChallengeID, ChallengeBid.BidStatusCodes.Accepted);
 
                 s.Status = (int)ChallengeStatus.StatusCodes.Completed;
@@ -151,26 +151,28 @@ namespace DareyaAPI.Controllers
         public void Accept(ChallengeStatus status)
         {
             Challenge c = ChalRepo.Get(status.ChallengeID);
-            ChallengeStatus s = StatusRepo.Get(((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID, status.ChallengeID);
-
-            if (s == null)
+            //ChallengeStatus s = StatusRepo.Get(((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID, status.ChallengeID);
+            
+            if (status.CustomerID != c.TargetCustomerID)
                 throw new HttpResponseException(System.Net.HttpStatusCode.NotFound);
 
             if (!Security.CanManipulateContent(c))
                 throw new HttpResponseException(System.Net.HttpStatusCode.Forbidden);
 
-            s.Status = (int)ChallengeStatus.StatusCodes.Accepted;
-
-            StatusRepo.Update(s);
+            ChallengeStatus newStatus = new ChallengeStatus();
+            newStatus.ChallengeID = c.ID;
+            newStatus.ChallengeOriginatorCustomerID = c.CustomerID;
+            newStatus.CustomerID = ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
+            newStatus.Status = (int)ChallengeStatus.StatusCodes.Accepted;
 
             // add a friendship between these folk if one doesn't exist.
-            if (!FriendRepo.CustomersAreFriends(s.ChallengeOriginatorCustomerID, ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID))
-                FriendRepo.Add(s.ChallengeOriginatorCustomerID, ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID);
+            if (!FriendRepo.CustomersAreFriends(c.CustomerID, ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID))
+                FriendRepo.Add(c.CustomerID, ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID);
 
             c.State = (int)Challenge.ChallengeState.Accepted;
             ChalRepo.Update(c);
 
-            CustomerNotifier.NotifyChallengeAccepted(s.ChallengeOriginatorCustomerID, s.CustomerID, c.ID);
+            CustomerNotifier.NotifyChallengeAccepted(c.CustomerID, c.TargetCustomerID, c.ID);
         }
 
         // Reject is specifically for when a Challenge has been sent directly to you
@@ -183,24 +185,15 @@ namespace DareyaAPI.Controllers
             if (c.Privacy != (int)Challenge.ChallengePrivacy.SinglePerson || c.TargetCustomerID != ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID)
                 throw new HttpResponseException(System.Net.HttpStatusCode.NotImplemented);
 
-            ChallengeStatus s = StatusRepo.Get(status.CustomerID, status.ChallengeID);
-
-            if (s == null)
-                throw new HttpResponseException(System.Net.HttpStatusCode.NotFound);
-
             if (!Security.CanManipulateContent(c))
                 throw new HttpResponseException(System.Net.HttpStatusCode.Forbidden);
-
-            s.Status = (int)ChallengeStatus.StatusCodes.TargetRejected;
-
-            StatusRepo.Update(s);
 
             // the recipient has rejected this challenge. it dies here.
             // the creator will have to make a new one to re-issue it.
             c.State = (int)Challenge.ChallengeState.Rejected;
             ChalRepo.Update(c);
 
-            CustomerNotifier.NotifyChallengeRejected(s.ChallengeOriginatorCustomerID, s.CustomerID, s.ChallengeID);
+            CustomerNotifier.NotifyChallengeRejected(c.CustomerID, c.TargetCustomerID, c.ID);
         }
     }
 }

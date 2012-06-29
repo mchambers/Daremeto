@@ -169,5 +169,37 @@ namespace DareyaAPI.Models
                 Add(s);
             }
         }
+
+        public void ClearAll(long ChallengeID)
+        {
+            TableServiceContextV2 clearChalContext = new TableServiceContextV2(client.BaseUri.ToString(), client.Credentials);
+            TableServiceContextV2 clearCustContext = new TableServiceContextV2(client.BaseUri.ToString(), client.Credentials);
+
+            CloudTableQuery<ChallengeStatusDb> c = (from e in clearChalContext.CreateQuery<ChallengeStatusDb>(TableName) where e.PartitionKey == DbChalKey(ChallengeID) select e).AsTableServiceQuery<ChallengeStatusDb>();
+
+            List<ChallengeStatusDb> custDeletes = new List<ChallengeStatusDb>();
+
+            foreach (ChallengeStatusDb d in c)
+            {
+                custDeletes.Add(new ChallengeStatusDb { PartitionKey = DbCustKey(d.CustomerID), RowKey = DbChalKey(d.ChallengeID) });
+                clearChalContext.DeleteObject(d);
+            }
+            clearChalContext.SaveChangesWithRetries(SaveChangesOptions.Batch);
+            
+            foreach (ChallengeStatusDb d in custDeletes)
+            {
+                clearCustContext.AttachTo(TableName, d);
+                clearCustContext.DeleteObject(d);
+            }
+            clearCustContext.SaveChangesWithRetries(SaveChangesOptions.Batch);
+
+            clearChalContext = null;
+            clearCustContext = null;
+        }
+
+        public void MoveToLocker(long CustomerID, long ChallengeID)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

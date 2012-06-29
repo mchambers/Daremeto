@@ -120,5 +120,15 @@ namespace DareyaAPI.Models
                 return chals;
             }
         }
+
+        public IEnumerable<Challenge> GetOpenForCustomer(long CustomerID)
+        {
+            using (SqlConnection db = new SqlConnection(connStr))
+            {
+                db.Open();
+                var chals = db.Query<Challenge>("spChallengeGetOpenForCustomer", new { CustomerID = CustomerID }, commandType: CommandType.StoredProcedure).AsEnumerable();
+                return chals;
+            }
+        }
     }
 }

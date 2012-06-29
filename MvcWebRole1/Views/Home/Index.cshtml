@@ -1,37 +1,38 @@
 ﻿@{
     Layout = null;
 }
-
 <!DOCTYPE html>
-
 <html>
+
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>dareme.to</title>
-
-    <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css' />
-    <link href="http://fonts.googleapis.com/css?family=Maven+Pro:700" rel="stylesheet" type="text/css" />
-
-    <style type="text/css">
-        #outer { margin-top: 130px; margin-left: auto; margin-right: auto; }
-        #header { font-family: 'Pacifico', Sans-Serif; font-size:36px; text-align: center; }
-        #content { font-family:  'Maven Pro', Serif; font-size: 28px; text-align: center; }
-        #copyright { font-family: 'Helvetica', Sans-Serif; font-size: 12px; text-align: center; color: #ccc; margin-top: 170px; }
-    </style>
+	
+	<title>dareme.to</title>
+	
+	<style type="text/css">
+	body { background-image: url('/content/images/bkg.png'); background-position: fixed; }
+	#content { text-align: center; margin-top: 100px; }
+	#content h1 { color: #fff; font-family: 'Pacifico', sans-serif; font-size: 82px; line-height: 40px; }
+	#content p { color: #fff; font-family: 'Maven Pro', sans-serif; font-size: 24px; }
+	#copyright { margin-top: 70px; color: #fff; font-family: 'Maven Pro', sans-serif; font-size: 12px; text-align: center; }
+	</style>
+	
+	<link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css' />
+	<link href="http://fonts.googleapis.com/css?family=Maven+Pro:700" rel="stylesheet" type="text/css" />
+	
 </head>
+
 <body>
-    <div id="outer">
-    
-    <div id="header">dareme.to</div>
-        
-        <div id="content">
-            Be daring. Get paid.
-        </div>
 
-    </div>
-
-    <div id="copyright">
-        &copy; 2012 <a href="http://www.bigpretzel.com">Big Pretzel</a>.
-    </div>
+	<div id="content">
+		<img style="width: 256px; height: 256px;" src="~/content/images/icon_512.png" alt="dareme.to" title="dareme.to" />
+		
+		<h1>dareme.to</h1>
+		<p>Be daring. Get paid.</p>
+	</div>
+	
+	<div id="copyright">
+		&copy; 2012 Big Pretzel, LLC. Made in Los Angeles.
+	</div>
 </body>
+
 </html>
