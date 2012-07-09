@@ -242,6 +242,8 @@ namespace DareyaAPI.Controllers
             decimal approximateFees = Billing.GetFeesForBounty(processor, value.Amount);
 
             ChalRepo.AddBidToChallenge(c, ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID, value.Amount, approximateFees);
+
+            CustomerNotifier.NotifyChallengeBacked(((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID, c.CustomerID, c.ID);
         }
 
         // POST /api/challenge
@@ -383,7 +385,16 @@ namespace DareyaAPI.Controllers
 
             if (c.CustomerID == ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID)
                 throw new DaremetoResponseException("This Challenge originated from the current user; you can't take your own dare", System.Net.HttpStatusCode.Conflict);
-            
+
+            if (c.TargetCustomerID == ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID)
+            {
+                // if this dare was sent directly to the customer,
+                // we can go ahead and mark it Accepted since it's no
+                // longer open for additional takers.
+                c.State = (int)Challenge.ChallengeState.Accepted;
+                ChalRepo.Update(c);
+            }
+
             ChallengeStatus s = new ChallengeStatus();
             s.ChallengeID = c.ID;
             s.ChallengeOriginatorCustomerID = c.CustomerID;

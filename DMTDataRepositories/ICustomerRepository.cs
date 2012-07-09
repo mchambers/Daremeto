@@ -15,6 +15,8 @@ namespace DareyaAPI.Models
         Customer GetWithForeignUserID(string ID, Customer.ForeignUserTypes type);
         long GetIDForForeignUserID(string ID, Customer.ForeignUserTypes type);
         void AddForeignNetworkForCustomer(long ID, string ForeignID, Customer.ForeignUserTypes type);
+        void ClearForeignNetworkLinks(string ForeignID, Customer.ForeignUserTypes type);
+        void RemoveForeignNetworkForCustomer(long ID, string ForeignID, Customer.ForeignUserTypes type);
         void Remove(long CustomerID);
     }
 }

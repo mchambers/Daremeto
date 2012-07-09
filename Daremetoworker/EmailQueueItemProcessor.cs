@@ -31,7 +31,7 @@ namespace DaremetoWorker
             return new RequestBuilder { NetworkCredential = new System.Net.NetworkCredential("m-3W3fEkS52DUwrGMhqQ-w", "-hOx6911T06Kt9G5Ff7BrA") };
         }
         
-        private void PushToCustomer(long CustomerID, string Text)
+        private void PushToCustomer(long CustomerID, string Text, long ChallengeID=0)
         {
             IPushServiceTokenRepository tokenRepo = RepoFactory.GetPushServiceTokenRepo();
             
@@ -56,9 +56,16 @@ namespace DaremetoWorker
 
             Trace.WriteLine("PUSH: Pushing \"" + Text + "\" to " + pushTokens.Count.ToString()+" clients - "+pushTokens.ToString());
 
+            Dictionary<string, string> customData=null;
+
+            if (ChallengeID > 0)
+            {
+                customData = new Dictionary<string, string>();
+                customData.Add("dareid", ChallengeID.ToString());
+            }
             try
             {
-                PushNotification notification = new PushNotification { DeviceTokens = pushTokens, Payload = payload };
+                PushNotification notification = new PushNotification { DeviceTokens = pushTokens, Payload = payload, CustomData=customData };
                 service.Execute(notification);
             }
             catch (Exception e)
@@ -75,18 +82,18 @@ namespace DaremetoWorker
             {
                 case CustomerNotifier.NotifyType.ChallengeAccepted:         // source, target
                     c = RepoFactory.GetCustomerRepo().GetWithID(TargetCustomerID);
-                    PushToCustomer(SourceCustomerID,  c.FirstName+" has accepted your dare!");
+                    PushToCustomer(SourceCustomerID,  c.FirstName+" has taken your dare!", ChallengeID);
                     break;
                 case CustomerNotifier.NotifyType.ChallengeAwardedToYou:     // target
-                    PushToCustomer(TargetCustomerID, "A dare you've attempted has been awarded to you!");
+                    PushToCustomer(TargetCustomerID, "A dare you've attempted has been awarded to you!", ChallengeID);
                     break;
                 case CustomerNotifier.NotifyType.ChallengeBacked:           // source, target
-                    c = RepoFactory.GetCustomerRepo().GetWithID(TargetCustomerID);
-                    PushToCustomer(SourceCustomerID, c.FirstName+" has backed one of your dares!");
+                    c = RepoFactory.GetCustomerRepo().GetWithID(SourceCustomerID);
+                    PushToCustomer(TargetCustomerID, c.FirstName+" has backed one of your dares!", ChallengeID);
                     break;
                 case CustomerNotifier.NotifyType.ChallengeClaimed:          // source, target
                     c = RepoFactory.GetCustomerRepo().GetWithID(TargetCustomerID);
-                    PushToCustomer(SourceCustomerID, c.FirstName+" claims to have completed a dare you issued");
+                    PushToCustomer(SourceCustomerID, c.FirstName+" claims to have completed a dare you issued", ChallengeID);
                     break;
                 case CustomerNotifier.NotifyType.ChallengeRejected:         // target
                     
@@ -99,7 +106,7 @@ namespace DaremetoWorker
                     break;
                 case CustomerNotifier.NotifyType.NewChallenge:              // source, target
                     c = RepoFactory.GetCustomerRepo().GetWithID(SourceCustomerID);
-                    PushToCustomer(TargetCustomerID, c.FirstName+" has dared you to do something!");
+                    PushToCustomer(TargetCustomerID, c.FirstName+" has dared you to do something!", ChallengeID);
                     break;
             }
         }

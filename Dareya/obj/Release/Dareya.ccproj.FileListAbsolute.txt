@@ -199,6 +199,7 @@ C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Content\bootstrap\img\glyphicons-halflings.png
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Content\bootstrap\js\bootstrap.js
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Content\bootstrap\js\bootstrap.min.js
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Content\dmt.css
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Content\images\86-camera.png
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Content\images\86-camera@2x.png
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Content\images\ajax-loader.gif
@@ -253,6 +254,16 @@ C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Content\images\tabBarBg@2x.png
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Content\images\topPiece.png
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Content\images\twitterSmallIcon@2x.png
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Content\img\bkg.png
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Content\img\blackbar_bkg.png
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Content\img\box_bkg_full.png
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Content\img\feedItemBg.png
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Content\img\glyphicons-halflings-white.png
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Content\img\glyphicons-halflings.png
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Content\img\navbg.png
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Content\img\newChallengeSm.png
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Content\img\sectionHeader.png
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Content\img\tag_bkg.png
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Content\jquery.mobile-1.1.0.css
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Content\jquery.mobile-1.1.0.min.css
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Content\jquery.mobile.structure-1.1.0.css

@@ -147,6 +147,22 @@ namespace DareyaAPI.Models
             return this.GetWithID(this.GetIDForForeignUserID(ID, type));
         }
 
+        public void RemoveForeignNetworkForCustomer(long ID, string ForeignID, Customer.ForeignUserTypes type)
+        {
+            CustomerForeignNetworkConnection f = new CustomerForeignNetworkConnection { CustomerID = ID, UserID = ForeignID, Type = (int)type };
+
+            CustomerForeignNetworkConnectionDb fDB1 = new CustomerForeignNetworkConnectionDb(f, true);
+            CustomerForeignNetworkConnectionDb fDB2 = new CustomerForeignNetworkConnectionDb(f, false);
+
+            context.AttachTo(TableName, fDB1);
+            context.AttachTo(TableName, fDB2);
+
+            context.DeleteObject(fDB1);
+            context.DeleteObject(fDB2);
+
+            context.SaveChangesWithRetries();
+        }
+
         public void AddForeignNetworkForCustomer(long ID, string ForeignID, Customer.ForeignUserTypes type)
         {
             CustomerForeignNetworkConnection f = new CustomerForeignNetworkConnection { CustomerID = ID, UserID = ForeignID, Type = (int)type };
@@ -199,5 +215,43 @@ namespace DareyaAPI.Models
                 return 0;
             }
         }
+
+        public void ClearForeignNetworkLinks(string ForeignID, Customer.ForeignUserTypes type)
+        {
+            try
+            {
+                TableServiceContextV2 clearContext = new TableServiceContextV2(client.BaseUri.ToString(), client.Credentials);
+
+                string partitionKey = ((int)type).ToString() + "+" + ForeignID;
+
+                var f = (from e in clearContext.CreateQuery<CustomerForeignNetworkConnectionDb>(TableName) where e.PartitionKey == partitionKey select e).AsTableServiceQuery();
+
+                List<string> custPartitions = new List<string>();
+
+                foreach (CustomerForeignNetworkConnectionDb d in f)
+                {
+                    custPartitions.Add("Cust" + d.CustomerID.ToString());
+                    clearContext.DeleteObject(d);
+                }
+
+                clearContext.SaveChangesWithRetries(SaveChangesOptions.Batch);
+
+                foreach (string s in custPartitions)
+                {
+                    var c = (from e in context.CreateQuery<CustomerForeignNetworkConnectionDb>(TableName) where e.PartitionKey == s && e.RowKey == partitionKey select e).FirstOrDefault();
+                    clearContext.DeleteObject(c);
+                    clearContext.SaveChangesWithRetries();
+                }
+
+                clearContext = null;
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Trace.WriteLine("FOREIGN NETWORK EXCEPTION: " + e.ToString());
+            }
+        }
+
+
+        
     }
 }

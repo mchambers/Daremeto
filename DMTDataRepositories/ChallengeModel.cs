@@ -52,6 +52,8 @@ namespace DareyaAPI.Models
         public int Disposition { get; set; }
         public ChallengeBid Bid { get; set; }
         public List<ChallengeBid> Bids { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime Expires { get; set; }
 
         public Challenge()
         {

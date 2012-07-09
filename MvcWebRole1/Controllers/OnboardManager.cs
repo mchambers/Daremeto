@@ -27,6 +27,12 @@ namespace DareyaAPI.Controllers
             ICustomerRepository custRepo=RepoFactory.GetCustomerRepo();
             OnboardResult res = new OnboardResult();
 
+            if (type == Customer.ForeignUserTypes.Twitter)
+            {
+                if (!handle.StartsWith("@"))
+                    handle = "@" + handle;
+            }
+
             Customer c = custRepo.GetWithForeignUserID(handle, type);
             if (c != null)
             {
@@ -38,6 +44,7 @@ namespace DareyaAPI.Controllers
 
                 RepoFactory.GetChallengeRepo().MoveChallengesToCustomer(c.ID, custToLink.ID);
                 custRepo.Remove(c.ID);
+                custRepo.RemoveForeignNetworkForCustomer(c.ID, handle, type);
             }
 
             custRepo.AddForeignNetworkForCustomer(custToLink.ID, handle, type);

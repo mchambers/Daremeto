@@ -35,37 +35,45 @@
     }
 }
 
-<div class="row">
-<div class="span8">
-	
-	<div class="alert alert-info">
-		<h3>@(targetFirstName) was dared through <em>dareme.to</em>, an iPhone app that lets you motivate your friends to do things with cash. Check out dareme.to on the iTunes App Store!</h3>
+	<div id="left">
+		<div class="sectionHeader">Latest Dares</div>
+		
 	</div>
+
+<div id="content">
+	<div class="sectionHeader">@{if (Model.TargetCustomer != null)
+                              {
+                                  @("This dare is open for " + Model.TargetCustomer.FirstName)   
+                              }
+                              else
+                              {
+                                  @("This dare is open for anyone")
+                              }
+                              }</div>
 	
-    @{
+	<div id="top">
+		<img id="avatar" src="@Model.Customer.AvatarURL" />
+		<div id="bountycallout">@{
         if(plural)
         {
-            <h2>@(bidderDescString) dares <strong>@(targetFirstName)</strong> to @(Model.Description.Trim()).</h2>
+            @(bidderDescString + " has put up")
         }
         else
         {
-            <h2>@(bidderDescString) dare <strong>@(targetFirstName)</strong> to @(Model.Description.Trim()).</h2>
+            @(bidderDescString + " have put up")
         }
-    }
-
-</div>
-
-<div class="span4">
-	
-	<div class="bounty"> 
-		
-		<h4>There's a bounty of</h4> <div class="amount">$@(Model.CurrentBid.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture))</div> <p>from @bidderDescString</p>
-	
+      }</div>
+		<div id="bounty">$@(Model.CurrentBid.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture))</div>
 	</div>
 	
+	<div id="darecontainer">
+		<p id="daretext">
+        @(Model.Description)
+	    </p>
+	</div>
+
+    
 	<div class="sectionHeader">Ready to take this dare?</div>
-	
-             <div class="section">
 
     @{
         if (Model.TargetCustomer != null)
@@ -106,8 +114,7 @@
             }
         }
         }
-    </div>
-</div>
-
 
 </div>
+
+	

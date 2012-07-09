@@ -57,7 +57,7 @@ namespace DareyaAPI.Models
         public string FacebookExpires { get; set; }
         [JsonIgnoreAttribute]
         public string FacebookUserID { get; set; }
-        [JsonIgnoreAttribute]
+        
         public string Password { get; set; }
 
         public int BillingType { get; set; }

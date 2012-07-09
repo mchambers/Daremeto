@@ -30,7 +30,7 @@ namespace DareyaAPI.BillingSystem
                         _processors.Add(processor, new StripeBillingProcessor());
                         break;
                     default:
-                        throw new Exception("No billing processor exists for the specified type.");
+                        return null;
                 }
             }
 

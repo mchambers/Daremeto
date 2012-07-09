@@ -10,6 +10,15 @@ namespace DareyaAPI.Controllers
 {
     public class CustomerController : ApiController
     {
+        public class CustomerWithdrawRequest
+        {
+            public string Address { get; set; }
+            public string Address2 { get; set; }
+            public string City { get; set; }
+            public string State { get; set; }
+            public string ZIPCode { get; set; }
+        }
+
         public class CustomerSignupResult
         {
             public enum ResultCode
@@ -60,17 +69,24 @@ namespace DareyaAPI.Controllers
                 case Security.Audience.Anybody:
                     filtered.FirstName = c.FirstName;
                     filtered.LastName = c.LastName;
+                    filtered.AvatarURL = c.AvatarURL;
+                    filtered.ID = c.ID;
                     break;
                 case Security.Audience.Friends:
                     filtered.FirstName = c.FirstName;
                     filtered.LastName = c.LastName;
+                    filtered.AvatarURL = c.AvatarURL;
+                    filtered.ID = c.ID;
                     break;
                 case Security.Audience.Owner:
                     filtered = c;
+                    filtered.Password = null;
                     break;
                 case Security.Audience.Users:
                     filtered.FirstName = c.FirstName;
                     filtered.LastName = c.LastName;
+                    filtered.AvatarURL = c.AvatarURL;
+                    filtered.ID = c.ID;
                     break;
             }
 
@@ -94,10 +110,9 @@ namespace DareyaAPI.Controllers
 
         [HttpPost]
         [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Users)]
-        public void RequestWithdraw(long id)
+        public void RequestWithdraw(CustomerWithdrawRequest request)
         {
-            if (id != ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID)
-                throw new HttpResponseException(System.Net.HttpStatusCode.Forbidden);
+            long id=((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID;
 
 
         }

@@ -43,6 +43,7 @@ namespace DaremetoWorker
                     }
                     catch (Exception ex)
                     {
+                        Trace.WriteLine("EXCEPTION in worker: " + ex.ToString());
                     }
                     
                     item = queue.GetNextMessage();

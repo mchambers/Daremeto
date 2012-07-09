@@ -60,6 +60,11 @@ namespace DareyaAPI
             config.Formatters.Add(new JsonNetFormatter(serializerSettings));
         }
 
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+            HttpContext.Current.Response.AddHeader("Access-Control-Allow-Origin", "http://daremeto.azurewebsites.net");
+        }
+
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();

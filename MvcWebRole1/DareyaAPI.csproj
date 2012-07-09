@@ -204,6 +204,7 @@
     <Content Include="Content\bootstrap\img\glyphicons-halflings.png" />
     <Content Include="Content\bootstrap\js\bootstrap.js" />
     <Content Include="Content\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\dmt.css" />
     <Content Include="Content\images\86-camera%402x.png" />
     <Content Include="Content\images\86-camera.png" />
     <Content Include="Content\images\ajax-loader.gif" />
@@ -258,6 +259,16 @@
     <Content Include="Content\images\tabBarBg.png" />
     <Content Include="Content\images\topPiece.png" />
     <Content Include="Content\images\twitterSmallIcon%402x.png" />
+    <Content Include="Content\img\bkg.png" />
+    <Content Include="Content\img\blackbar_bkg.png" />
+    <Content Include="Content\img\box_bkg_full.png" />
+    <Content Include="Content\img\feedItemBg.png" />
+    <Content Include="Content\img\glyphicons-halflings-white.png" />
+    <Content Include="Content\img\glyphicons-halflings.png" />
+    <Content Include="Content\img\navbg.png" />
+    <Content Include="Content\img\newChallengeSm.png" />
+    <Content Include="Content\img\sectionHeader.png" />
+    <Content Include="Content\img\tag_bkg.png" />
     <Content Include="Content\jquery.mobile-1.1.0.css" />
     <Content Include="Content\jquery.mobile-1.1.0.min.css" />
     <Content Include="Content\jquery.mobile.structure-1.1.0.css" />
