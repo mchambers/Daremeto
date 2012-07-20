@@ -37,7 +37,7 @@ namespace DareyaAPI.Controllers
 
             ChallengeBid bid = BidRepo.CustomerDidBidOnChallenge(((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID, s.ChallengeID);
             if (bid==null)
-                throw new HttpResponseException("You can't deny a claim on a challenge you don't have a stake in.", System.Net.HttpStatusCode.Forbidden);
+                throw new HttpResponseException("You can't accept a claim on a challenge you don't have a stake in.", System.Net.HttpStatusCode.Forbidden);
 
             ChallengeStatusVote vote = new ChallengeStatusVote();
             vote.ChallengeID = s.ChallengeID;
@@ -49,7 +49,12 @@ namespace DareyaAPI.Controllers
 
             int yesVotes = VoteRepo.GetYesVotes(s);
             if (yesVotes > (BidRepo.GetBidCountForChallenge(status.ChallengeID) * 0.33))
-            { 
+            {
+                Challenge chal = ChalRepo.Get(s.ChallengeID);
+                chal.State = (int)Challenge.ChallengeState.Completed;
+                chal.TargetCustomerID = status.CustomerID;
+                ChalRepo.Update(chal);
+
                 BidRepo.UpdateStatusForBidsOnChallenge(s.ChallengeID, ChallengeBid.BidStatusCodes.Accepted);
 
                 s.Status = (int)ChallengeStatus.StatusCodes.Completed;

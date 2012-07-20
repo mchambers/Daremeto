@@ -84,9 +84,9 @@ C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\Newtonsoft.Json.pdb
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\Newtonsoft.Json.xml
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\RestSharp.dll
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\RestSharp.xml
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\SendGridMail.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\Stripe.dll
-C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\Stripe.net.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\System.Json.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\System.Json.xml
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\System.Net.Http.dll
@@ -124,6 +124,9 @@ C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\System.Web.WebPages.xml
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\TweetSharp.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\TweetSharp.pdb
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\Twilio.Api.dll
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\Twilio.Api.pdb
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\Twilio.Api.xml
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\UrbanBlimp.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DareyaAPI\bin\UrbanBlimp.pdb
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DaremetoWorker\ChallengeAccepted.email
@@ -155,5 +158,6 @@ C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DaremetoWorker\System.Web.Razor.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DaremetoWorker\System.Xml.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DaremetoWorker\System.Xml.Linq.dll
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DaremetoWorker\Takedown.email
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DaremetoWorker\UrbanBlimp.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Debug\DaremetoWorker\UrbanBlimp.pdb

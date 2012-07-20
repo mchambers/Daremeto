@@ -258,9 +258,13 @@ namespace DareyaAPI.Controllers
             
             try
             {
+                newCustomer.Password = Security.GenerateV1PasswordHash(newCustomer.EmailAddress, newCustomer.Password);
+
                 CoreCreateSendVerificationEmail(newCustomer);
                 if (tryEmail == null)
-                    newCustomer.ID=Repo.Add(newCustomer);
+                {
+                    newCustomer.ID = Repo.Add(newCustomer);
+                }
                 else
                     Repo.Update(tryEmail);
             }
@@ -277,7 +281,21 @@ namespace DareyaAPI.Controllers
         {
             
         }
-        
+        /*
+        [HttpGet]
+        public void FixPasswords()
+        {
+            for(int i=4; i<11; i++)
+            {
+                Customer c = Repo.GetWithID(i);
+                if (c!=null && c.Type == 2)
+                {
+                    c.Password = Security.GenerateV1PasswordHash(c.EmailAddress, c.Password);
+                    Repo.Update(c);
+                }
+            }
+        }*/
+
         // POST /api/customer/signup
         [HttpPost]
         public void Signup(Customer newCustomer)

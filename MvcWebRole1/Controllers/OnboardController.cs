@@ -6,11 +6,18 @@ using System.Web.Mvc;
 using TweetSharp;
 using DareyaAPI.Models;
 using Facebook;
+using Twilio;
+using Stripe;
 
 namespace DareyaAPI.Controllers
 {
     public class OnboardController : Controller
     {
+        public class TextLinkInfo
+        {
+            public string PhoneNumber { get; set; }
+        }
+
         FacebookClient _fb;
         OnboardManager _obm;
         DareManager _dmgr;
@@ -29,7 +36,7 @@ namespace DareyaAPI.Controllers
 
         private const string _fbAppID = "309260905814607";
         private const string _fbAppSecret = "c8c000c0ef5e4adc6a760662cd37638b";
-        private const string _fbRedirectUrl = "http://www.dareme.to/Onboard/CompleteFacebook/";
+        private const string _fbRedirectUrl = "https://api.dareme.to/Onboard/CompleteFacebook/";
 
         public ActionResult Index()
         {
@@ -73,7 +80,7 @@ namespace DareyaAPI.Controllers
 
             string redirectUri;
 
-            redirectUri = "http://www.dareme.to/Onboard/CompleteTwitter/";
+            redirectUri = "https://api.dareme.to/Onboard/CompleteTwitter/";
             
             OAuthRequestToken requestToken = service.GetRequestToken(redirectUri);
 
@@ -206,6 +213,49 @@ namespace DareyaAPI.Controllers
             }
         }
 
+        public ActionResult StartSignup(long ChallengeID=0, int DoBilling=0)
+        {
+            OnboardToken token = new OnboardToken();
+            token.ChallengeID = ChallengeID;
+            if (DoBilling == 1)
+                token.AccountType = 1;
+
+            return View("StartSignup", token);
+        }
+        
+        [HttpPost]
+        public ActionResult BillingOnboard(OnboardToken token)
+        {
+            OnboardToken retrievedToken = RepoFactory.GetOnboardTokenRepo().Get(token.VerificationString);
+
+            Customer cust = RepoFactory.GetCustomerRepo().GetWithID(retrievedToken.CustomerID);
+
+            // hardcode stripe for now, sucka
+            StripeClient client = new StripeClient("LB3kUwdhiUlPlNl1UYW52NLn4q88QsFT");
+            Stripe.CreditCardToken ccToken = new Stripe.CreditCardToken(token.BillingID);
+            var stripeCustomer = client.CreateCustomer(ccToken, email: cust.EmailAddress);
+            
+            cust.BillingType = (int)BillingSystem.BillingProcessorFactory.SupportedBillingProcessor.Stripe;
+            cust.BillingID = stripeCustomer.GetProperty("ID").ToString();
+
+            RepoFactory.GetCustomerRepo().Update(cust);
+
+            CustomerController.CustomerSignupResult result = new CustomerController.CustomerSignupResult();
+            result.Result = CustomerController.CustomerSignupResult.ResultCode.Success;
+            result.Customer = cust;
+
+            if (retrievedToken.ChallengeID != 0)
+            {
+                Security s = new Security();
+                Authorization a=s.AuthorizeCustomer(new Login { EmailAddress = cust.EmailAddress, Password = cust.Password });
+                return Redirect("http://dareme.to/authorize?id="+a.CustomerID.ToString()+"&session_token="+a.Token+"&dare=" + retrievedToken.ChallengeID.ToString());
+            }
+            else
+            {
+                return View("SignupComplete", result);
+            }
+        }
+
         [HttpPost]
         public ActionResult Signup(SignupCustomer newCustomer)
         {
@@ -215,8 +265,31 @@ namespace DareyaAPI.Controllers
 
             if (result.Result != CustomerController.CustomerSignupResult.ResultCode.Success)
                 return View("SignupFailed");
-            
-            return View("SignupComplete", result);
+
+            if (newCustomer.AccountType == 1)
+            {
+                OnboardToken newToken = new OnboardToken()
+                {
+                    CustomerID = result.Customer.ID,
+                    VerificationString = System.Guid.NewGuid().ToString(),
+                    ChallengeID=newCustomer.ChallengeID
+                };
+
+                RepoFactory.GetOnboardTokenRepo().Add(newToken);
+                
+                return View("BillingOnboard", newToken);
+            }
+            else
+                return View("SignupComplete", result);
+        }
+
+        [HttpPost]
+        public ActionResult TextLink(TextLinkInfo i)
+        {
+            var twilio = new TwilioRestClient("ACdcf7995cf5db85ecd7cfa259b546aaea", "8484e4f209948846e5eb74eb137a0292");
+            twilio.SendSmsMessage("+12139853273", i.PhoneNumber, "Download dareme.to on your iPhone here: http://goo.gl/YJI4b");
+
+            return View();
         }
 
         [HttpPost]

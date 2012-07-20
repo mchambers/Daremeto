@@ -10,6 +10,7 @@ namespace DareyaAPI.Models
     public class SignupCustomer : Customer
     {
         public long ChallengeID { get; set; }
+        public int AccountType { get; set; }
     }
 
     public class MiniCustomer
@@ -27,7 +28,11 @@ namespace DareyaAPI.Models
             Default,
             Unclaimed,
             Unverified,
-            IncompleteOnboard
+            IncompleteOnboard,
+            VIP,
+            Partner,
+            SystemModerator,
+            SystemAdministrator
         }
 
         public enum ForeignUserTypes

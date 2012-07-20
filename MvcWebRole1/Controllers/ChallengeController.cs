@@ -68,6 +68,20 @@ namespace DareyaAPI.Controllers
             return c;
         }
 
+        [HttpPost]
+        [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Admin)]
+        public void RetryFailedBillings()
+        {
+            IEnumerable<Challenge> chals = ChalRepo.GetUnbilledChallenges();
+            foreach (Challenge c in chals)
+            {
+                Dictionary<string, long> billingQueueItemData = new Dictionary<string, long>();
+                billingQueueItemData.Add("ChalID", c.ID);
+                billingQueueItemData.Add("CustID", c.TargetCustomerID);
+                RepoFactory.GetProcessingQueue().PutQueueMessage(ProcessingQueue.MessageType.Billing, billingQueueItemData);
+            }
+        }
+
         [HttpGet]
         [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Public)]
         public List<Challenge> Featured(int StartAt = 0, int Limit = 10)
@@ -88,6 +102,15 @@ namespace DareyaAPI.Controllers
             }
 
             return outChals;
+        }
+
+        [HttpPost]
+        [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Moderator)]
+        public void Takedown(long id)
+        {
+            DareManager dareMgr = new DareManager();
+            dareMgr.Takedown(id);
+            dareMgr = null;
         }
 
         // GET /api/challenge
@@ -170,6 +193,7 @@ namespace DareyaAPI.Controllers
 
         // GET /api/challenge/5
         [HttpGet]
+        [DareyaAPI.Filters.DYAuthorization(Filters.DYAuthorizationRoles.Public)]
         public Challenge Get(long id)
         {
             Challenge c = PrepOutboundChallenge(ChalRepo.Get(id));
@@ -244,6 +268,9 @@ namespace DareyaAPI.Controllers
             ChalRepo.AddBidToChallenge(c, ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID, value.Amount, approximateFees);
 
             CustomerNotifier.NotifyChallengeBacked(((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID, c.CustomerID, c.ID);
+
+            Activity activity = new Activity(c.ID, DateTime.UtcNow) { Type = (int)Activity.ActivityType.ActivityBackDare, CustomerID = ((DareyaIdentity)HttpContext.Current.User.Identity).CustomerID };
+            RepoFactory.GetActivityRepo().Add(activity);
         }
 
         // POST /api/challenge
@@ -343,20 +370,11 @@ namespace DareyaAPI.Controllers
             
             ChalRepo.Update(value);
 
+            Activity activity = new Activity(value.ID, DateTime.UtcNow) { Type = (int)Activity.ActivityType.ActivityCreateDare, CustomerID=value.CustomerID };
+            RepoFactory.GetActivityRepo().Add(activity);
+
             if (createTargetStatus)
             {
-                /*
-                ChallengeStatus s = new ChallengeStatus()
-                {
-                    ChallengeID=value.ID,
-                    ChallengeOriginatorCustomerID=value.CustomerID,
-                    CustomerID=value.TargetCustomerID,
-                    Status=(int)ChallengeStatus.StatusCodes.None
-                };
-
-                StatusRepo.Add(s);
-                */
-
                 // notify the receipient of the new challenge.
                 CustomerNotifier.NotifyNewChallenge(value.CustomerID, value.TargetCustomerID, value.ID);
             }
@@ -405,6 +423,9 @@ namespace DareyaAPI.Controllers
             StatusRepo.Add(s);
 
             CustomerNotifier.NotifyChallengeAccepted(s.ChallengeOriginatorCustomerID, s.CustomerID, c.ID);
+
+            Activity activity = new Activity(s.ChallengeID, DateTime.UtcNow) { Type = (int)Activity.ActivityType.ActivityTakeDare, CustomerID = s.CustomerID };
+            RepoFactory.GetActivityRepo().Add(activity);
 
             return s;
         }

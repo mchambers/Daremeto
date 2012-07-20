@@ -58,9 +58,9 @@ namespace DaremetoWorker
 
             int bidsPaid = 0;
 
-            if (chalStatus.Status != (int)ChallengeStatus.StatusCodes.Accepted)
+            if (chalStatus.Status != (int)ChallengeStatus.StatusCodes.Completed)
             {
-                System.Diagnostics.Trace.WriteLine("BILLING: Cust" + CustomerID.ToString() + "_Chal" + ChallengeID.ToString() + " - Caught a non-accepted challenge status attempting to be billed");
+                System.Diagnostics.Trace.WriteLine("BILLING: Cust" + CustomerID.ToString() + "_Chal" + ChallengeID.ToString() + " - Caught a non-completed challenge status attempting to be billed");
                 return;
             }
 

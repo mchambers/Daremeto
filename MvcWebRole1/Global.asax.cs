@@ -62,7 +62,7 @@ namespace DareyaAPI
 
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
-            HttpContext.Current.Response.AddHeader("Access-Control-Allow-Origin", "http://daremeto.azurewebsites.net");
+            //HttpContext.Current.Response.AddHeader("Access-Control-Allow-Origin", "http://daremeto.azurewebsites.net");
         }
 
         protected void Application_Start()
@@ -74,6 +74,8 @@ namespace DareyaAPI
 
             //BundleTable.Bundles.RegisterTemplateBundles();
             BundleTable.Bundles.EnableDefaultBundles();
+
+            GlobalConfiguration.Configuration.MessageHandlers.Add(new DareyaAPI.Filters.CorsHandler());
 
             Configure(GlobalConfiguration.Configuration);
         }

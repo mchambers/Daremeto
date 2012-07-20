@@ -23,6 +23,17 @@ namespace DareyaAPI.Controllers
         }
         */
 
+        public void Takedown(long ChallengeID)
+        {
+            Challenge c = RepoFactory.GetChallengeRepo().Get(ChallengeID);
+            if (c == null) return;
+
+            c.State = (int)Challenge.ChallengeState.Expired;
+            RepoFactory.GetChallengeRepo().Update(c);
+
+            CustomerNotifier.NotifyChallengeTakenDownModerator(c.CustomerID, c.ID);
+        }
+
         public ChallengeStatus Take(long ChallengeID, long CustomerID)
         {
             Challenge c = RepoFactory.GetChallengeRepo().Get(ChallengeID);

@@ -24,7 +24,7 @@ namespace DareyaAPI.Models
             d.PartitionKey = a.Token;
             d.RowKey = a.UniqueID;
             d.Valid = a.Valid;
-
+            d.Type = a.Type;
             return d;
         }
 
@@ -37,6 +37,7 @@ namespace DareyaAPI.Models
             a.EmailAddress = d.EmailAddress;
             a.CustomerID = d.CustomerID;
             a.Valid = d.Valid;
+            a.Type = d.Type;
 
             return a;
         }

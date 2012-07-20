@@ -24,6 +24,7 @@ namespace DareyaAPI.Models
         public string LastName { get; set; }
         public string Password { get; set; }
         public string AvatarURL { get; set; }
+        public string BillingID { get; set; }
     }
 
     public class OnboardTokenDb : TableServiceEntity

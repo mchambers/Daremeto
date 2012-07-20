@@ -139,6 +139,11 @@ namespace DareyaAPI.Controllers
             return CoreDetermineAudience(c.CustomerID);
         }
 
+        public string GenerateV1PasswordHash(string user, string pass)
+        {
+            return System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(user+"."+"4%!m0zr43lla82!!32rp-2"+pass, "sha1");
+        }
+
         public Authorization AuthorizeCustomer(Login l)
         {
             ICustomerRepository repo = Models.RepoFactory.GetCustomerRepo();
@@ -151,7 +156,7 @@ namespace DareyaAPI.Controllers
                 if (c == null)
                     return null;
 
-                if (!l.Password.Equals(c.Password))
+                if (!l.Password.ToUpper().Equals(c.Password.ToUpper()))
                     return null;
             }
             else

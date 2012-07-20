@@ -6,6 +6,18 @@
 
 <h2>Thanks for signing up!</h2>
 
-<p>Now prove you've done the deed. Install dareme.to on your iPhone and sign in using the account you just created:</p>
+<p>Now you'll want to install <span style="font-family: 'Pacifico', Helvetica, sans-serif;">dareme.to</span> on your iPhone. You can find it in the App Store, fer shure. We can also text you a download link, if you'd like. 
+We don't store your phone number anywhere, for any reason. <small><em>Not that we wouldn't want to talk to you. But like, you can call us if you want.</em></small></p>
+
+@{
+    using (Html.BeginForm("TextLink", "Onboard"))
+    {           
+    <label for="PhoneNumber">Mobile Number (U.S. Only):</label>
+	<input type="text" name="PhoneNumber" />		    
+	<input class="btn btn-success" type="submit" value="Text It To Me!" />
+    }
+}
+
+<p>Once it's installed, sign in using the account you just created:</p>
 <h2>Email: @Model.Customer.EmailAddress</h2>
 <h2>Password: <em>The one you provided</em></h2>

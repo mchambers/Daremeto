@@ -42,9 +42,17 @@ namespace DareyaAPI.Controllers
                 if (c.Type != (int)Customer.TypeCodes.Unclaimed)
                     return false;
 
-                RepoFactory.GetChallengeRepo().MoveChallengesToCustomer(c.ID, custToLink.ID);
+                try
+                {
+                    RepoFactory.GetChallengeRepo().MoveChallengesToCustomer(c.ID, custToLink.ID);
+                    custRepo.RemoveForeignNetworkForCustomer(c.ID, handle, type);
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Trace.WriteLine("Onboard Exception: " + e.ToString());
+                }
+                
                 custRepo.Remove(c.ID);
-                custRepo.RemoveForeignNetworkForCustomer(c.ID, handle, type);
             }
 
             custRepo.AddForeignNetworkForCustomer(custToLink.ID, handle, type);

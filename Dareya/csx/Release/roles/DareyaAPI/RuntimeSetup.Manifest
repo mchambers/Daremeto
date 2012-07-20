@@ -4,7 +4,7 @@
   <Operation type="Path" path="base\x86" />
   <Operation type="Path" path="diagnostics\x64" />
   <PermissionLevels>
-    <StoredCert name="Stored0Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" permissionLevel="elevated" />
+    <StoredCert name="Stored0api.dareme.to" permissionLevel="limitedOrElevated" />
   </PermissionLevels>
   <AdditionalRoleIdentities>
     <Identity username="NetworkService" domain="NT AUTHORITY" />

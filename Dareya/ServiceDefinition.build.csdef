@@ -14,16 +14,16 @@
       <Site name="Web">
         <Bindings>
           <Binding name="Endpoint1" endpointName="Endpoint1" />
+          <Binding name="Endpoint2" endpointName="https" />
         </Bindings>
       </Site>
     </Sites>
     <Endpoints>
       <InputEndpoint name="Endpoint1" protocol="http" port="80" />
+      <InputEndpoint name="https" protocol="https" port="443" certificate="api.dareme.to" />
     </Endpoints>
     <Imports>
       <Import moduleName="Diagnostics" />
-      <Import moduleName="RemoteAccess" />
-      <Import moduleName="RemoteForwarder" />
     </Imports>
     <ConfigurationSettings>
       <Setting name="StorageConnectionString" />
@@ -31,11 +31,12 @@
     <Startup>
       <Task commandLine="disableAppPoolTimeout.cmd" executionContext="elevated" taskType="background" />
     </Startup>
-    <Certificates></Certificates>
+    <Certificates>
+      <Certificate name="api.dareme.to" storeLocation="LocalMachine" storeName="My" />
+    </Certificates>
   </WebRole>
   <WorkerRole name="DaremetoWorker" vmsize="Small">
     <Imports>
-      <Import moduleName="RemoteAccess" />
       <Import moduleName="Diagnostics" />
     </Imports>
     <ConfigurationSettings>

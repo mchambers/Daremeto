@@ -1,0 +1,30 @@
+html { height: 100%; overflow:hidden; width: 960px; margin-left: auto; margin-right: auto; }
+body { height: 100%; background-image: url('img/bkg.png'); background-position: fixed; padding: 0px; margin:0px; }
+#copyright { color: #fff; font-family: 'Maven Pro', sans-serif; font-size: 12px; text-align: center;  }
+
+header { height: 50px; background-color: blue; background-image: url('img/navbg.png'); background-repeat: repeat-x; border-bottom: 2px solid #ccc; padding-top: 15px; padding-left: 24px; line-height: 36px;  color: #fff; }
+
+header .title { font-size: 36px; font-family: 'Pacifico'; text-shadow: 0px 1px #000; }
+
+header #nav { float: right; margin-right: 20px; padding-top: -10px; margin-top: -16px; }
+header #nav ul { float: left; font-family: 'Maven Pro', sans-serif; font-weight: bold; font-size: 16px;}
+header #nav li { float: left; padding-right: 30px; list-style-type: none; }
+
+div#left { float: left; overflow: scroll; width:320px; height: 90%; background-color: rgba(0, 0, 0, 0.3);}
+div.feedItem { }
+div.feedItem img { position: relative; left: 10px; top: 10px; float: left; margin-top: 8px; width: 48px; height: 48px; border: 1px solid white; }
+div.feedItemBody { position: relative; left: 65px; top: 10px; width:241px; height: 130px; background-image:url('img/feedItemBg.png'); background-repeat: no-repeat; font-size: 12px; }
+div.feedItemText { font-family: Helvetica, sans-serif; position: relative; left: -30px; top: 20px; height: 90px; overflow: hidden; }
+
+#content { float: left; width:640px; padding:0px; margin-top:-11px; }
+#content h1 { color: #fff; font-family: 'Pacifico', sans-serif; font-size: 82px; line-height: 40px; }
+#content p { color: #fff; font-size: 24px; }
+
+.sectionHeader { background-color: #ccc; color: #000; padding-top: 10px; padding-left: 10px; font-weight: bold; font-family: HelveticaNeue-Bold, sans-serif; height: 26px; background-image: url('img/sectionHeader.png'); background-repeat: repeat-x; }
+
+#content #top { background-image: url('img/blackbar_bkg.png'); background-repeat: no-repeat; position: relative; z-index:-1; top:-15px; width: 640px; height: 191px; overflow: hidden; }
+#content #top #bountycallout { font-size: 14px; font-family: 'Helvetica Neue', Helvetica, sans-serif; position: relative; text-align: right; top: 50px; left: 300px; width: 325px; color: #fff; }
+#content #top #bounty { font-size: 64px; font-family: 'Helvetica Neue', Helvetica, sans-serif; font-weight: bold; position: relative; text-align: right; top: 50px; left: 300px; width: 325px; color: #fff; }
+#content #darecontainer { left: 16px; position: relative; background-image: url('img/box_bkg_full.png'); background-repeat: no-repeat; width: 616px; height: 252px;  }
+#content #darecontainer #daretext { position: relative; left: 20px; top: 20px; width: 586px; height: 222px; color: #000; font-size: 14px; overflow: hidden; font-family: Helvetica, sans-serif; }
+#content #top #avatar { width: 112px; height: 112px; float: left; border: 1px solid white; position: relative; top: 40px; left: 10px; }

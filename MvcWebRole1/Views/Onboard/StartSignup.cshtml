@@ -1,0 +1,31 @@
+﻿@model DareyaAPI.Models.OnboardToken
+
+@{
+    ViewBag.Title = "Sign Up";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<img style="width: 128px; height: 128px;" src="~/content/images/icon_512.png" alt="dareme.to" title="dareme.to" />
+
+<h2>Create your <span style="font-family: 'Pacifico', Helvetica, sans-serif;">dareme.to</span> Account</h2>
+
+<p>Get started in seconds, then download the app and start daring people right away.</p>
+
+@{
+    using (Html.BeginForm("Signup", "Onboard"))
+    {           
+        <input type="hidden" name="AccountType" value="@(Model.AccountType)" />
+        <input type="hidden" name="ChallengeID" value="@(Model.ChallengeID)" />
+    
+        <label for="FirstName">First Name:</label>
+	    <input type="text" name="FirstName" />
+	    <label for="LastName">Last Name:</label>
+	    <input type="text" name="LastName" />
+	    <label for="EmailAddress">Email Address:</label>
+	    <input type="text" name="EmailAddress" />
+	    <label for="Password">Desired Password:</label>
+	    <input type="password" name="Password" />
+	    <p>&nbsp;</p>		    
+	    <input class="btn btn-success" type="submit" value="Sign Up" />
+    }
+}

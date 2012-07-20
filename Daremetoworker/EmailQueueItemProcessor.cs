@@ -141,7 +141,7 @@ namespace DaremetoWorker
                     case CustomerNotifier.NotifyType.ChallengeAwardedToYou:
                         template = File.OpenText("ChallengeAwardedToYou.email").ReadToEnd();
                         output = Razor.Parse(template, m);
-                        email = sourceCust.EmailAddress;
+                        email = targetCust.EmailAddress;
                         subject = "You've been awarded a bounty!";
                         break;
                     case CustomerNotifier.NotifyType.ChallengeBacked:
@@ -172,6 +172,12 @@ namespace DaremetoWorker
                         email = targetCust.EmailAddress;
                         subject = "You've been dared by " + sourceCust.FirstName;
                         break;
+                    case CustomerNotifier.NotifyType.ChallengeModeratorTakeDown:
+                        template = File.OpenText("Takedown.email").ReadToEnd();
+                        output = Razor.Parse(template, m);
+                        email = targetCust.EmailAddress;
+                        subject = "Your dare has been taken down by a moderator";
+                        break;
                 }
             }
             catch (Exception e)
@@ -185,7 +191,8 @@ namespace DaremetoWorker
                 {
                     var message = SendGrid.GenerateInstance();
                     message.AddTo(email);
-                    message.From = new System.Net.Mail.MailAddress("support@dareme.to");
+                    message.From = new System.Net.Mail.MailAddress("support@dareme.to", "dareme.to");
+                    message.Cc = new System.Net.Mail.MailAddress[] { new System.Net.Mail.MailAddress("support@dareme.to") };
                     message.Html = output;
                     message.Subject = subject;
                     var transport = SendGridMail.Transport.SMTP.GenerateInstance(new System.Net.NetworkCredential("daremeto", "3f!margarita"));

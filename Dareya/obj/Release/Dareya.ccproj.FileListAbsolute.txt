@@ -145,9 +145,9 @@ C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\bin\Newtonsoft.Json.pdb
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\bin\Newtonsoft.Json.xml
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\bin\RestSharp.dll
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\bin\RestSharp.xml
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\bin\SendGridMail.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\bin\Stripe.dll
-C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\bin\Stripe.net.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\bin\System.Json.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\bin\System.Json.xml
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\bin\System.Net.Http.dll
@@ -185,6 +185,9 @@ C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\bin\System.Web.WebPages.xml
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\bin\TweetSharp.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\bin\TweetSharp.pdb
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\bin\Twilio.Api.dll
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\bin\Twilio.Api.pdb
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\bin\Twilio.Api.xml
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\bin\UrbanBlimp.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\bin\UrbanBlimp.pdb
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Content\bootstrap-responsive.css
@@ -352,11 +355,14 @@ C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Views\Home\Boiler.cshtml
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Views\Home\Index.cshtml
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Views\Onboard\AlreadyACustomer.cshtml
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Views\Onboard\BillingOnboard.cshtml
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Views\Onboard\Complete.cshtml
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Views\Onboard\CompleteAlreadyExisted.cshtml
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Views\Onboard\CompleteOnboard.cshtml
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Views\Onboard\Index.cshtml
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Views\Onboard\SignupComplete.cshtml
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Views\Onboard\StartSignup.cshtml
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Views\Onboard\TextLink.cshtml
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Views\Onboard\_TwitterAuth.cshtml
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Views\Shared\Error.cshtml
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DareyaAPI\Views\Shared\_Layout.cshtml
@@ -393,5 +399,6 @@ C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DaremetoWorker\System.Web.Razor.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DaremetoWorker\System.Xml.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DaremetoWorker\System.Xml.Linq.dll
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DaremetoWorker\Takedown.email
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DaremetoWorker\UrbanBlimp.dll
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\obj\Release\DaremetoWorker\UrbanBlimp.pdb

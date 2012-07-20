@@ -1,6 +1,6 @@
 ﻿@model DaremetoWorker.EmailNotifyModel
 
-<h1>@(Model.TargetCustomer.FirstName) just backed your dare. It's up to $@(Model.Challenge.CurrentBid.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)) now.</h1>
+<h1>@(Model.SourceCustomer.FirstName) just backed your dare. It's up to $@(Model.Challenge.CurrentBid.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)) now.</h1>
 
 <p>Yeah, that's basically it. They want to see it completed just as bad as you do, and they were willing to put some money on the line to make that happen. You fancy, huh?</p>
 

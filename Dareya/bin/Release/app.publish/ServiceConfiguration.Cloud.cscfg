@@ -14,28 +14,17 @@
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=daremeto;AccountKey=Zd6EEZ9lRvPELkVjk70rASP1H8OCFcaaZPhlF+p3bYYtWzc0ZZOalsAM7Ldyx22wQt3OTKpz7YbuWsIN0/AyVw==" />
       <Setting name="StorageConnectionString" value="DefaultEndpointsProtocol=https;AccountName=daremeto;AccountKey=Zd6EEZ9lRvPELkVjk70rASP1H8OCFcaaZPhlF+p3bYYtWzc0ZZOalsAM7Ldyx22wQt3OTKpz7YbuWsIN0/AyVw==" />
-      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
-      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="daremeto" />
-      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="MIIBnQYJKoZIhvcNAQcDoIIBjjCCAYoCAQAxggFOMIIBSgIBADAyMB4xHDAaBgNVBAMME1dpbmRvd3MgQXp1cmUgVG9vbHMCEGG8t0nUVx2NRVdLjjGJUxcwDQYJKoZIhvcNAQEBBQAEggEABdDXD7esaZqcXKsB1cRAGPezohk7vdORPDfGXJvRZDS4xn0SfM384B7msxF/DdhSpOleVK+qU2tiFApAX2ivncYWWnYMKqvYDyB63IAkBepJjT32QBKQFU6AX+ug6HZmGVGDkJ3Bab1Y4EPjR3sLER41XjITUjSaH5vbWXMjDE4eiQoENO1FHgkxWAhjfIiCWuGr+lll2CeFG3md4ycdBCZwGuwdTMFfzuD9TB0luQxBr4hOuouM+ZxFiiaVKsF7hRAKMOlh7Vn5xrbz/0JujgCzGXfwd9KqNKRw91jc7cYXiZPTvUUhbqAJCNFDjc1Fz1ayl7RM1mUJ2+J4b9AHhjAzBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECLy7yLI746f5gBAtDgI26QvyA2YnBFxZk4hi" />
-      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2013-04-22T23:59:59.0000000-07:00" />
-      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" value="true" />
     </ConfigurationSettings>
     <Certificates>
-      <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="D9C995BD1DEC1D83F02454F44D3078F902202A2A" thumbprintAlgorithm="sha1" />
+      <Certificate name="api.dareme.to" thumbprint="DE682EB2F0F775974CB24A89F1EB3F687E8E2F5D" thumbprintAlgorithm="sha1" />
     </Certificates>
   </Role>
   <Role name="DaremetoWorker">
     <Instances count="1" />
     <ConfigurationSettings>
-      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
-      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="daremeto" />
-      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="MIIBnQYJKoZIhvcNAQcDoIIBjjCCAYoCAQAxggFOMIIBSgIBADAyMB4xHDAaBgNVBAMME1dpbmRvd3MgQXp1cmUgVG9vbHMCEGG8t0nUVx2NRVdLjjGJUxcwDQYJKoZIhvcNAQEBBQAEggEABdDXD7esaZqcXKsB1cRAGPezohk7vdORPDfGXJvRZDS4xn0SfM384B7msxF/DdhSpOleVK+qU2tiFApAX2ivncYWWnYMKqvYDyB63IAkBepJjT32QBKQFU6AX+ug6HZmGVGDkJ3Bab1Y4EPjR3sLER41XjITUjSaH5vbWXMjDE4eiQoENO1FHgkxWAhjfIiCWuGr+lll2CeFG3md4ycdBCZwGuwdTMFfzuD9TB0luQxBr4hOuouM+ZxFiiaVKsF7hRAKMOlh7Vn5xrbz/0JujgCzGXfwd9KqNKRw91jc7cYXiZPTvUUhbqAJCNFDjc1Fz1ayl7RM1mUJ2+J4b9AHhjAzBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECLy7yLI746f5gBAtDgI26QvyA2YnBFxZk4hi" />
-      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2013-04-22T23:59:59.0000000-07:00" />
       <Setting name="StorageConnectionString" value="DefaultEndpointsProtocol=https;AccountName=daremeto;AccountKey=Zd6EEZ9lRvPELkVjk70rASP1H8OCFcaaZPhlF+p3bYYtWzc0ZZOalsAM7Ldyx22wQt3OTKpz7YbuWsIN0/AyVw==" />
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=daremeto;AccountKey=Zd6EEZ9lRvPELkVjk70rASP1H8OCFcaaZPhlF+p3bYYtWzc0ZZOalsAM7Ldyx22wQt3OTKpz7YbuWsIN0/AyVw==" />
     </ConfigurationSettings>
-    <Certificates>
-      <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="D9C995BD1DEC1D83F02454F44D3078F902202A2A" thumbprintAlgorithm="sha1" />
-    </Certificates>
+    <Certificates></Certificates>
   </Role>
 </ServiceConfiguration>

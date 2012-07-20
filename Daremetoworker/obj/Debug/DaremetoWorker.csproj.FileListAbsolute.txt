@@ -35,3 +35,5 @@ C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWo
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\bin\Debug\ChallengeClaimed.email
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\bin\Debug\ChallengeBacked.email
 C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\bin\Debug\ChallengeRejected.email
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\bin\Debug\Takedown.email
+C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\DaremetoWorker\bin\Debug\RestSharp.xml

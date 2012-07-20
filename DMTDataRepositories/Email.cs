@@ -16,7 +16,8 @@ namespace DareyaAPI.Models
             ChallengeBacked,
             ChallengeYouBackedAwardedAssented,
             ChallengeYouBackedAwardedDissented,
-            ChallengeAwardedToYou
+            ChallengeAwardedToYou,
+            ChallengeModeratorTakeDown
         }
 
         public static Dictionary<string, long> GetNotifyQueueMessageData(NotifyType emailType, Nullable<long> SourceCustomerID, Nullable<long> TargetCustomerID, Nullable<long> ChallengeID)
@@ -51,7 +52,7 @@ namespace DareyaAPI.Models
             RepoFactory.GetProcessingQueue().PutQueueMessage(ProcessingQueue.MessageType.Notify, 
                 GetNotifyQueueMessageData(NotifyType.ChallengeRejected, Source, Target, Challenge));
         }
-
+        
         public static void NotifyChallengeClaimed(long Source, long Target, long Challenge)
         {
             RepoFactory.GetProcessingQueue().PutQueueMessage(ProcessingQueue.MessageType.Notify, 
@@ -80,6 +81,12 @@ namespace DareyaAPI.Models
         {
             RepoFactory.GetProcessingQueue().PutQueueMessage(ProcessingQueue.MessageType.Notify, 
                 GetNotifyQueueMessageData(NotifyType.ChallengeAwardedToYou, null, Target, Challenge));
+        }
+
+        public static void NotifyChallengeTakenDownModerator(long Target, long Challenge)
+        {
+            RepoFactory.GetProcessingQueue().PutQueueMessage(ProcessingQueue.MessageType.Notify,
+                GetNotifyQueueMessageData(NotifyType.ChallengeModeratorTakeDown, null, Target, Challenge));
         }
     }
 }

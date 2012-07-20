@@ -21,6 +21,15 @@ namespace DareyaAPI.Models
         private static IAccountRepository accountRepository;
         private static ITransactionRepository transRepository;
         private static IOnboardTokenRepository onboardRepo;
+        private static IActivityRepository actRepo;
+
+        public static IActivityRepository GetActivityRepo()
+        {
+            if (actRepo == null)
+                actRepo = new ActivityRepository();
+
+            return actRepo;
+        }
 
         public static IOnboardTokenRepository GetOnboardTokenRepo()
         {

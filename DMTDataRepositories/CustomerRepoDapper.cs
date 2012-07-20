@@ -158,8 +158,9 @@ namespace DareyaAPI.Models
             context.AttachTo(TableName, fDB2);
 
             context.DeleteObject(fDB1);
-            context.DeleteObject(fDB2);
+            context.SaveChangesWithRetries();
 
+            context.DeleteObject(fDB2);
             context.SaveChangesWithRetries();
         }
 

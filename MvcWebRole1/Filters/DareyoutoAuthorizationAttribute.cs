@@ -15,7 +15,9 @@ namespace DareyaAPI.Filters
         Public,
         Users,
         Private,
-        Friends
+        Friends,
+        Admin,
+        Moderator
     }
 
     public enum DYAuthorizationResourceType
@@ -64,6 +66,11 @@ namespace DareyaAPI.Filters
                 }
                 else
                 {
+                    if (AuthLevel == DYAuthorizationRoles.Moderator)
+                    {
+                        if (a.Type != (int)Customer.TypeCodes.SystemModerator && a.Type != (int)Customer.TypeCodes.SystemAdministrator)
+                            HandleUnauthorizedRequest(actionContext);
+                    }
                     String[] roles = { "Standard" };
                     HttpContext.Current.User=new GenericPrincipal(new DareyaIdentity(a.EmailAddress, a.CustomerID), roles);
                 }

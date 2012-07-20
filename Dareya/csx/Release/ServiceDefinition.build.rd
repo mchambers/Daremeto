@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Dareya" generation="1" functional="0" release="0" Id="fd3147df-e676-429b-9eaf-6276446955fc" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
+<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Dareya" generation="1" functional="0" release="0" Id="2ef14283-4bcb-4a30-b50d-8528c38d4f29" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
   <groups>
     <group name="DareyaGroup" generation="1" functional="0" release="0">
       <componentports>
@@ -8,46 +8,21 @@
             <lBChannelMoniker name="/Dareya/DareyaGroup/LB:DareyaAPI:Endpoint1" />
           </inToChannel>
         </inPort>
-        <inPort name="DareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput" protocol="tcp">
+        <inPort name="DareyaAPI:https" protocol="https">
           <inToChannel>
-            <lBChannelMoniker name="/Dareya/DareyaGroup/LB:DareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput" />
+            <lBChannelMoniker name="/Dareya/DareyaGroup/LB:DareyaAPI:https" />
           </inToChannel>
         </inPort>
       </componentports>
       <settings>
-        <aCS name="Certificate|DaremetoWorker:Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" defaultValue="">
+        <aCS name="Certificate|DareyaAPI:api.dareme.to" defaultValue="">
           <maps>
-            <mapMoniker name="/Dareya/DareyaGroup/MapCertificate|DaremetoWorker:Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" />
-          </maps>
-        </aCS>
-        <aCS name="Certificate|DareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" defaultValue="">
-          <maps>
-            <mapMoniker name="/Dareya/DareyaGroup/MapCertificate|DareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" />
+            <mapMoniker name="/Dareya/DareyaGroup/MapCertificate|DareyaAPI:api.dareme.to" />
           </maps>
         </aCS>
         <aCS name="DaremetoWorker:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="">
           <maps>
             <mapMoniker name="/Dareya/DareyaGroup/MapDaremetoWorker:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
-          </maps>
-        </aCS>
-        <aCS name="DaremetoWorker:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" defaultValue="">
-          <maps>
-            <mapMoniker name="/Dareya/DareyaGroup/MapDaremetoWorker:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" />
-          </maps>
-        </aCS>
-        <aCS name="DaremetoWorker:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" defaultValue="">
-          <maps>
-            <mapMoniker name="/Dareya/DareyaGroup/MapDaremetoWorker:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" />
-          </maps>
-        </aCS>
-        <aCS name="DaremetoWorker:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" defaultValue="">
-          <maps>
-            <mapMoniker name="/Dareya/DareyaGroup/MapDaremetoWorker:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" />
-          </maps>
-        </aCS>
-        <aCS name="DaremetoWorker:Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" defaultValue="">
-          <maps>
-            <mapMoniker name="/Dareya/DareyaGroup/MapDaremetoWorker:Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" />
           </maps>
         </aCS>
         <aCS name="DaremetoWorker:StorageConnectionString" defaultValue="">
@@ -63,31 +38,6 @@
         <aCS name="DareyaAPI:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="">
           <maps>
             <mapMoniker name="/Dareya/DareyaGroup/MapDareyaAPI:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
-          </maps>
-        </aCS>
-        <aCS name="DareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" defaultValue="">
-          <maps>
-            <mapMoniker name="/Dareya/DareyaGroup/MapDareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" />
-          </maps>
-        </aCS>
-        <aCS name="DareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" defaultValue="">
-          <maps>
-            <mapMoniker name="/Dareya/DareyaGroup/MapDareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" />
-          </maps>
-        </aCS>
-        <aCS name="DareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" defaultValue="">
-          <maps>
-            <mapMoniker name="/Dareya/DareyaGroup/MapDareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" />
-          </maps>
-        </aCS>
-        <aCS name="DareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" defaultValue="">
-          <maps>
-            <mapMoniker name="/Dareya/DareyaGroup/MapDareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" />
-          </maps>
-        </aCS>
-        <aCS name="DareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" defaultValue="">
-          <maps>
-            <mapMoniker name="/Dareya/DareyaGroup/MapDareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" />
           </maps>
         </aCS>
         <aCS name="DareyaAPI:StorageConnectionString" defaultValue="">
@@ -107,56 +57,21 @@
             <inPortMoniker name="/Dareya/DareyaGroup/DareyaAPI/Endpoint1" />
           </toPorts>
         </lBChannel>
-        <lBChannel name="LB:DareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput">
+        <lBChannel name="LB:DareyaAPI:https">
           <toPorts>
-            <inPortMoniker name="/Dareya/DareyaGroup/DareyaAPI/Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput" />
+            <inPortMoniker name="/Dareya/DareyaGroup/DareyaAPI/https" />
           </toPorts>
         </lBChannel>
-        <sFSwitchChannel name="SW:DaremetoWorker:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp">
-          <toPorts>
-            <inPortMoniker name="/Dareya/DareyaGroup/DaremetoWorker/Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
-          </toPorts>
-        </sFSwitchChannel>
-        <sFSwitchChannel name="SW:DareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp">
-          <toPorts>
-            <inPortMoniker name="/Dareya/DareyaGroup/DareyaAPI/Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
-          </toPorts>
-        </sFSwitchChannel>
       </channels>
       <maps>
-        <map name="MapCertificate|DaremetoWorker:Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" kind="Identity">
+        <map name="MapCertificate|DareyaAPI:api.dareme.to" kind="Identity">
           <certificate>
-            <certificateMoniker name="/Dareya/DareyaGroup/DaremetoWorker/Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" />
-          </certificate>
-        </map>
-        <map name="MapCertificate|DareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" kind="Identity">
-          <certificate>
-            <certificateMoniker name="/Dareya/DareyaGroup/DareyaAPI/Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" />
+            <certificateMoniker name="/Dareya/DareyaGroup/DareyaAPI/api.dareme.to" />
           </certificate>
         </map>
         <map name="MapDaremetoWorker:Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" kind="Identity">
           <setting>
             <aCSMoniker name="/Dareya/DareyaGroup/DaremetoWorker/Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
-          </setting>
-        </map>
-        <map name="MapDaremetoWorker:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" kind="Identity">
-          <setting>
-            <aCSMoniker name="/Dareya/DareyaGroup/DaremetoWorker/Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" />
-          </setting>
-        </map>
-        <map name="MapDaremetoWorker:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" kind="Identity">
-          <setting>
-            <aCSMoniker name="/Dareya/DareyaGroup/DaremetoWorker/Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" />
-          </setting>
-        </map>
-        <map name="MapDaremetoWorker:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" kind="Identity">
-          <setting>
-            <aCSMoniker name="/Dareya/DareyaGroup/DaremetoWorker/Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" />
-          </setting>
-        </map>
-        <map name="MapDaremetoWorker:Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" kind="Identity">
-          <setting>
-            <aCSMoniker name="/Dareya/DareyaGroup/DaremetoWorker/Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" />
           </setting>
         </map>
         <map name="MapDaremetoWorker:StorageConnectionString" kind="Identity">
@@ -174,31 +89,6 @@
             <aCSMoniker name="/Dareya/DareyaGroup/DareyaAPI/Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
           </setting>
         </map>
-        <map name="MapDareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" kind="Identity">
-          <setting>
-            <aCSMoniker name="/Dareya/DareyaGroup/DareyaAPI/Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" />
-          </setting>
-        </map>
-        <map name="MapDareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" kind="Identity">
-          <setting>
-            <aCSMoniker name="/Dareya/DareyaGroup/DareyaAPI/Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" />
-          </setting>
-        </map>
-        <map name="MapDareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" kind="Identity">
-          <setting>
-            <aCSMoniker name="/Dareya/DareyaGroup/DareyaAPI/Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" />
-          </setting>
-        </map>
-        <map name="MapDareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" kind="Identity">
-          <setting>
-            <aCSMoniker name="/Dareya/DareyaGroup/DareyaAPI/Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" />
-          </setting>
-        </map>
-        <map name="MapDareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" kind="Identity">
-          <setting>
-            <aCSMoniker name="/Dareya/DareyaGroup/DareyaAPI/Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" />
-          </setting>
-        </map>
         <map name="MapDareyaAPI:StorageConnectionString" kind="Identity">
           <setting>
             <aCSMoniker name="/Dareya/DareyaGroup/DareyaAPI/StorageConnectionString" />
@@ -213,42 +103,15 @@
       <components>
         <groupHascomponents>
           <role name="DaremetoWorker" generation="1" functional="0" release="0" software="C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\csx\Release\roles\DaremetoWorker" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaWorkerHost.exe " memIndex="1792" hostingEnvironment="consoleroleadmin" hostingEnvironmentVersion="2">
-            <componentports>
-              <inPort name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp" portRanges="3389" />
-              <outPort name="DaremetoWorker:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp">
-                <outToChannel>
-                  <sFSwitchChannelMoniker name="/Dareya/DareyaGroup/SW:DaremetoWorker:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
-                </outToChannel>
-              </outPort>
-              <outPort name="DareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp">
-                <outToChannel>
-                  <sFSwitchChannelMoniker name="/Dareya/DareyaGroup/SW:DareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
-                </outToChannel>
-              </outPort>
-            </componentports>
             <settings>
               <aCS name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="" />
-              <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" defaultValue="" />
-              <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" defaultValue="" />
-              <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" defaultValue="" />
-              <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" defaultValue="" />
               <aCS name="StorageConnectionString" defaultValue="" />
-              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;DaremetoWorker&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;DaremetoWorker&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;DareyaAPI&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput&quot; /&gt;&lt;/r&gt;&lt;/m&gt;" />
+              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;DaremetoWorker&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;DaremetoWorker&quot; /&gt;&lt;r name=&quot;DareyaAPI&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;https&quot; /&gt;&lt;/r&gt;&lt;/m&gt;" />
             </settings>
             <resourcereferences>
               <resourceReference name="DiagnosticStore" defaultAmount="[4096,4096,4096]" defaultSticky="true" kind="Directory" />
               <resourceReference name="EventStore" defaultAmount="[1000,1000,1000]" defaultSticky="false" kind="LogStore" />
             </resourcereferences>
-            <storedcertificates>
-              <storedCertificate name="Stored0Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" certificateStore="My" certificateLocation="System">
-                <certificate>
-                  <certificateMoniker name="/Dareya/DareyaGroup/DaremetoWorker/Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" />
-                </certificate>
-              </storedCertificate>
-            </storedcertificates>
-            <certificates>
-              <certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" />
-            </certificates>
           </role>
           <sCSPolicy>
             <sCSPolicyIDMoniker name="/Dareya/DareyaGroup/DaremetoWorkerInstances" />
@@ -259,42 +122,30 @@
           <role name="DareyaAPI" generation="1" functional="0" release="0" software="C:\Users\Marc Chambers\Documents\Visual Studio 2010\Projects\Daremeto\Dareya\csx\Release\roles\DareyaAPI" entryPoint="base\x64\WaHostBootstrapper.exe" parameters="base\x64\WaIISHost.exe " memIndex="3584" hostingEnvironment="frontendadmin" hostingEnvironmentVersion="2">
             <componentports>
               <inPort name="Endpoint1" protocol="http" portRanges="80" />
-              <inPort name="Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput" protocol="tcp" />
-              <inPort name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp" portRanges="3389" />
-              <outPort name="DaremetoWorker:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp">
-                <outToChannel>
-                  <sFSwitchChannelMoniker name="/Dareya/DareyaGroup/SW:DaremetoWorker:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
-                </outToChannel>
-              </outPort>
-              <outPort name="DareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" protocol="tcp">
-                <outToChannel>
-                  <sFSwitchChannelMoniker name="/Dareya/DareyaGroup/SW:DareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp" />
-                </outToChannel>
-              </outPort>
+              <inPort name="https" protocol="https" portRanges="443">
+                <certificate>
+                  <certificateMoniker name="/Dareya/DareyaGroup/DareyaAPI/api.dareme.to" />
+                </certificate>
+              </inPort>
             </componentports>
             <settings>
               <aCS name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" defaultValue="" />
-              <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" defaultValue="" />
-              <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" defaultValue="" />
-              <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" defaultValue="" />
-              <aCS name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" defaultValue="" />
-              <aCS name="Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" defaultValue="" />
               <aCS name="StorageConnectionString" defaultValue="" />
-              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;DareyaAPI&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;DaremetoWorker&quot;&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp&quot; /&gt;&lt;/r&gt;&lt;r name=&quot;DareyaAPI&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteAccess.Rdp&quot; /&gt;&lt;e name=&quot;Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput&quot; /&gt;&lt;/r&gt;&lt;/m&gt;" />
+              <aCS name="__ModelData" defaultValue="&lt;m role=&quot;DareyaAPI&quot; xmlns=&quot;urn:azure:m:v1&quot;&gt;&lt;r name=&quot;DaremetoWorker&quot; /&gt;&lt;r name=&quot;DareyaAPI&quot;&gt;&lt;e name=&quot;Endpoint1&quot; /&gt;&lt;e name=&quot;https&quot; /&gt;&lt;/r&gt;&lt;/m&gt;" />
             </settings>
             <resourcereferences>
               <resourceReference name="DiagnosticStore" defaultAmount="[4096,4096,4096]" defaultSticky="true" kind="Directory" />
               <resourceReference name="EventStore" defaultAmount="[1000,1000,1000]" defaultSticky="false" kind="LogStore" />
             </resourcereferences>
             <storedcertificates>
-              <storedCertificate name="Stored0Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" certificateStore="My" certificateLocation="System">
+              <storedCertificate name="Stored0api.dareme.to" certificateStore="My" certificateLocation="System">
                 <certificate>
-                  <certificateMoniker name="/Dareya/DareyaGroup/DareyaAPI/Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" />
+                  <certificateMoniker name="/Dareya/DareyaGroup/DareyaAPI/api.dareme.to" />
                 </certificate>
               </storedCertificate>
             </storedcertificates>
             <certificates>
-              <certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" />
+              <certificate name="api.dareme.to" />
             </certificates>
           </role>
           <sCSPolicy>
@@ -312,16 +163,16 @@
     </group>
   </groups>
   <implements>
-    <implementation Id="4031655a-c3c7-41b4-ac7d-4eb958ef56b0" ref="Microsoft.RedDog.Contract\ServiceContract\DareyaContract@ServiceDefinition.build">
+    <implementation Id="29de44b0-e2ee-44ae-86c8-8ab67731e13c" ref="Microsoft.RedDog.Contract\ServiceContract\DareyaContract@ServiceDefinition.build">
       <interfacereferences>
-        <interfaceReference Id="e85f22c0-6454-4951-834e-1faf01f56a25" ref="Microsoft.RedDog.Contract\Interface\DareyaAPI:Endpoint1@ServiceDefinition.build">
+        <interfaceReference Id="850e9ac7-665b-4350-8afb-e2b8821a1034" ref="Microsoft.RedDog.Contract\Interface\DareyaAPI:Endpoint1@ServiceDefinition.build">
           <inPort>
             <inPortMoniker name="/Dareya/DareyaGroup/DareyaAPI:Endpoint1" />
           </inPort>
         </interfaceReference>
-        <interfaceReference Id="d7256c26-cae1-4019-9cde-d573f4c86b59" ref="Microsoft.RedDog.Contract\Interface\DareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput@ServiceDefinition.build">
+        <interfaceReference Id="92ef39e0-3c52-42a1-bf45-3128caeffcda" ref="Microsoft.RedDog.Contract\Interface\DareyaAPI:https@ServiceDefinition.build">
           <inPort>
-            <inPortMoniker name="/Dareya/DareyaGroup/DareyaAPI:Microsoft.WindowsAzure.Plugins.RemoteForwarder.RdpInput" />
+            <inPortMoniker name="/Dareya/DareyaGroup/DareyaAPI:https" />
           </inPort>
         </interfaceReference>
       </interfacereferences>
